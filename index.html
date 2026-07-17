@@ -2041,6 +2041,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
         <div class="ev-modal-actions">
           <button class="ev-btn-secondary" id="ef-cancel">ยกเลิก</button>
+          ${e?`<button class="ev-btn-danger" id="ef-delete" style="flex:0 0 auto;">${iconTrash()} ลบร่าง</button>`:''}
           <button class="ev-btn-primary" id="ef-save">บันทึกร่าง</button>
           <button class="ev-btn-close" id="ef-close-round">${iconCheck()} ปิดรอบขายนี้</button>
         </div>
@@ -2126,6 +2127,8 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     function bindEvents(){
       const box = document.getElementById('ef-modal-box');
       box.querySelector('#ef-cancel').onclick = ()=>overlay.remove();
+      const deleteBtn = box.querySelector('#ef-delete');
+      if(deleteBtn) deleteBtn.onclick = ()=>confirmDeleteEvent(e, overlay);
       box.querySelector('#ef-bowls').oninput = ()=>{
         draft.bowlsSold = box.querySelector('#ef-bowls').value;
         refreshUsageList(box);

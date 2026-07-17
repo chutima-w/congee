@@ -608,6 +608,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   const STORE_KEY = 'fixed_assets_list';
   const CATS = ['โต๊ะ','หม้อ/ภาชนะ','ชั้นวาง','อุปกรณ์ครัว','อุปกรณ์ไฟฟ้า','อื่นๆ'];
   const STATUSES = ['ใช้งานอยู่','ไม่ใช้งาน'];
+  const OWNER_OPTIONS = ['Chu','Fah','อื่นๆ (ระบุเอง)'];
 
   let assets = [];
   let filterStatus = 'all';
@@ -815,7 +816,18 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         </div>
         <div class="faw-field">
           <label>เจ้าของ / ผู้รับผิดชอบ</label>
-          <input id="f-owner" value="${a?escapeHtml(a.owner||''):''}" placeholder="เช่น แม่, ป้าแดง, ร้าน">
+          <select id="f-owner-select">
+            ${OWNER_OPTIONS.map(o=>{
+              const isOther = o===OWNER_OPTIONS[OWNER_OPTIONS.length-1];
+              const isCustom = a && a.owner && !OWNER_OPTIONS.slice(0,-1).includes(a.owner);
+              const selected = a ? (isCustom ? isOther : a.owner===o) : false;
+              return `<option value="${escapeHtml(o)}" ${selected?'selected':''}>${escapeHtml(o)}</option>`;
+            }).join('')}
+          </select>
+        </div>
+        <div class="faw-field" id="f-owner-custom-wrap" style="${(a && a.owner && !OWNER_OPTIONS.slice(0,-1).includes(a.owner))?'':'display:none;'}">
+          <label>ระบุชื่อเจ้าของเอง</label>
+          <input id="f-owner-custom" value="${(a && a.owner && !OWNER_OPTIONS.slice(0,-1).includes(a.owner))?escapeHtml(a.owner):''}" placeholder="พิมพ์ชื่อ">
         </div>
         <div class="faw-row2">
           <div class="faw-field">
@@ -854,14 +866,23 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
     overlay.querySelector('#f-cancel').onclick = ()=>overlay.remove();
+    const ownerSelect = overlay.querySelector('#f-owner-select');
+    ownerSelect.onchange = ()=>{
+      const wrap = overlay.querySelector('#f-owner-custom-wrap');
+      wrap.style.display = ownerSelect.value===OWNER_OPTIONS[OWNER_OPTIONS.length-1] ? '' : 'none';
+    };
     overlay.querySelector('#f-save').onclick = async ()=>{
       const name = overlay.querySelector('#f-name').value.trim();
       if(!name){ toast('กรุณาระบุชื่อทรัพย์สิน'); return; }
+      let owner = overlay.querySelector('#f-owner-select').value;
+      if(owner===OWNER_OPTIONS[OWNER_OPTIONS.length-1]){
+        owner = overlay.querySelector('#f-owner-custom').value.trim();
+      }
       const payload = {
         id: a?a.id:uid(),
         faId: a?a.faId:nextFaId(),
         name,
-        owner: overlay.querySelector('#f-owner').value.trim(),
+        owner,
         category: overlay.querySelector('#f-category').value,
         status: overlay.querySelector('#f-status').value,
         purchaseDate: overlay.querySelector('#f-date').value,

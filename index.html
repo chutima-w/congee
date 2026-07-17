@@ -514,20 +514,95 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .ev-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
 
 
-/* ===== App shell (shared nav) ===== */
-.app-shell{max-width:820px;margin:0 auto;padding:20px 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
-.app-eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  color:#8A7A67;margin-bottom:10px;
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+/* ===== Bold sticker theme override ===== */
+:root{
+  --bg:#F3EEDD;
+  --surface:#FFFFFF;
+  --ink:#17130F;
+  --ink-soft:#5B564D;
+  --green:#1F6F4C;
+  --green-soft:#CFE7D8;
+  --red:#D33F3F;
+  --red-soft:#F7D9D2;
+  --gold:#F0A400;
+  --gold-soft:#FCE7B8;
+  --border:#17130F;
+  --radius:18px;
+  --header-red:#E14B2E;
 }
-.app-nav{display:flex;gap:6px;border-bottom:1px solid #E7DCC9;padding-bottom:0;flex-wrap:wrap;}
+
+.faw-ticket,.faw-receipt,.sw-receipt,.ev-hero,
+.faw-modal,.sw-modal,.ev-modal{
+  border-width:2px !important;
+  box-shadow:5px 5px 0 var(--ink);
+}
+.faw-add,.sw-add,.ev-add,
+.faw-btn-primary,.sw-btn-primary,.ev-btn-primary,.ev-btn-close{
+  border:2px solid var(--ink) !important;
+  box-shadow:3px 3px 0 var(--ink);
+  font-weight:700 !important;
+}
+.faw-add:hover,.sw-add:hover,.ev-add:hover,
+.faw-btn-primary:hover,.sw-btn-primary:hover,.ev-btn-primary:hover{
+  transform:translate(1px,1px);
+  box-shadow:2px 2px 0 var(--ink);
+}
+.faw-chip,.sw-chip,.ev-chip,
+.faw-btn-secondary,.sw-btn-secondary,.ev-btn-secondary,
+.faw-btn-danger,.sw-btn-danger,.ev-btn-danger{
+  border-width:1.5px !important;
+  border-color:var(--ink) !important;
+  font-weight:600;
+}
+.faw-chip.active,.sw-chip.active,.ev-chip.active{
+  box-shadow:2px 2px 0 var(--ink);
+}
+.faw-tag,.sw-tag,.ev-tag,.faw-faid{
+  border:1.5px solid var(--ink);
+  font-weight:700;
+}
+.faw-row,.sw-row,.ev-row{
+  border-width:1.5px !important;
+  border-left-width:5px !important;
+}
+.faw-title,.sw-title,.ev-title{
+  font-family:'Archivo Black','IBM Plex Sans Thai',sans-serif !important;
+  letter-spacing:-0.01em;
+}
+
+/* ===== App shell — bold red grid header ===== */
+.app-shell{max-width:820px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
+.app-header{
+  background-color:var(--header-red);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(0,0,0,.55) 31px, rgba(0,0,0,.55) 33px),
+    repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(0,0,0,.55) 31px, rgba(0,0,0,.55) 33px);
+  margin:0 -16px;padding:20px 20px 30px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+}
+.app-brand{display:flex;align-items:center;gap:10px;}
+.app-logo{width:32px;height:32px;flex:0 0 auto;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5));}
+.app-wordmark{
+  font-family:'Archivo Black','IBM Plex Sans Thai',sans-serif;
+  font-size:19px;letter-spacing:-0.01em;color:#FFF6E9;
+  text-shadow:2px 2px 0 rgba(0,0,0,.35);
+}
+.app-nav{display:flex;gap:8px;flex-wrap:wrap;}
 .app-navbtn{
-  background:none;border:none;padding:10px 18px;font-size:14px;font-weight:600;
-  color:#8A7A67;cursor:pointer;font-family:inherit;position:relative;top:1px;
-  border-bottom:2.5px solid transparent;display:flex;align-items:center;gap:7px;
+  background:#FFF6E9;border:2px solid var(--ink);border-radius:999px;
+  padding:8px 16px;font-size:13px;font-weight:700;color:var(--ink-soft);
+  cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:7px;
+  box-shadow:2px 2px 0 var(--ink);
 }
-.app-navbtn.active{color:#3A2A1E;border-bottom-color:#3F7A52;}
-.app-navbtn:hover{color:#3A2A1E;}
+.app-navbtn.active{background:var(--gold);color:var(--ink);box-shadow:3px 3px 0 var(--ink);}
+.app-navbtn:hover{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+.app-navdot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+.app-navdot.dot-green{background:var(--green);}
+.app-navdot.dot-gold{background:var(--gold);}
+.app-navdot.dot-red{background:var(--red);}
+.app-wave{width:100%;height:20px;display:block;margin:0 -16px 20px;}
 .app-module{display:none;}
 .app-module.active{display:block;}
 
@@ -535,13 +610,25 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
 
 <div class="app-shell">
-  <div class="app-eyebrow">Back Office of Mom's Congee</div>
-  <div class="app-nav">
-    <button class="app-navbtn active" data-module="assets">🗄️ Fixed Assets</button>
-    <button class="app-navbtn" data-module="supplies">📦 Supplies</button>
-    <button class="app-navbtn" data-module="events">🍚 Events</button>
-  </div>
+  <header class="app-header">
+    <div class="app-brand">
+      <svg class="app-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 22h36c0 10-8 18-18 18S6 32 6 22Z" fill="#FFF6E9" stroke="#17130F" stroke-width="2"/>
+        <path d="M14 22c0-2 2-3 2-5s-2-3-2-5M22 22c0-2 2-3 2-5s-2-3-2-5M30 22c0-2 2-3 2-5s-2-3-2-5" stroke="#17130F" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span class="app-wordmark">MOM'S CONGEE</span>
+    </div>
+    <nav class="app-nav">
+      <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
+      <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
+      <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
+    </nav>
+  </header>
 </div>
+<svg class="app-wave" viewBox="0 0 400 24" preserveAspectRatio="none">
+  <path d="M0,0 Q10,24 20,0 T40,0 T60,0 T80,0 T100,0 T120,0 T140,0 T160,0 T180,0 T200,0 T220,0 T240,0 T260,0 T280,0 T300,0 T320,0 T340,0 T360,0 T380,0 T400,0 L400,24 L0,24 Z" fill="var(--bg)" style="background:var(--header-red);"></path>
+</svg>
+<div class="app-shell">
 <div id="module-assets" class="app-module active">
 <div class="faw-root" id="faw-root">
   <div class="faw-loading">กำลังโหลดข้อมูล...</div>
@@ -555,6 +642,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 <div id="module-events" class="app-module">
 <div class="ev-root" id="ev-root">
   <div class="ev-loading">กำลังโหลดข้อมูล...</div>
+</div>
 </div>
 </div>
 
@@ -629,6 +717,22 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     }catch(e){return d;}
   }
   function uid(){return 'a'+Date.now()+Math.random().toString(36).slice(2,7);}
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return; // already in progress, ignore extra clicks
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+    btn.style.cursor = 'wait';
+    btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.innerHTML = original;
+      }
+    });
+  }
   function nextFaId(){
     let max = 0;
     assets.forEach(a=>{
@@ -871,34 +975,36 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const wrap = overlay.querySelector('#f-owner-custom-wrap');
       wrap.style.display = ownerSelect.value===OWNER_OPTIONS[OWNER_OPTIONS.length-1] ? '' : 'none';
     };
-    overlay.querySelector('#f-save').onclick = async ()=>{
-      const name = overlay.querySelector('#f-name').value.trim();
-      if(!name){ toast('กรุณาระบุชื่อทรัพย์สิน'); return; }
-      let owner = overlay.querySelector('#f-owner-select').value;
-      if(owner===OWNER_OPTIONS[OWNER_OPTIONS.length-1]){
-        owner = overlay.querySelector('#f-owner-custom').value.trim();
-      }
-      const payload = {
-        id: a?a.id:uid(),
-        faId: a?a.faId:nextFaId(),
-        name,
-        owner,
-        category: overlay.querySelector('#f-category').value,
-        status: overlay.querySelector('#f-status').value,
-        purchaseDate: overlay.querySelector('#f-date').value,
-        price: parseFloat(overlay.querySelector('#f-price').value)||0,
-        note: overlay.querySelector('#f-note').value.trim(),
-      };
-      if(a){
-        const idx = assets.findIndex(x=>x.id===a.id);
-        assets[idx] = payload;
-      }else{
-        assets.push(payload);
-      }
-      await saveAssets();
-      overlay.remove();
-      render();
-      toast(a?'แก้ไขรายการแล้ว':'เพิ่มรายการแล้ว');
+    overlay.querySelector('#f-save').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        const name = overlay.querySelector('#f-name').value.trim();
+        if(!name){ toast('กรุณาระบุชื่อทรัพย์สิน'); throw new Error('validation'); }
+        let owner = overlay.querySelector('#f-owner-select').value;
+        if(owner===OWNER_OPTIONS[OWNER_OPTIONS.length-1]){
+          owner = overlay.querySelector('#f-owner-custom').value.trim();
+        }
+        const payload = {
+          id: a?a.id:uid(),
+          faId: a?a.faId:nextFaId(),
+          name,
+          owner,
+          category: overlay.querySelector('#f-category').value,
+          status: overlay.querySelector('#f-status').value,
+          purchaseDate: overlay.querySelector('#f-date').value,
+          price: parseFloat(overlay.querySelector('#f-price').value)||0,
+          note: overlay.querySelector('#f-note').value.trim(),
+        };
+        if(a){
+          const idx = assets.findIndex(x=>x.id===a.id);
+          assets[idx] = payload;
+        }else{
+          assets.push(payload);
+        }
+        await saveAssets();
+        overlay.remove();
+        render();
+        toast(a?'แก้ไขรายการแล้ว':'เพิ่มรายการแล้ว');
+      });
     };
     overlay.querySelector('#f-name').focus();
   }
@@ -923,12 +1029,14 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
     overlay.querySelector('#del-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#del-confirm').onclick = async ()=>{
-      assets = assets.filter(x=>x.id!==id);
-      await saveAssets();
-      overlay.remove();
-      render();
-      toast('ลบรายการแล้ว');
+    overlay.querySelector('#del-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        assets = assets.filter(x=>x.id!==id);
+        await saveAssets();
+        overlay.remove();
+        render();
+        toast('ลบรายการแล้ว');
+      });
     };
   }
 
@@ -967,6 +1075,22 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     catch(e){ return d; }
   }
   function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+    btn.style.cursor = 'wait';
+    btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.innerHTML = original;
+      }
+    });
+  }
   function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
 
   function iconPencil(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>'; }
@@ -1201,29 +1325,31 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       box.querySelector('#mf-usage-pb').onclick = ()=>{ captureDraft(); draft.usageType='per_bowl'; rerender(); };
       box.querySelector('#mf-usage-gen').onclick = ()=>{ captureDraft(); draft.usageType='general'; rerender(); };
       box.querySelector('#mf-category-select').onchange = ()=>{ captureDraft(); rerender(); };
-      box.querySelector('#mf-save').onclick = async ()=>{
-        captureDraft();
-        const name = draft.name.trim();
-        if(!name){ toast('กรุณาระบุชื่อรายการ'); return; }
-        let category = draft.categorySelect;
-        if(category===CATEGORY_OPTIONS[CATEGORY_OPTIONS.length-1]){
-          category = (draft.categoryCustom||'').trim();
-        }
-        const payload = {
-          id: m?m.id:uid('m'),
-          name,
-          unit: draft.unit,
-          category,
-          usageType: draft.usageType,
-          qtyPerBowl: draft.usageType==='per_bowl' ? (parseFloat(draft.qtyPerBowl)||1) : 0,
-          minStock: parseFloat(draft.minStock)||0,
-        };
-        if(m){ master[master.findIndex(x=>x.id===m.id)] = payload; }
-        else{ master.push(payload); }
-        await saveMaster();
-        overlay.remove();
-        render();
-        toast(m?'แก้ไขรายการแล้ว':'เพิ่มรายการแล้ว');
+      box.querySelector('#mf-save').onclick = (ev)=>{
+        withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+          captureDraft();
+          const name = draft.name.trim();
+          if(!name){ toast('กรุณาระบุชื่อรายการ'); throw new Error('validation'); }
+          let category = draft.categorySelect;
+          if(category===CATEGORY_OPTIONS[CATEGORY_OPTIONS.length-1]){
+            category = (draft.categoryCustom||'').trim();
+          }
+          const payload = {
+            id: m?m.id:uid('m'),
+            name,
+            unit: draft.unit,
+            category,
+            usageType: draft.usageType,
+            qtyPerBowl: draft.usageType==='per_bowl' ? (parseFloat(draft.qtyPerBowl)||1) : 0,
+            minStock: parseFloat(draft.minStock)||0,
+          };
+          if(m){ master[master.findIndex(x=>x.id===m.id)] = payload; }
+          else{ master.push(payload); }
+          await saveMaster();
+          overlay.remove();
+          render();
+          toast(m?'แก้ไขรายการแล้ว':'เพิ่มรายการแล้ว');
+        });
       };
     }
     bindEvents();
@@ -1252,12 +1378,14 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
     overlay.querySelector('#mdel-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#mdel-confirm').onclick = async ()=>{
-      master = master.filter(x=>x.id!==id);
-      await saveMaster();
-      overlay.remove();
-      render();
-      toast('ลบรายการแล้ว');
+    overlay.querySelector('#mdel-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        master = master.filter(x=>x.id!==id);
+        await saveMaster();
+        overlay.remove();
+        render();
+        toast('ลบรายการแล้ว');
+      });
     };
   }
 
@@ -1365,7 +1493,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       itemId: t ? t.itemId : (master[0]?master[0].id:''),
       date: t ? t.date : new Date().toISOString().slice(0,10),
       quantity: t ? t.quantity : '',
-      unitCost: t && t.unitCost ? t.unitCost : '',
+      totalPrice: t && t.unitCost ? (Number(t.unitCost)*Number(t.quantity||0)) : '',
       note: t ? (t.note||'') : '',
     };
     const overlay = document.createElement('div');
@@ -1377,7 +1505,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const itemSel = box.querySelector('#tf-item'); if(itemSel) draft.itemId = itemSel.value;
       const dateEl = box.querySelector('#tf-date'); if(dateEl) draft.date = dateEl.value;
       const qtyEl = box.querySelector('#tf-qty'); if(qtyEl) draft.quantity = qtyEl.value;
-      const ucEl = box.querySelector('#tf-unitcost'); if(ucEl) draft.unitCost = ucEl.value;
+      const tpEl = box.querySelector('#tf-totalprice'); if(tpEl) draft.totalPrice = tpEl.value;
       const noteEl = box.querySelector('#tf-note'); if(noteEl) draft.note = noteEl.value;
     }
 
@@ -1412,8 +1540,11 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           </div>
         </div>
         <div class="sw-field" id="tf-unitcost-wrap" style="${draft.type==='out'?'display:none;':''}">
-          <label>ราคาต่อหน่วย (บาท)</label>
-          <input id="tf-unitcost" type="number" step="0.01" min="0" value="${draft.unitCost}" placeholder="0.00">
+          <label>ราคารวมที่จ่าย (บาท)</label>
+          <input id="tf-totalprice" type="number" step="0.01" min="0" value="${draft.totalPrice}" placeholder="0.00">
+          <div class="sw-hint" id="tf-computed-unit" style="margin-top:6px;">
+            ${(Number(draft.quantity)>0 && Number(draft.totalPrice)>0) ? `≈ ฿${fmtMoney(Number(draft.totalPrice)/Number(draft.quantity))} ต่อหน่วย` : 'กรอกจำนวนและราคารวม เพื่อคำนวณต้นทุนต่อหน่วยให้อัตโนมัติ'}
+          </div>
         </div>
         ${stockInfo?`<div class="sw-hint" id="tf-stock-hint">คงเหลือปัจจุบัน: ${fmtNum(stockInfo.qty)} ${escapeHtml(selectedItem.unit)} · ต้นทุนเฉลี่ย ฿${fmtMoney(stockInfo.avgCost)}/${escapeHtml(selectedItem.unit)}</div>`:''}
         <div class="sw-field">
@@ -1447,8 +1578,21 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       if(outBtn) outBtn.onclick = ()=>{ captureDraft(); draft.type='out'; rerender(); };
       const itemSel = box.querySelector('#tf-item');
       if(itemSel) itemSel.onchange = ()=>{ captureDraft(); rerender(); };
+      function updateComputedHint(){
+        const qtyEl = box.querySelector('#tf-qty');
+        const tpEl = box.querySelector('#tf-totalprice');
+        const hint = box.querySelector('#tf-computed-unit');
+        if(!qtyEl || !tpEl || !hint) return;
+        const qty = parseFloat(qtyEl.value)||0;
+        const tp = parseFloat(tpEl.value)||0;
+        hint.textContent = (qty>0 && tp>0) ? `≈ ฿${fmtMoney(tp/qty)} ต่อหน่วย` : 'กรอกจำนวนและราคารวม เพื่อคำนวณต้นทุนต่อหน่วยให้อัตโนมัติ';
+      }
+      const qtyInput = box.querySelector('#tf-qty');
+      if(qtyInput) qtyInput.oninput = updateComputedHint;
+      const totalPriceInput = box.querySelector('#tf-totalprice');
+      if(totalPriceInput) totalPriceInput.oninput = updateComputedHint;
       const saveBtn = box.querySelector('#tf-save');
-      if(saveBtn) saveBtn.onclick = async ()=>{
+      if(saveBtn) saveBtn.onclick = (ev)=>{
         captureDraft();
         const itemId = draft.itemId;
         const date = draft.date;
@@ -1466,21 +1610,23 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           }
         }
 
-        const payload = {
-          id: t?t.id:uid('t'),
-          type: draft.type,
-          itemId,
-          date,
-          quantity: qty,
-          unitCost: draft.type==='in' ? (parseFloat(draft.unitCost)||0) : 0,
-          note: box.querySelector('#tf-note').value.trim(),
-        };
-        if(t){ transactions[transactions.findIndex(x=>x.id===t.id)] = payload; }
-        else{ transactions.push(payload); }
-        await saveTx();
-        overlay.remove();
-        render();
-        toast(t?'แก้ไขรายการแล้ว':'บันทึกรายการแล้ว');
+        withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+          const payload = {
+            id: t?t.id:uid('t'),
+            type: draft.type,
+            itemId,
+            date,
+            quantity: qty,
+            unitCost: draft.type==='in' ? (qty>0 ? (parseFloat(draft.totalPrice)||0)/qty : 0) : 0,
+            note: box.querySelector('#tf-note').value.trim(),
+          };
+          if(t){ transactions[transactions.findIndex(x=>x.id===t.id)] = payload; }
+          else{ transactions.push(payload); }
+          await saveTx();
+          overlay.remove();
+          render();
+          toast(t?'แก้ไขรายการแล้ว':'บันทึกรายการแล้ว');
+        });
       };
     }
     bindEvents();
@@ -1508,12 +1654,14 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
     overlay.querySelector('#tdel-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#tdel-confirm').onclick = async ()=>{
-      transactions = transactions.filter(x=>x.id!==id);
-      await saveTx();
-      overlay.remove();
-      render();
-      toast('ลบรายการแล้ว');
+    overlay.querySelector('#tdel-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        transactions = transactions.filter(x=>x.id!==id);
+        await saveTx();
+        overlay.remove();
+        render();
+        toast('ลบรายการแล้ว');
+      });
     };
   }
 
@@ -1543,6 +1691,22 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   function fmtDate(d){ if(!d) return '-'; try{ return new Date(d).toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return d; } }
   function defaultEventName(date){ return 'รอบขาย '+fmtDate(date); }
   function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+    btn.style.cursor = 'wait';
+    btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.innerHTML = original;
+      }
+    });
+  }
   function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
 
   function iconPencil(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>'; }
@@ -1702,12 +1866,14 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     box.querySelectorAll('[data-pname]').forEach(inp=> inp.oninput = ()=>{ draft[inp.dataset.pname].name = inp.value; });
     box.querySelectorAll('[data-pshare]').forEach(inp=> inp.oninput = ()=>{ draft[inp.dataset.pshare].share = parseFloat(inp.value)||0; });
     box.querySelector('#pf-cancel').onclick = ()=>overlay.remove();
-    box.querySelector('#pf-save').onclick = async ()=>{
-      partners = draft;
-      await savePartners();
-      overlay.remove();
-      render();
-      toast('บันทึกการตั้งค่าหุ้นส่วนแล้ว');
+    box.querySelector('#pf-save').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        partners = draft;
+        await savePartners();
+        overlay.remove();
+        render();
+        toast('บันทึกการตั้งค่าหุ้นส่วนแล้ว');
+      });
     };
   }
 
@@ -1998,28 +2164,30 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         rerender();
       });
 
-      box.querySelector('#ef-save').onclick = async ()=>{
-        captureDraft(box);
-        if(!draft.date){ toast('กรุณาระบุวันที่'); return; }
-        const finalName = draft.name.trim() || defaultEventName(draft.date);
-        const payload = {
-          id: e?e.id:uid('ev'),
-          status:'open',
-          name: finalName,
-          date: draft.date,
-          note: draft.note.trim(),
-          bowlsSold: parseFloat(draft.bowlsSold)||0,
-          cashRevenue: parseFloat(draft.cashRevenue)||0,
-          transferRevenue: parseFloat(draft.transferRevenue)||0,
-          rawIngredients: draft.rawIngredients,
-          usage: draft.usage,
-          otherCosts: draft.otherCosts,
-        };
-        if(e){ events[events.findIndex(x=>x.id===e.id)] = payload; } else{ events.push(payload); }
-        await saveEvents();
-        overlay.remove();
-        render();
-        toast('บันทึกร่างแล้ว');
+      box.querySelector('#ef-save').onclick = (ev2)=>{
+        withLoading(ev2.currentTarget, 'กำลังบันทึก...', async ()=>{
+          captureDraft(box);
+          if(!draft.date){ toast('กรุณาระบุวันที่'); throw new Error('validation'); }
+          const finalName = draft.name.trim() || defaultEventName(draft.date);
+          const payload = {
+            id: e?e.id:uid('ev'),
+            status:'open',
+            name: finalName,
+            date: draft.date,
+            note: draft.note.trim(),
+            bowlsSold: parseFloat(draft.bowlsSold)||0,
+            cashRevenue: parseFloat(draft.cashRevenue)||0,
+            transferRevenue: parseFloat(draft.transferRevenue)||0,
+            rawIngredients: draft.rawIngredients,
+            usage: draft.usage,
+            otherCosts: draft.otherCosts,
+          };
+          if(e){ events[events.findIndex(x=>x.id===e.id)] = payload; } else{ events.push(payload); }
+          await saveEvents();
+          overlay.remove();
+          render();
+          toast('บันทึกร่างแล้ว');
+        });
       };
 
       box.querySelector('#ef-close-round').onclick = ()=>{
@@ -2071,46 +2239,48 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
     overlay.querySelector('#cc-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#cc-confirm').onclick = async ()=>{
-      const state = computeLedgerState();
-      const activeUsage = draft.usage.filter(u=>!u.removed && Number(u.qty||0)>0);
-      const eventId = existingEvent?existingEvent.id:uid('ev');
-      const suppliesCost = activeUsage.reduce((s,u)=> s+Number(u.qty)*avgCostFor(u.itemId,state), 0);
-      const ingredientsCost = draft.rawIngredients.reduce((s,i)=>s+Number(i.price||0),0);
-      const otherCost = draft.otherCosts.reduce((s,c)=>s+Number(c.amount||0),0);
-      const totalCost = suppliesCost+ingredientsCost+otherCost;
-      const cash = parseFloat(draft.cashRevenue)||0;
-      const transfer = parseFloat(draft.transferRevenue)||0;
-      const revenue = cash+transfer;
-      const profit = revenue-totalCost;
-      const bowls = parseFloat(draft.bowlsSold)||0;
+    overlay.querySelector('#cc-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังปิดรอบ...', async ()=>{
+        const state = computeLedgerState();
+        const activeUsage = draft.usage.filter(u=>!u.removed && Number(u.qty||0)>0);
+        const eventId = existingEvent?existingEvent.id:uid('ev');
+        const suppliesCost = activeUsage.reduce((s,u)=> s+Number(u.qty)*avgCostFor(u.itemId,state), 0);
+        const ingredientsCost = draft.rawIngredients.reduce((s,i)=>s+Number(i.price||0),0);
+        const otherCost = draft.otherCosts.reduce((s,c)=>s+Number(c.amount||0),0);
+        const totalCost = suppliesCost+ingredientsCost+otherCost;
+        const cash = parseFloat(draft.cashRevenue)||0;
+        const transfer = parseFloat(draft.transferRevenue)||0;
+        const revenue = cash+transfer;
+        const profit = revenue-totalCost;
+        const bowls = parseFloat(draft.bowlsSold)||0;
 
-      activeUsage.forEach(u=>{
-        transactions.push({
-          id: uid('t'), type:'out', itemId:u.itemId, date:draft.date,
-          quantity:Number(u.qty), unitCost:0,
-          note:`ตัดจากรอบขาย: ${draft.name.trim()}`, eventId,
+        activeUsage.forEach(u=>{
+          transactions.push({
+            id: uid('t'), type:'out', itemId:u.itemId, date:draft.date,
+            quantity:Number(u.qty), unitCost:0,
+            note:`ตัดจากรอบขาย: ${draft.name.trim()}`, eventId,
+          });
         });
+
+        const payload = {
+          id: eventId, status:'closed', closedAt: new Date().toISOString(),
+          name: draft.name.trim(), date: draft.date, note: draft.note.trim(),
+          bowlsSold: bowls, cashRevenue: cash, transferRevenue: transfer,
+          rawIngredients: draft.rawIngredients,
+          usage: draft.usage, otherCosts: draft.otherCosts,
+          finalRevenue: revenue, finalCashRevenue: cash, finalTransferRevenue: transfer,
+          finalCost: totalCost, finalProfit: profit, finalBowls: bowls,
+        };
+        if(existingEvent){ events[events.findIndex(x=>x.id===existingEvent.id)] = payload; }
+        else{ events.push(payload); }
+
+        await saveTx();
+        await saveEvents();
+        overlay.remove();
+        parentOverlay.remove();
+        render();
+        toast('ปิดรอบขายและตัดสต๊อกเรียบร้อยแล้ว');
       });
-
-      const payload = {
-        id: eventId, status:'closed', closedAt: new Date().toISOString(),
-        name: draft.name.trim(), date: draft.date, note: draft.note.trim(),
-        bowlsSold: bowls, cashRevenue: cash, transferRevenue: transfer,
-        rawIngredients: draft.rawIngredients,
-        usage: draft.usage, otherCosts: draft.otherCosts,
-        finalRevenue: revenue, finalCashRevenue: cash, finalTransferRevenue: transfer,
-        finalCost: totalCost, finalProfit: profit, finalBowls: bowls,
-      };
-      if(existingEvent){ events[events.findIndex(x=>x.id===existingEvent.id)] = payload; }
-      else{ events.push(payload); }
-
-      await saveTx();
-      await saveEvents();
-      overlay.remove();
-      parentOverlay.remove();
-      render();
-      toast('ปิดรอบขายและตัดสต๊อกเรียบร้อยแล้ว');
     };
   }
 
@@ -2171,16 +2341,18 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(ev)=>{ if(ev.target===overlay) overlay.remove(); });
     overlay.querySelector('#rc-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#rc-confirm').onclick = async ()=>{
-      transactions = transactions.filter(t=>t.eventId!==e.id);
-      const idx = events.findIndex(x=>x.id===e.id);
-      events[idx] = Object.assign({}, e, {status:'open', closedAt:null, finalRevenue:undefined, finalCashRevenue:undefined, finalTransferRevenue:undefined, finalCost:undefined, finalProfit:undefined, finalBowls:undefined});
-      await saveTx();
-      await saveEvents();
-      overlay.remove();
-      parentOverlay.remove();
-      render();
-      toast('เปิดรอบใหม่แล้ว แก้ไขได้ตามต้องการ');
+    overlay.querySelector('#rc-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังเปิดรอบ...', async ()=>{
+        transactions = transactions.filter(t=>t.eventId!==e.id);
+        const idx = events.findIndex(x=>x.id===e.id);
+        events[idx] = Object.assign({}, e, {status:'open', closedAt:null, finalRevenue:undefined, finalCashRevenue:undefined, finalTransferRevenue:undefined, finalCost:undefined, finalProfit:undefined, finalBowls:undefined});
+        await saveTx();
+        await saveEvents();
+        overlay.remove();
+        parentOverlay.remove();
+        render();
+        toast('เปิดรอบใหม่แล้ว แก้ไขได้ตามต้องการ');
+      });
     };
   }
 
@@ -2204,15 +2376,17 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.body.appendChild(overlay);
     overlay.addEventListener('click',(ev)=>{ if(ev.target===overlay) overlay.remove(); });
     overlay.querySelector('#ed-cancel').onclick = ()=>overlay.remove();
-    overlay.querySelector('#ed-confirm').onclick = async ()=>{
-      transactions = transactions.filter(t=>t.eventId!==e.id);
-      events = events.filter(x=>x.id!==e.id);
-      await saveTx();
-      await saveEvents();
-      overlay.remove();
-      parentOverlay.remove();
-      render();
-      toast('ลบรอบขายแล้ว');
+    overlay.querySelector('#ed-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        transactions = transactions.filter(t=>t.eventId!==e.id);
+        events = events.filter(x=>x.id!==e.id);
+        await saveTx();
+        await saveEvents();
+        overlay.remove();
+        parentOverlay.remove();
+        render();
+        toast('ลบรอบขายแล้ว');
+      });
     };
   }
 

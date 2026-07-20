@@ -522,6 +522,190 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .ev-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
 
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
+  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
+  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.od-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+
+.od-header{margin-bottom:16px;}
+.od-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;-webkit-text-stroke:0.6px var(--ink);}
+.od-sub{font-size:13px;color:var(--ink-soft);}
+
+.od-add{
+  width:100%;background:var(--green);color:#fff;border:2px solid var(--ink);
+  padding:16px;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;
+  font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:3px 3px 0 var(--ink);margin-bottom:20px;
+}
+.od-add:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+.od-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.od-chip{font-size:12.5px;padding:6px 13px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink-soft);cursor:pointer;font-family:inherit;font-weight:600;}
+.od-chip.active{background:var(--ink);color:var(--bg);box-shadow:2px 2px 0 var(--ink);}
+
+.od-list{display:flex;flex-direction:column;gap:10px;}
+.od-row{
+  background:var(--surface);border:2px solid var(--ink);border-radius:12px;
+  padding:12px 14px;display:flex;align-items:center;gap:14px;box-shadow:3px 3px 0 var(--ink);
+}
+.od-row.ready{border-color:var(--green);}
+.od-qnum{
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:24px;
+  background:var(--gold-soft);border:2px solid var(--ink);border-radius:10px;
+  padding:4px 12px;flex:0 0 auto;min-width:54px;text-align:center;
+}
+.od-row.ready .od-qnum{background:var(--green-soft);}
+.od-row-main{flex:1;min-width:0;}
+.od-row-items{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.od-row-note{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+.od-row-time{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+.od-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;border:1.5px solid var(--ink);flex:0 0 auto;}
+.od-tag.pending{background:var(--gold-soft);color:var(--ink);}
+.od-tag.ready{background:var(--green-soft);color:var(--green);}
+.od-serve-btn{
+  flex:0 0 auto;background:var(--ink);color:var(--bg);border:none;border-radius:8px;
+  padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.od-empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
+
+/* Modal */
+.od-overlay{position:fixed;inset:0;background:rgba(23,19,15,.45);display:flex;align-items:flex-end;justify-content:center;z-index:50;}
+@media (min-width:640px){.od-overlay{align-items:center;}}
+.od-modal{background:var(--bg);width:100%;max-width:480px;border-radius:18px 18px 0 0;padding:22px 20px 26px;max-height:90vh;overflow-y:auto;border:2px solid var(--ink);border-bottom:none;}
+@media (min-width:640px){.od-modal{border-radius:18px;border-bottom:2px solid var(--ink);}}
+.od-modal h2{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:20px;margin:0 0 16px;}
+.od-field{margin-bottom:13px;}
+.od-field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
+.od-field input,.od-field textarea{width:100%;padding:9px 12px;border:1.5px solid var(--ink);border-radius:8px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.od-field input:focus,.od-field textarea:focus{outline:2px solid var(--gold);outline-offset:1px;}
+.od-item-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.od-item-row input.iname{flex:1;}
+.od-item-row input.iqty{width:60px;text-align:center;}
+.od-item-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;}
+.od-item-del:hover{color:var(--red);}
+.od-menu-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.od-menu-btn{
+  width:100%;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:10px;
+  padding:13px 16px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit;
+  box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;
+}
+.od-menu-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+.od-menu-btn .plus{color:var(--green);font-size:18px;}
+.od-cart{margin-bottom:14px;}
+.od-cart-empty{font-size:12.5px;color:var(--ink-soft);padding:10px 0;text-align:center;}
+.od-cart-line{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--gold-soft);
+  border:1.5px solid var(--ink);border-radius:8px;margin-bottom:6px;font-size:13.5px;font-weight:600;
+}
+.od-cart-name{flex:1;}
+.od-cart-qty-ctrl{display:flex;align-items:center;gap:8px;}
+.od-cart-qty-btn{
+  width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);background:var(--surface);
+  cursor:pointer;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;
+  font-family:inherit;line-height:1;padding:0;
+}
+.od-cart-qty-num{font-family:'IBM Plex Mono',monospace;min-width:18px;text-align:center;}
+.od-cart-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:2px;}
+.od-cart-del:hover{color:var(--red);}
+.od-custom-add{display:flex;gap:8px;margin-bottom:14px;}
+.od-custom-add input{flex:1;}
+.od-custom-add button{
+  background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:0 14px;
+  font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;
+}
+.od-mini-add{font-size:12.5px;color:var(--green);background:none;border:1.5px dashed var(--green);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;margin-bottom:14px;}
+.od-modal-actions{display:flex;gap:10px;margin-top:16px;}
+.od-btn-primary{flex:1;background:var(--green);color:#fff;border:2px solid var(--ink);padding:11px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:2px 2px 0 var(--ink);}
+.od-btn-secondary{background:var(--surface);border:1.5px solid var(--ink);color:var(--ink-soft);padding:11px 16px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;}
+
+/* Big queue confirmation */
+.od-confirm-modal{background:var(--gold);border:3px solid var(--ink);border-radius:20px;padding:36px 30px;text-align:center;box-shadow:6px 6px 0 var(--ink);max-width:320px;}
+.od-confirm-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.od-confirm-num{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:72px;color:var(--ink);line-height:1;}
+.od-confirm-ok{margin-top:20px;background:var(--ink);color:var(--bg);border:none;padding:12px 30px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+
+.od-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.od-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
+  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
+  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.kt-root{padding:20px 16px 60px;max-width:960px;margin:0 auto;}
+
+.kt-header{margin-bottom:18px;}
+.kt-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;-webkit-text-stroke:0.6px var(--ink);}
+.kt-sub{font-size:13px;color:var(--ink-soft);}
+.kt-count-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 12px;
+  background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;
+  font-size:12.5px;font-weight:700;
+}
+
+/* ===== Receipt-rail concept ===== */
+.kt-rail-wrap{margin-bottom:36px;position:relative;}
+.kt-rail-label{font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:18px;}
+.kt-rail-bar{
+  height:10px;background:var(--ink);border-radius:6px;
+  box-shadow:0 2px 0 rgba(0,0,0,.15);
+  margin-bottom:0;position:relative;z-index:1;
+}
+.kt-rail-track{
+  display:flex;gap:22px;overflow-x:auto;padding:0 6px 16px;margin-top:-2px;
+  scroll-snap-type:x proximity;
+}
+.kt-ticket{
+  flex:0 0 auto;width:190px;background:var(--surface);border:2px solid var(--ink);
+  border-radius:12px;padding:16px 14px 14px;position:relative;margin-top:16px;
+  box-shadow:4px 4px 0 var(--ink);scroll-snap-align:start;
+}
+.kt-ticket::before{
+  content:'';position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  width:16px;height:16px;border-radius:50%;background:var(--bg);border:2.5px solid var(--ink);
+  z-index:2;
+}
+.kt-ticket:nth-child(odd){transform:rotate(-2deg);}
+.kt-ticket:nth-child(even){transform:rotate(2deg);}
+.kt-ticket-qnum{
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:26px;
+  text-align:center;margin-bottom:8px;
+}
+.kt-ticket-items{font-size:13px;font-weight:600;border-top:1.5px dashed var(--border);padding-top:8px;margin-bottom:6px;min-height:36px;}
+.kt-ticket-item-line{display:flex;justify-content:space-between;gap:6px;padding:1px 0;}
+.kt-ticket-note{font-size:11px;color:var(--ink-soft);margin-bottom:10px;font-style:italic;}
+.kt-ticket-time{font-size:10.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;text-align:center;margin-bottom:8px;}
+.kt-ready-btn{
+  width:100%;background:var(--green);color:#fff;border:2px solid var(--ink);border-radius:8px;
+  padding:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;
+}
+.kt-ready-btn:hover{transform:translate(1px,1px);}
+
+.kt-ready-section{display:flex;flex-direction:column;gap:8px;}
+.kt-ready-row{
+  display:flex;align-items:center;gap:12px;background:var(--green-soft);border:1.5px solid var(--green);
+  border-radius:10px;padding:9px 14px;font-size:13px;
+}
+.kt-ready-qnum{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;flex:0 0 auto;}
+.kt-ready-items{flex:1;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kt-ready-tag{font-size:10.5px;font-weight:700;color:var(--green);flex:0 0 auto;}
+
+.kt-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
+.kt-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.kt-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 @font-face{
@@ -600,7 +784,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 }
 
 /* ===== App shell — bold red grid header ===== */
-.app-shell{max-width:820px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
+.app-shell{max-width:960px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
 .app-header{
   background-color:var(--header-red);
   background-image:
@@ -610,7 +794,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   display:flex;justify-content:center;
 }
 .app-header-inner{
-  width:100%;max-width:820px;box-sizing:border-box;
+  width:100%;max-width:960px;box-sizing:border-box;
   padding:22px 20px 32px;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
 }
@@ -636,6 +820,8 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .app-navdot.dot-green{background:var(--green);}
 .app-navdot.dot-gold{background:var(--gold);}
 .app-navdot.dot-red{background:var(--red);}
+.app-navdot.dot-blue{background:#345BFF;}
+.app-navdot.dot-purple{background:#8C4FD1;}
 .app-wave{width:100%;height:20px;display:block;margin:0 0 20px;}
 .app-module{display:none;}
 .app-module.active{display:block;}
@@ -656,6 +842,8 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <span class="app-wordmark">MOM'S CONGEE</span>
     </div>
     <nav class="app-nav">
+      <button class="app-navbtn" data-module="orders"><span class="app-navdot dot-blue"></span>สั่งอาหาร</button>
+      <button class="app-navbtn" data-module="kitchen"><span class="app-navdot dot-purple"></span>ครัว</button>
       <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
       <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
       <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
@@ -666,6 +854,16 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   <path d="M0,0 Q10,24 20,0 T40,0 T60,0 T80,0 T100,0 T120,0 T140,0 T160,0 T180,0 T200,0 T220,0 T240,0 T260,0 T280,0 T300,0 T320,0 T340,0 T360,0 T380,0 T400,0 L400,24 L0,24 Z" fill="var(--bg)" style="background:var(--header-red);"></path>
 </svg>
 <div class="app-shell">
+<div id="module-orders" class="app-module">
+<div class="od-root" id="od-root">
+  <div class="od-loading">กำลังโหลดข้อมูล...</div>
+</div>
+</div>
+<div id="module-kitchen" class="app-module">
+<div class="kt-root" id="kt-root">
+  <div class="kt-loading">กำลังโหลดข้อมูล...</div>
+</div>
+</div>
 <div id="module-assets" class="app-module active">
 <div class="faw-root" id="faw-root">
   <div class="faw-loading">กำลังโหลดข้อมูล...</div>
@@ -2431,6 +2629,346 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   }
 
   loadAll();
+})();
+
+</script>
+<script>
+
+(function(){
+  const ORDERS_KEY = 'orders_list';
+  const QUEUE_KEY = 'queue_counter';
+  const POLL_MS = 8000;
+  const MENU_ITEMS = ['โจ๊กหมูสับเห็ดหอม','เพิ่มไข่','ไข่ลวก (1 ชุด 2 ฟอง)'];
+
+  let orders = [];
+  let filter = 'active'; // active | served | all
+  const root = document.getElementById('od-root');
+
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
+  function iconPlus(){ return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
+  function iconTrash(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
+
+  async function loadAll(){
+    try{ const o = await window.storage.get(ORDERS_KEY, true); orders = o && o.value ? JSON.parse(o.value) : []; }catch(e){ orders = []; }
+    render();
+  }
+  async function saveOrders(){
+    try{ const r = await window.storage.set(ORDERS_KEY, JSON.stringify(orders), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
+  }
+  async function nextQueueNumber(){
+    let counter = {date: todayStr(), n: 0};
+    try{
+      const c = await window.storage.get(QUEUE_KEY, true);
+      if(c && c.value){
+        const parsed = JSON.parse(c.value);
+        if(parsed.date === todayStr()) counter = parsed;
+      }
+    }catch(e){}
+    counter.n += 1;
+    try{ await window.storage.set(QUEUE_KEY, JSON.stringify(counter), true); }catch(e){}
+    return counter.n;
+  }
+  function toast(msg){ const t=document.createElement('div'); t.className='od-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true; btn.style.opacity='.6'; btn.style.cursor='wait'; btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; btn.innerHTML=original; }
+    });
+  }
+
+  function filteredOrders(){
+    const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
+    if(filter==='active') return todays.filter(o=>o.status!=='served').sort((a,b)=>a.queueNumber-b.queueNumber);
+    if(filter==='served') return todays.filter(o=>o.status==='served').sort((a,b)=>b.queueNumber-a.queueNumber);
+    return todays.sort((a,b)=>b.queueNumber-a.queueNumber);
+  }
+
+  function render(){
+    const list = filteredOrders();
+    root.innerHTML = `
+      <div class="od-header">
+        <h1 class="od-title">สั่งอาหาร</h1>
+        <div class="od-sub">รับออเดอร์ลูกค้า แจกเลขคิวอัตโนมัติ</div>
+      </div>
+      <button class="od-add" id="od-add-btn">${iconPlus()} รับออเดอร์ใหม่</button>
+      <div class="od-toolbar">
+        <button class="od-chip ${filter==='active'?'active':''}" data-f="active">กำลังดำเนินการ</button>
+        <button class="od-chip ${filter==='served'?'active':''}" data-f="served">เสิร์ฟแล้ววันนี้</button>
+        <button class="od-chip ${filter==='all'?'active':''}" data-f="all">ทั้งหมดวันนี้</button>
+      </div>
+      <div class="od-list">
+        ${list.length===0?`<div class="od-empty">ไม่มีออเดอร์ในหมวดนี้</div>`:list.map(orderRow).join('')}
+      </div>
+    `;
+    document.getElementById('od-add-btn').onclick = openOrderModal;
+    root.querySelectorAll('[data-f]').forEach(b=> b.onclick = ()=>{ filter=b.dataset.f; render(); });
+    root.querySelectorAll('[data-serve]').forEach(b=> b.onclick = (ev)=>{
+      withLoading(ev.currentTarget, '...', async ()=>{
+        const o = orders.find(x=>x.id===b.dataset.serve);
+        if(o) o.status='served';
+        await saveOrders();
+        render();
+        toast('ปิดรายการแล้ว');
+      });
+    });
+  }
+
+  function orderRow(o){
+    const itemsSummary = (o.items||[]).map(i=>`${escapeHtml(i.name)}${i.qty>1?' x'+i.qty:''}`).join(', ');
+    return `
+      <div class="od-row ${o.status==='ready'?'ready':''}">
+        <div class="od-qnum">#${o.queueNumber}</div>
+        <div class="od-row-main">
+          <div class="od-row-items">${itemsSummary||'(ไม่มีรายการ)'}</div>
+          ${o.note?`<div class="od-row-note">📝 ${escapeHtml(o.note)}</div>`:''}
+          <div class="od-row-time">${fmtTime(o.createdAt)}</div>
+        </div>
+        <span class="od-tag ${o.status}">${o.status==='ready'?'พร้อมเสิร์ฟ':o.status==='served'?'เสิร์ฟแล้ว':'กำลังทำ'}</span>
+        ${o.status==='ready'?`<button class="od-serve-btn" data-serve="${o.id}">เสิร์ฟแล้ว</button>`:''}
+      </div>
+    `;
+  }
+
+  function openOrderModal(){
+    let items = []; // cart: {id, name, qty}
+    let note = '';
+    let showCustom = false;
+    const overlay = document.createElement('div');
+    overlay.className='od-overlay';
+
+    function bodyHtml(){
+      return `
+        <h2>รับออเดอร์ใหม่</h2>
+        <div class="od-menu-grid">
+          ${MENU_ITEMS.map(name=>`
+            <button type="button" class="od-menu-btn" data-menu="${escapeHtml(name)}">
+              <span>${escapeHtml(name)}</span><span class="plus">+</span>
+            </button>
+          `).join('')}
+          ${!showCustom?`<button type="button" class="od-menu-btn" id="od-show-custom"><span>+ รายการอื่น (ระบุเอง)</span></button>`:''}
+        </div>
+        ${showCustom?`
+        <div class="od-custom-add">
+          <input id="od-custom-name" placeholder="ระบุชื่อรายการ">
+          <button type="button" id="od-custom-confirm">เพิ่ม</button>
+        </div>`:''}
+        <div class="od-cart" id="od-cart-list">
+          ${items.length===0?`<div class="od-cart-empty">แตะเมนูด้านบนเพื่อเพิ่มรายการ</div>`:items.map(it=>`
+            <div class="od-cart-line" data-cart-item="${it.id}">
+              <span class="od-cart-name">${escapeHtml(it.name)}</span>
+              <div class="od-cart-qty-ctrl">
+                <button type="button" class="od-cart-qty-btn" data-qtyminus="${it.id}">−</button>
+                <span class="od-cart-qty-num">${it.qty}</span>
+                <button type="button" class="od-cart-qty-btn" data-qtyplus="${it.id}">+</button>
+              </div>
+              <button type="button" class="od-cart-del" data-cartdel="${it.id}" title="ลบ">${iconTrash()}</button>
+            </div>
+          `).join('')}
+        </div>
+        <div class="od-field">
+          <label>หมายเหตุ (ไม่บังคับ)</label>
+          <textarea id="od-note" placeholder="เช่น ไม่ใส่ผัก, เผ็ดน้อย">${escapeHtml(note)}</textarea>
+        </div>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="od-cancel">ยกเลิก</button>
+          <button class="od-btn-primary" id="od-confirm">ยืนยันออเดอร์ &amp; แจกเลขคิว</button>
+        </div>
+      `;
+    }
+
+    function addItem(name){
+      const existing = items.find(i=>i.name===name);
+      if(existing) existing.qty += 1;
+      else items.push({id:uid('i'), name, qty:1});
+    }
+
+    overlay.innerHTML = `<div class="od-modal" id="od-modal-box">${bodyHtml()}</div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+
+    function captureNote(box){
+      const noteEl = box.querySelector('#od-note');
+      if(noteEl) note = noteEl.value;
+    }
+
+    function rerender(){
+      const box = document.getElementById('od-modal-box');
+      box.innerHTML = bodyHtml();
+      bindEvents();
+    }
+
+    function bindEvents(){
+      const box = document.getElementById('od-modal-box');
+      box.querySelector('#od-cancel').onclick = ()=>overlay.remove();
+      box.querySelectorAll('[data-menu]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        addItem(btn.dataset.menu);
+        rerender();
+      });
+      const showCustomBtn = box.querySelector('#od-show-custom');
+      if(showCustomBtn) showCustomBtn.onclick = ()=>{ captureNote(box); showCustom=true; rerender(); box.querySelector('#od-custom-name').focus(); };
+      const customConfirmBtn = box.querySelector('#od-custom-confirm');
+      if(customConfirmBtn) customConfirmBtn.onclick = ()=>{
+        captureNote(box);
+        const val = box.querySelector('#od-custom-name').value.trim();
+        if(val){ addItem(val); showCustom=false; }
+        rerender();
+      };
+      box.querySelectorAll('[data-qtyplus]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        const it = items.find(x=>x.id===btn.dataset.qtyplus);
+        if(it) it.qty += 1;
+        rerender();
+      });
+      box.querySelectorAll('[data-qtyminus]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        const it = items.find(x=>x.id===btn.dataset.qtyminus);
+        if(it){ it.qty -= 1; if(it.qty<=0) items = items.filter(x=>x.id!==it.id); }
+        rerender();
+      });
+      box.querySelectorAll('[data-cartdel]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        items = items.filter(x=>x.id!==btn.dataset.cartdel);
+        rerender();
+      });
+      box.querySelector('#od-confirm').onclick = (ev)=>{
+        withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+          captureNote(box);
+          if(items.length===0){ toast('กรุณาเลือกรายการอาหารอย่างน้อย 1 อย่าง'); throw new Error('validation'); }
+          const qNum = await nextQueueNumber();
+          const order = {
+            id: uid('o'), queueNumber: qNum, items: items.map(i=>({name:i.name, qty:i.qty})),
+            note: note.trim(), status:'pending', createdAt: new Date().toISOString(),
+          };
+          orders.push(order);
+          await saveOrders();
+          overlay.remove();
+          render();
+          showQueueConfirm(qNum);
+        });
+      };
+    }
+    bindEvents();
+  }
+
+  function showQueueConfirm(qNum){
+    const overlay = document.createElement('div');
+    overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-confirm-modal">
+        <div class="od-confirm-label">คิวของคุณคือ</div>
+        <div class="od-confirm-num">#${qNum}</div>
+        <button class="od-confirm-ok" id="qc-ok">ตกลง</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#qc-ok').onclick = ()=>overlay.remove();
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+  }
+
+  loadAll();
+  setInterval(loadAll, POLL_MS);
+})();
+
+</script>
+<script>
+
+(function(){
+  const ORDERS_KEY = 'orders_list';
+  const POLL_MS = 6000;
+  let orders = [];
+  const root = document.getElementById('kt-root');
+
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
+  function toast(msg){ const t=document.createElement('div'); t.className='kt-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+
+  async function loadAll(){
+    try{ const o = await window.storage.get(ORDERS_KEY, true); orders = o && o.value ? JSON.parse(o.value) : []; }catch(e){ orders = []; }
+    render();
+  }
+  async function saveOrders(){
+    try{ const r = await window.storage.set(ORDERS_KEY, JSON.stringify(orders), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
+  }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true; btn.style.opacity='.6'; btn.style.cursor='wait'; btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; btn.innerHTML=original; }
+    });
+  }
+
+  function render(){
+    const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
+    const pending = todays.filter(o=>o.status==='pending').sort((a,b)=>a.queueNumber-b.queueNumber);
+    const ready = todays.filter(o=>o.status==='ready').sort((a,b)=>a.queueNumber-b.queueNumber);
+
+    root.innerHTML = `
+      <div class="kt-header">
+        <h1 class="kt-title">ออเดอร์ในครัว</h1>
+        <div class="kt-sub">ทำตามคิว กดพร้อมเสิร์ฟเมื่อเสร็จ</div>
+        ${pending.length>0?`<div class="kt-count-badge">🔥 ${pending.length} ออเดอร์รอทำ</div>`:''}
+      </div>
+
+      <div class="kt-rail-wrap">
+        <div class="kt-rail-label">รางออเดอร์ — รอทำ (เรียงตามคิว)</div>
+        <div class="kt-rail-bar"></div>
+        ${pending.length===0?`<div class="kt-empty" style="margin-top:16px;">ไม่มีออเดอร์รอทำ 🎉</div>`:`
+        <div class="kt-rail-track">
+          ${pending.map(ticketHtml).join('')}
+        </div>`}
+      </div>
+
+      <div class="kt-rail-label">พร้อมเสิร์ฟ — รอพนักงานหน้าร้านมารับ</div>
+      <div class="kt-ready-section">
+        ${ready.length===0?`<div class="kt-empty">ยังไม่มีออเดอร์ที่พร้อมเสิร์ฟ</div>`:ready.map(readyRow).join('')}
+      </div>
+    `;
+
+    root.querySelectorAll('[data-ready]').forEach(btn=> btn.onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        const o = orders.find(x=>x.id===btn.dataset.ready);
+        if(o) o.status='ready';
+        await saveOrders();
+        render();
+        toast(`คิว #${o?o.queueNumber:''} พร้อมเสิร์ฟแล้ว`);
+      });
+    });
+  }
+
+  function ticketHtml(o){
+    const itemLines = (o.items||[]).map(i=>`<div class="kt-ticket-item-line"><span>${escapeHtml(i.name)}</span>${i.qty>1?`<span>x${i.qty}</span>`:''}</div>`).join('');
+    return `
+      <div class="kt-ticket">
+        <div class="kt-ticket-qnum">#${o.queueNumber}</div>
+        <div class="kt-ticket-items">${itemLines}</div>
+        ${o.note?`<div class="kt-ticket-note">📝 ${escapeHtml(o.note)}</div>`:''}
+        <div class="kt-ticket-time">${fmtTime(o.createdAt)}</div>
+        <button class="kt-ready-btn" data-ready="${o.id}">✓ พร้อมเสิร์ฟ</button>
+      </div>
+    `;
+  }
+
+  function readyRow(o){
+    const itemsSummary = (o.items||[]).map(i=>`${escapeHtml(i.name)}${i.qty>1?' x'+i.qty:''}`).join(', ');
+    return `
+      <div class="kt-ready-row">
+        <span class="kt-ready-qnum">#${o.queueNumber}</span>
+        <span class="kt-ready-items">${itemsSummary}</span>
+        <span class="kt-ready-tag">รอรับ</span>
+      </div>
+    `;
+  }
+
+  loadAll();
+  setInterval(loadAll, POLL_MS);
 })();
 
 </script>

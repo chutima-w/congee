@@ -620,8 +620,8 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;
 }
 .od-menu-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
-.od-menu-btn .price{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-weight:600;font-size:13px;}
-.od-menu-btn .plus{color:var(--green);font-size:18px;}
+.od-menu-btn .price{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-weight:600;font-size:13px;flex:0 0 56px;text-align:right;}
+.od-menu-btn .plus{color:var(--green);font-size:18px;flex:0 0 18px;text-align:center;}
 .od-cart{margin-bottom:14px;}
 .od-cart-empty{font-size:12.5px;color:var(--ink-soft);padding:10px 0;text-align:center;}
 .od-cart-line{
@@ -2769,6 +2769,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   let menu = [];
   let events = [];
   let activeRoundId = null;
+  let queueCounter = {date: todayStr(), n: 0};
   let filter = 'active'; // active | served | all
   const root = document.getElementById('od-root');
 
@@ -2781,10 +2782,23 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   function iconTrash(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
 
   async function loadAll(){
-    try{ const o = await window.storage.get(ORDERS_KEY, true); orders = o && o.value ? JSON.parse(o.value) : []; }catch(e){ orders = []; }
-    try{ const m = await window.storage.get(MENU_KEY, true); menu = m && m.value ? JSON.parse(m.value) : []; }catch(e){ menu = []; }
-    try{ const ev = await window.storage.get(EVENTS_KEY, true); events = ev && ev.value ? JSON.parse(ev.value) : []; }catch(e){ events = []; }
-    try{ const ar = await window.storage.get(ACTIVE_ROUND_KEY, true); activeRoundId = ar && ar.value ? ar.value : null; }catch(e){ activeRoundId = null; }
+    const [o, m, ev, ar, qc] = await Promise.allSettled([
+      window.storage.get(ORDERS_KEY, true),
+      window.storage.get(MENU_KEY, true),
+      window.storage.get(EVENTS_KEY, true),
+      window.storage.get(ACTIVE_ROUND_KEY, true),
+      window.storage.get(QUEUE_KEY, true),
+    ]);
+    orders = (o.status==='fulfilled' && o.value && o.value.value) ? JSON.parse(o.value.value) : [];
+    menu = (m.status==='fulfilled' && m.value && m.value.value) ? JSON.parse(m.value.value) : [];
+    events = (ev.status==='fulfilled' && ev.value && ev.value.value) ? JSON.parse(ev.value.value) : [];
+    activeRoundId = (ar.status==='fulfilled' && ar.value && ar.value.value) ? ar.value.value : null;
+    if(qc.status==='fulfilled' && qc.value && qc.value.value){
+      const parsed = JSON.parse(qc.value.value);
+      queueCounter = (parsed.date===todayStr()) ? parsed : {date: todayStr(), n: 0};
+    }else{
+      queueCounter = {date: todayStr(), n: 0};
+    }
     render();
   }
   async function saveOrders(){
@@ -2793,18 +2807,13 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   async function saveEvents(){
     try{ await window.storage.set(EVENTS_KEY, JSON.stringify(events), true); }catch(e){}
   }
-  async function nextQueueNumber(){
-    let counter = {date: todayStr(), n: 0};
-    try{
-      const c = await window.storage.get(QUEUE_KEY, true);
-      if(c && c.value){
-        const parsed = JSON.parse(c.value);
-        if(parsed.date === todayStr()) counter = parsed;
-      }
-    }catch(e){}
-    counter.n += 1;
-    try{ await window.storage.set(QUEUE_KEY, JSON.stringify(counter), true); }catch(e){}
-    return counter.n;
+  function peekNextQueueNumber(){
+    if(queueCounter.date !== todayStr()) queueCounter = {date: todayStr(), n: 0};
+    queueCounter.n += 1;
+    return queueCounter.n;
+  }
+  async function saveQueueCounter(){
+    try{ await window.storage.set(QUEUE_KEY, JSON.stringify(queueCounter), true); }catch(e){}
   }
   function toast(msg){ const t=document.createElement('div'); t.className='od-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
   function withLoading(btn, loadingText, fn){
@@ -3010,7 +3019,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <div class="od-menu-grid">
           ${activeMenu.map(m=>`
             <button type="button" class="od-menu-btn" data-menu="${m.id}">
-              <span>${escapeHtml(m.name)}</span><span class="price">฿${fmtMoney(m.price)}</span><span class="plus">+</span>
+              <span style="flex:1;min-width:0;">${escapeHtml(m.name)}</span><span class="price">฿${fmtMoney(m.price)}</span><span class="plus">+</span>
             </button>
           `).join('')}
           ${!showCustom?`<button type="button" class="od-menu-btn" id="od-show-custom"><span>+ รายการอื่น (ระบุเอง)</span></button>`:''}
@@ -3127,14 +3136,14 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             render();
             toast('บันทึกการแก้ไขแล้ว');
           }else{
-            const qNum = await nextQueueNumber();
+            const qNum = peekNextQueueNumber();
             const order = {
               id: uid('o'), queueNumber: qNum, items: items.map(i=>({name:i.name, price:i.price, qty:i.qty})),
               note: note.trim(), status:'pending', createdAt: new Date().toISOString(),
               eventId: round?round.id:null, editHistory:[],
             };
             orders.push(order);
-            await saveOrders();
+            await Promise.all([saveOrders(), saveQueueCounter()]);
             overlay.remove();
             render();
             showQueueConfirm(qNum);
@@ -3147,7 +3156,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   function showQueueConfirm(qNum){
     const overlay = document.createElement('div');
-    overlay.className='od-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(23,19,15,.45);display:flex;align-items:center;justify-content:center;z-index:60;';
     overlay.innerHTML = `
       <div class="od-confirm-modal">
         <div class="od-confirm-label">คิวของคุณคือ</div>
@@ -3233,7 +3242,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   }
 
   function ticketHtml(o){
-    const itemLines = (o.items||[]).map(i=>`<div class="kt-ticket-item-line"><span>${escapeHtml(i.name)}</span>${i.qty>1?`<span>x${i.qty}</span>`:''}</div>`).join('');
+    const itemLines = (o.items||[]).map(i=>`<div class="kt-ticket-item-line"><span>${escapeHtml(i.name)}</span><span>x${i.qty}</span></div>`).join('');
     const edited = (o.editHistory||[]).length>0;
     return `
       <div class="kt-ticket">

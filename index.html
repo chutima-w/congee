@@ -537,6 +537,25 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .od-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;-webkit-text-stroke:0.6px var(--ink);}
 .od-sub{font-size:13px;color:var(--ink-soft);}
 
+.od-round-banner{
+  background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px;
+  margin-bottom:18px;box-shadow:3px 3px 0 var(--ink);display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.od-round-info{flex:1;min-width:0;}
+.od-round-name{font-weight:700;font-size:14.5px;}
+.od-round-loc{font-size:12px;color:var(--ink-soft);}
+.od-round-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;background:var(--green-soft);color:var(--green);border:1.5px solid var(--ink);border-radius:5px;padding:2px 8px;}
+
+.od-noround{
+  background:var(--surface);border:2px dashed var(--ink);border-radius:var(--radius);
+  padding:36px 24px;text-align:center;margin-bottom:20px;
+}
+.od-noround p{font-size:13.5px;color:var(--ink-soft);margin:0 0 16px;}
+.od-open-round-btn{
+  background:var(--green);color:#fff;border:2px solid var(--ink);padding:13px 26px;border-radius:12px;
+  font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;box-shadow:3px 3px 0 var(--ink);
+}
+
 .od-add{
   width:100%;background:var(--green);color:#fff;border:2px solid var(--ink);
   padding:16px;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;
@@ -552,26 +571,34 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .od-list{display:flex;flex-direction:column;gap:10px;}
 .od-row{
   background:var(--surface);border:2px solid var(--ink);border-radius:12px;
-  padding:12px 14px;display:flex;align-items:center;gap:14px;box-shadow:3px 3px 0 var(--ink);
+  padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:3px 3px 0 var(--ink);flex-wrap:wrap;
 }
 .od-row.ready{border-color:var(--green);}
+.od-row.cancelled{opacity:.5;}
 .od-qnum{
   font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:24px;
   background:var(--gold-soft);border:2px solid var(--ink);border-radius:10px;
   padding:4px 12px;flex:0 0 auto;min-width:54px;text-align:center;
 }
 .od-row.ready .od-qnum{background:var(--green-soft);}
-.od-row-main{flex:1;min-width:0;}
-.od-row-items{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.od-row.cancelled .od-qnum{background:var(--red-soft);}
+.od-row-main{flex:1;min-width:120px;}
+.od-row-items{font-size:13.5px;font-weight:600;}
 .od-row-note{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
 .od-row-time{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+.od-row-total{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;flex:0 0 auto;}
 .od-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;border:1.5px solid var(--ink);flex:0 0 auto;}
 .od-tag.pending{background:var(--gold-soft);color:var(--ink);}
 .od-tag.ready{background:var(--green-soft);color:var(--green);}
+.od-tag.cancelled{background:var(--red-soft);color:var(--red);}
+.od-tag.edited{background:#E0D9F5;color:#5C3FA8;}
+.od-row-actions{display:flex;gap:6px;flex:0 0 auto;}
 .od-serve-btn{
   flex:0 0 auto;background:var(--ink);color:var(--bg);border:none;border-radius:8px;
   padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
 }
+.od-icon-btn{background:none;border:1.5px solid var(--ink);border-radius:7px;cursor:pointer;padding:6px 9px;color:var(--ink-soft);font-family:inherit;font-size:12.5px;font-weight:700;}
+.od-icon-btn:hover{background:var(--gold-soft);color:var(--ink);}
 .od-empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
 
 /* Modal */
@@ -584,26 +611,25 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .od-field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
 .od-field input,.od-field textarea{width:100%;padding:9px 12px;border:1.5px solid var(--ink);border-radius:8px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
 .od-field input:focus,.od-field textarea:focus{outline:2px solid var(--gold);outline-offset:1px;}
-.od-item-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
-.od-item-row input.iname{flex:1;}
-.od-item-row input.iqty{width:60px;text-align:center;}
 .od-item-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;}
 .od-item-del:hover{color:var(--red);}
 .od-menu-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
 .od-menu-btn{
   width:100%;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:10px;
   padding:13px 16px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit;
-  box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;
+  box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;
 }
 .od-menu-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+.od-menu-btn .price{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-weight:600;font-size:13px;}
 .od-menu-btn .plus{color:var(--green);font-size:18px;}
 .od-cart{margin-bottom:14px;}
 .od-cart-empty{font-size:12.5px;color:var(--ink-soft);padding:10px 0;text-align:center;}
 .od-cart-line{
   display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--gold-soft);
-  border:1.5px solid var(--ink);border-radius:8px;margin-bottom:6px;font-size:13.5px;font-weight:600;
+  border:1.5px solid var(--ink);border-radius:8px;margin-bottom:6px;font-size:13.5px;font-weight:600;flex-wrap:wrap;
 }
-.od-cart-name{flex:1;}
+.od-cart-name{flex:1;min-width:100px;}
+.od-cart-price{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);flex:0 0 auto;}
 .od-cart-qty-ctrl{display:flex;align-items:center;gap:8px;}
 .od-cart-qty-btn{
   width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);background:var(--surface);
@@ -613,16 +639,23 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .od-cart-qty-num{font-family:'IBM Plex Mono',monospace;min-width:18px;text-align:center;}
 .od-cart-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:2px;}
 .od-cart-del:hover{color:var(--red);}
+.od-cart-total{
+  display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+  background:var(--ink);color:var(--bg);border-radius:8px;font-weight:700;font-size:15px;margin-bottom:14px;
+}
+.od-cart-total .val{font-family:'IBM Plex Mono',monospace;font-size:19px;}
 .od-custom-add{display:flex;gap:8px;margin-bottom:14px;}
 .od-custom-add input{flex:1;}
 .od-custom-add button{
   background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:0 14px;
   font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;
 }
-.od-mini-add{font-size:12.5px;color:var(--green);background:none;border:1.5px dashed var(--green);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;margin-bottom:14px;}
 .od-modal-actions{display:flex;gap:10px;margin-top:16px;}
 .od-btn-primary{flex:1;background:var(--green);color:#fff;border:2px solid var(--ink);padding:11px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:2px 2px 0 var(--ink);}
 .od-btn-secondary{background:var(--surface);border:1.5px solid var(--ink);color:var(--ink-soft);padding:11px 16px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;}
+.od-btn-danger{background:var(--red-soft);color:var(--red);border:2px solid var(--ink);padding:11px 16px;border-radius:9px;font-size:13.5px;cursor:pointer;font-family:inherit;font-weight:700;}
+.od-history-item{font-size:12px;color:var(--ink-soft);padding:6px 0;border-top:1px dashed var(--border);}
+.od-history-item:first-child{border-top:none;}
 
 /* Big queue confirmation */
 .od-confirm-modal{background:var(--gold);border:3px solid var(--ink);border-radius:20px;padding:36px 30px;text-align:center;box-shadow:6px 6px 0 var(--ink);max-width:320px;}
@@ -704,6 +737,76 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .kt-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
 .kt-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
 .kt-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+:root{
+  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
+  --blue:#7C8DB5; --blue-soft:#DCE3F0; --coral:#E8735A; --coral-soft:#FBDDD5;
+  --gold:#F5CB4D; --gold-soft:#FCEBB8; --border:#C7D0E4; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.mn-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+.mn-header{margin-bottom:16px;}
+.mn-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;color:var(--coral);}
+.mn-sub{font-size:13px;color:var(--ink-soft);}
+.mn-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.mn-add{margin-left:auto;background:var(--coral);color:#fff;border:none;padding:9px 18px;border-radius:999px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 3px 8px rgba(0,0,0,.12);}
+.mn-list{display:flex;flex-direction:column;gap:8px;}
+.mn-row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.mn-row.inactive{opacity:.5;}
+.mn-name{flex:1;font-weight:700;font-size:14.5px;}
+.mn-price{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;color:var(--coral);flex:0 0 auto;}
+.mn-toggle{position:relative;width:42px;height:24px;flex:0 0 auto;}
+.mn-toggle input{opacity:0;width:0;height:0;}
+.mn-toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:.2s;}
+.mn-toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.mn-toggle input:checked + .mn-toggle-slider{background:var(--coral);}
+.mn-toggle input:checked + .mn-toggle-slider::before{transform:translateX(18px);}
+.mn-row-actions{display:flex;gap:2px;flex:0 0 auto;}
+.mn-icon-btn{background:none;border:none;cursor:pointer;padding:5px;color:var(--ink-soft);border-radius:6px;}
+.mn-icon-btn:hover{background:var(--blue-soft);color:var(--ink);}
+.mn-empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;border:1.5px dashed var(--border);border-radius:var(--radius);}
+.mn-overlay{position:fixed;inset:0;background:rgba(59,66,88,.35);display:flex;align-items:flex-end;justify-content:center;z-index:50;}
+@media (min-width:640px){.mn-overlay{align-items:center;}}
+.mn-modal{background:var(--bg);width:100%;max-width:420px;border-radius:18px 18px 0 0;padding:22px 20px 26px;max-height:88vh;overflow-y:auto;}
+@media (min-width:640px){.mn-modal{border-radius:18px;}}
+.mn-modal h2{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-size:19px;margin:0 0 16px;color:var(--coral);}
+.mn-field{margin-bottom:13px;}
+.mn-field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
+.mn-field input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.mn-field input:focus{outline:2px solid var(--coral);outline-offset:1px;}
+.mn-modal-actions{display:flex;gap:10px;margin-top:18px;}
+.mn-btn-primary{flex:1;background:var(--coral);color:#fff;border:none;padding:11px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+.mn-btn-secondary{background:var(--surface);border:1.5px solid var(--border);color:var(--ink-soft);padding:11px 16px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;}
+.mn-btn-danger{background:var(--coral-soft);color:var(--coral);border:none;padding:11px 16px;border-radius:9px;font-size:13.5px;cursor:pointer;font-family:inherit;font-weight:700;flex:1;}
+.mn-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.mn-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
+  --coral:#E8735A; --coral-soft:#FBDDD5; --border:#C7D0E4; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.ig-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+.ig-header{margin-bottom:16px;}
+.ig-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;color:var(--coral);}
+.ig-sub{font-size:13px;color:var(--ink-soft);}
+.ig-toolbar{display:flex;gap:8px;margin-bottom:14px;}
+.ig-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:999px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.ig-input:focus{outline:2px solid var(--coral);outline-offset:1px;}
+.ig-add{background:var(--coral);color:#fff;border:none;padding:10px 20px;border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;font-size:13.5px;}
+.ig-list{display:flex;flex-wrap:wrap;gap:8px;}
+.ig-chip{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;padding:8px 8px 8px 16px;font-size:13.5px;font-weight:600;}
+.ig-chip button{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;border-radius:50%;}
+.ig-chip button:hover{background:var(--coral-soft);color:var(--coral);}
+.ig-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:1.5px dashed var(--border);border-radius:var(--radius);width:100%;}
+.ig-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.ig-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
 
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
@@ -822,6 +925,8 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .app-navdot.dot-red{background:var(--red);}
 .app-navdot.dot-blue{background:#345BFF;}
 .app-navdot.dot-purple{background:#8C4FD1;}
+.app-navdot.dot-coral{background:#E8735A;}
+.app-navdot.dot-teal{background:#2E9E8F;}
 .app-wave{width:100%;height:20px;display:block;margin:0 0 20px;}
 .app-module{display:none;}
 .app-module.active{display:block;}
@@ -844,8 +949,10 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     <nav class="app-nav">
       <button class="app-navbtn" data-module="orders"><span class="app-navdot dot-blue"></span>สั่งอาหาร</button>
       <button class="app-navbtn" data-module="kitchen"><span class="app-navdot dot-purple"></span>ครัว</button>
+      <button class="app-navbtn" data-module="menu"><span class="app-navdot dot-coral"></span>เมนู</button>
       <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
       <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
+      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>วัตถุดิบ</button>
       <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
     </nav>
   </div>
@@ -864,6 +971,9 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   <div class="kt-loading">กำลังโหลดข้อมูล...</div>
 </div>
 </div>
+<div id="module-menu" class="app-module">
+<div class="mn-root" id="mn-root"><div class="mn-loading">กำลังโหลดข้อมูล...</div></div>
+</div>
 <div id="module-assets" class="app-module active">
 <div class="faw-root" id="faw-root">
   <div class="faw-loading">กำลังโหลดข้อมูล...</div>
@@ -873,6 +983,9 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 <div class="sw-root" id="sw-root">
   <div class="sw-loading">กำลังโหลดข้อมูล...</div>
 </div>
+</div>
+<div id="module-ingredients" class="app-module">
+<div class="ig-root" id="ig-root"><div class="ig-loading">กำลังโหลดข้อมูล...</div></div>
 </div>
 <div id="module-events" class="app-module">
 <div class="ev-root" id="ev-root">
@@ -1090,6 +1203,12 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     root.querySelectorAll('[data-del]').forEach(btn=>{
       btn.onclick = ()=>deleteAsset(btn.dataset.del);
     });
+    root.querySelectorAll('[data-paidback]').forEach(btn=>{
+      btn.onclick = async ()=>{
+        const a = assets.find(x=>x.id===btn.dataset.paidback);
+        if(a){ a.paidBack = !a.paidBack; await saveAssets(); render(); toast(a.paidBack?'ทำเครื่องหมายคืนทุนแล้ว':'ยกเลิกสถานะคืนทุน'); }
+      };
+    });
   }
 
   function listRowHtml(a){
@@ -1103,6 +1222,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <span class="faw-row-date">${fmtDate(a.purchaseDate)}</span>
         <span class="faw-row-price">฿${fmtMoney(a.price)}</span>
         <span class="faw-row-actions">
+          <button class="faw-icon-btn" data-paidback="${a.id}" title="${a.paidBack?'ยกเลิกคืนทุน':'ทำเครื่องหมายคืนทุนแล้ว'}">${a.paidBack?'💰':'⭕'}</button>
           <button class="faw-icon-btn" data-edit="${a.id}" title="แก้ไข">${iconPencil()}</button>
           <button class="faw-icon-btn" data-del="${a.id}" title="ลบ">${iconTrash()}</button>
         </span>
@@ -1117,6 +1237,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           <div class="faw-ticket-name"><span class="faw-faid">${escapeHtml(a.faId||'-')}</span> ${escapeHtml(a.name)}</div>
           <div class="faw-ticket-meta">
             <span class="faw-tag st-${a.status}">${a.status}</span>
+            ${a.paidBack?'<span class="faw-tag st-ใช้งานอยู่" style="background:var(--green-soft);color:var(--green);">คืนทุนแล้ว</span>':''}
             <span>${a.category||'-'}</span>
             <span>ซื้อเมื่อ ${fmtDate(a.purchaseDate)}</span>
             ${a.owner?`<span>เจ้าของ: ${escapeHtml(a.owner)}</span>`:''}
@@ -1126,6 +1247,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <div class="faw-ticket-right">
           <div class="faw-ticket-price">฿${fmtMoney(a.price)}</div>
           <div class="faw-ticket-actions">
+            <button class="faw-icon-btn" data-paidback="${a.id}" title="${a.paidBack?'ยกเลิกคืนทุน':'ทำเครื่องหมายคืนทุนแล้ว'}">${a.paidBack?'💰':'⭕'}</button>
             <button class="faw-icon-btn" data-edit="${a.id}" title="แก้ไข">${iconPencil()}</button>
             <button class="faw-icon-btn" data-del="${a.id}" title="ลบ">${iconTrash()}</button>
           </div>
@@ -1228,6 +1350,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           purchaseDate: overlay.querySelector('#f-date').value,
           price: parseFloat(overlay.querySelector('#f-price').value)||0,
           note: overlay.querySelector('#f-note').value.trim(),
+          paidBack: a?!!a.paidBack:false,
         };
         if(a){
           const idx = assets.findIndex(x=>x.id===a.id);
@@ -2637,15 +2760,21 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 (function(){
   const ORDERS_KEY = 'orders_list';
   const QUEUE_KEY = 'queue_counter';
+  const MENU_KEY = 'menu_items_list';
+  const EVENTS_KEY = 'events_list';
+  const ACTIVE_ROUND_KEY = 'active_round_id';
   const POLL_MS = 8000;
-  const MENU_ITEMS = ['โจ๊กหมูสับเห็ดหอม','เพิ่มไข่','ไข่ลวก (1 ชุด 2 ฟอง)'];
 
   let orders = [];
+  let menu = [];
+  let events = [];
+  let activeRoundId = null;
   let filter = 'active'; // active | served | all
   const root = document.getElementById('od-root');
 
   function todayStr(){ return new Date().toISOString().slice(0,10); }
   function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:0,maximumFractionDigits:2}); }
   function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
   function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
   function iconPlus(){ return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
@@ -2653,10 +2782,16 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   async function loadAll(){
     try{ const o = await window.storage.get(ORDERS_KEY, true); orders = o && o.value ? JSON.parse(o.value) : []; }catch(e){ orders = []; }
+    try{ const m = await window.storage.get(MENU_KEY, true); menu = m && m.value ? JSON.parse(m.value) : []; }catch(e){ menu = []; }
+    try{ const ev = await window.storage.get(EVENTS_KEY, true); events = ev && ev.value ? JSON.parse(ev.value) : []; }catch(e){ events = []; }
+    try{ const ar = await window.storage.get(ACTIVE_ROUND_KEY, true); activeRoundId = ar && ar.value ? ar.value : null; }catch(e){ activeRoundId = null; }
     render();
   }
   async function saveOrders(){
     try{ const r = await window.storage.set(ORDERS_KEY, JSON.stringify(orders), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
+  }
+  async function saveEvents(){
+    try{ await window.storage.set(EVENTS_KEY, JSON.stringify(events), true); }catch(e){}
   }
   async function nextQueueNumber(){
     let counter = {date: todayStr(), n: 0};
@@ -2681,19 +2816,51 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     });
   }
 
+  function getActiveRound(){
+    if(!activeRoundId) return null;
+    const ev = events.find(e=>e.id===activeRoundId);
+    if(!ev || ev.status!=='open') return null;
+    return ev;
+  }
+
+  function orderTotal(o){ return (o.items||[]).reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0); }
+
   function filteredOrders(){
     const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
-    if(filter==='active') return todays.filter(o=>o.status!=='served').sort((a,b)=>a.queueNumber-b.queueNumber);
+    if(filter==='active') return todays.filter(o=>o.status!=='served'&&o.status!=='cancelled').sort((a,b)=>a.queueNumber-b.queueNumber);
     if(filter==='served') return todays.filter(o=>o.status==='served').sort((a,b)=>b.queueNumber-a.queueNumber);
     return todays.sort((a,b)=>b.queueNumber-a.queueNumber);
   }
 
   function render(){
+    const round = getActiveRound();
+    if(!round){
+      root.innerHTML = `
+        <div class="od-header">
+          <h1 class="od-title">สั่งอาหาร</h1>
+          <div class="od-sub">รับออเดอร์ลูกค้า แจกเลขคิวอัตโนมัติ</div>
+        </div>
+        <div class="od-noround">
+          <p>ยังไม่ได้เปิดรอบขายวันนี้ — ต้องเปิดรอบก่อนถึงจะเริ่มรับออเดอร์ได้</p>
+          <button class="od-open-round-btn" id="od-open-round">🟢 เปิดรอบบิลวันนี้</button>
+        </div>
+      `;
+      document.getElementById('od-open-round').onclick = openRoundModal;
+      return;
+    }
+
     const list = filteredOrders();
     root.innerHTML = `
       <div class="od-header">
         <h1 class="od-title">สั่งอาหาร</h1>
         <div class="od-sub">รับออเดอร์ลูกค้า แจกเลขคิวอัตโนมัติ</div>
+      </div>
+      <div class="od-round-banner">
+        <div class="od-round-info">
+          <div class="od-round-name">${escapeHtml(round.name)}</div>
+          <div class="od-round-loc">${round.location?('📍 '+escapeHtml(round.location)):'ยังไม่ระบุสถานที่'}</div>
+        </div>
+        <span class="od-round-tag">รอบเปิดอยู่</span>
       </div>
       <button class="od-add" id="od-add-btn">${iconPlus()} รับออเดอร์ใหม่</button>
       <div class="od-toolbar">
@@ -2705,7 +2872,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         ${list.length===0?`<div class="od-empty">ไม่มีออเดอร์ในหมวดนี้</div>`:list.map(orderRow).join('')}
       </div>
     `;
-    document.getElementById('od-add-btn').onclick = openOrderModal;
+    document.getElementById('od-add-btn').onclick = ()=>openOrderModal(null);
     root.querySelectorAll('[data-f]').forEach(b=> b.onclick = ()=>{ filter=b.dataset.f; render(); });
     root.querySelectorAll('[data-serve]').forEach(b=> b.onclick = (ev)=>{
       withLoading(ev.currentTarget, '...', async ()=>{
@@ -2716,38 +2883,134 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         toast('ปิดรายการแล้ว');
       });
     });
+    root.querySelectorAll('[data-editorder]').forEach(b=> b.onclick = ()=>openOrderModal(b.dataset.editorder));
+    root.querySelectorAll('[data-cancelorder]').forEach(b=> b.onclick = ()=>confirmCancelOrder(b.dataset.cancelorder));
+    root.querySelectorAll('[data-history]').forEach(b=> b.onclick = ()=>showHistory(b.dataset.history));
   }
 
   function orderRow(o){
     const itemsSummary = (o.items||[]).map(i=>`${escapeHtml(i.name)}${i.qty>1?' x'+i.qty:''}`).join(', ');
+    const canEdit = o.status==='pending' || o.status==='ready';
+    const hasHistory = (o.editHistory||[]).length>0;
     return `
-      <div class="od-row ${o.status==='ready'?'ready':''}">
+      <div class="od-row ${o.status==='ready'?'ready':''} ${o.status==='cancelled'?'cancelled':''}">
         <div class="od-qnum">#${o.queueNumber}</div>
         <div class="od-row-main">
           <div class="od-row-items">${itemsSummary||'(ไม่มีรายการ)'}</div>
           ${o.note?`<div class="od-row-note">📝 ${escapeHtml(o.note)}</div>`:''}
           <div class="od-row-time">${fmtTime(o.createdAt)}</div>
         </div>
-        <span class="od-tag ${o.status}">${o.status==='ready'?'พร้อมเสิร์ฟ':o.status==='served'?'เสิร์ฟแล้ว':'กำลังทำ'}</span>
-        ${o.status==='ready'?`<button class="od-serve-btn" data-serve="${o.id}">เสิร์ฟแล้ว</button>`:''}
+        <div class="od-row-total">฿${fmtMoney(orderTotal(o))}</div>
+        <span class="od-tag ${o.status}">${o.status==='ready'?'พร้อมเสิร์ฟ':o.status==='served'?'เสิร์ฟแล้ว':o.status==='cancelled'?'ยกเลิกแล้ว':'กำลังทำ'}</span>
+        ${hasHistory?`<button class="od-tag edited" data-history="${o.id}" style="cursor:pointer;">แก้ไขแล้ว</button>`:''}
+        <div class="od-row-actions">
+          ${o.status==='ready'?`<button class="od-serve-btn" data-serve="${o.id}">เสิร์ฟแล้ว</button>`:''}
+          ${canEdit?`<button class="od-icon-btn" data-editorder="${o.id}">แก้ไข</button>`:''}
+          ${canEdit?`<button class="od-icon-btn" data-cancelorder="${o.id}">ยกเลิก</button>`:''}
+        </div>
       </div>
     `;
   }
 
-  function openOrderModal(){
-    let items = []; // cart: {id, name, qty}
-    let note = '';
+  function showHistory(id){
+    const o = orders.find(x=>x.id===id); if(!o) return;
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:400px;">
+        <h2>ประวัติการแก้ไข — คิว #${o.queueNumber}</h2>
+        ${(o.editHistory||[]).map(h=>`<div class="od-history-item">🕐 ${fmtTime(h.at)} — ${escapeHtml(h.summary)}</div>`).join('')}
+        <div class="od-modal-actions"><button class="od-btn-secondary" id="oh-close" style="flex:1;">ปิด</button></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#oh-close').onclick = ()=>overlay.remove();
+  }
+
+  function confirmCancelOrder(id){
+    const o = orders.find(x=>x.id===id); if(!o) return;
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:400px;">
+        <h2>ยืนยันยกเลิกออเดอร์</h2>
+        <p style="font-size:14px;color:var(--ink-soft);margin:0 0 20px;">ต้องการยกเลิกออเดอร์คิว <b style="color:var(--ink);">#${o.queueNumber}</b> ใช่หรือไม่?</p>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="oc-cancel">ไม่ยกเลิก</button>
+          <button class="od-btn-danger" id="oc-confirm" style="flex:1;">ยืนยันยกเลิก</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#oc-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#oc-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังยกเลิก...', async ()=>{
+        o.status='cancelled';
+        o.editHistory = o.editHistory||[];
+        o.editHistory.push({at:new Date().toISOString(), summary:'ยกเลิกออเดอร์'});
+        await saveOrders();
+        overlay.remove();
+        render();
+        toast('ยกเลิกออเดอร์แล้ว');
+      });
+    };
+  }
+
+  function openRoundModal(){
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:420px;">
+        <h2>เปิดรอบบิลวันนี้</h2>
+        <div class="od-field"><label>สถานที่ขาย</label><input id="or-location" placeholder="เช่น หน้าปากซอย, ตลาดนัด"></div>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="or-cancel">ยกเลิก</button>
+          <button class="od-btn-primary" id="or-confirm">เปิดรอบขาย</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#or-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#or-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังเปิดรอบ...', async ()=>{
+        const location = overlay.querySelector('#or-location').value.trim();
+        const today = todayStr();
+        const name = 'รอบขาย ' + new Date(today).toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});
+        const newEvent = {
+          id: uid('ev'), status:'open', name, date: today, location, note:'',
+          bowlsSold:0, cashRevenue:0, transferRevenue:0,
+          rawIngredients: [], usage: [], otherCosts: [],
+        };
+        events.push(newEvent);
+        activeRoundId = newEvent.id;
+        await saveEvents();
+        try{ await window.storage.set(ACTIVE_ROUND_KEY, activeRoundId, true); }catch(e){}
+        overlay.remove();
+        render();
+        toast('เปิดรอบขายวันนี้แล้ว');
+      });
+    };
+    overlay.querySelector('#or-location').focus();
+  }
+
+  function openOrderModal(existingId){
+    const existing = existingId ? orders.find(x=>x.id===existingId) : null;
+    const activeMenu = menu.filter(m=>m.active);
+    let items = existing ? JSON.parse(JSON.stringify(existing.items||[])) : [];
+    let note = existing ? (existing.note||'') : '';
     let showCustom = false;
     const overlay = document.createElement('div');
     overlay.className='od-overlay';
 
+    function cartTotal(){ return items.reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0); }
+
     function bodyHtml(){
       return `
-        <h2>รับออเดอร์ใหม่</h2>
+        <h2>${existing?'แก้ไขออเดอร์ คิว #'+existing.queueNumber:'รับออเดอร์ใหม่'}</h2>
         <div class="od-menu-grid">
-          ${MENU_ITEMS.map(name=>`
-            <button type="button" class="od-menu-btn" data-menu="${escapeHtml(name)}">
-              <span>${escapeHtml(name)}</span><span class="plus">+</span>
+          ${activeMenu.map(m=>`
+            <button type="button" class="od-menu-btn" data-menu="${m.id}">
+              <span>${escapeHtml(m.name)}</span><span class="price">฿${fmtMoney(m.price)}</span><span class="plus">+</span>
             </button>
           `).join('')}
           ${!showCustom?`<button type="button" class="od-menu-btn" id="od-show-custom"><span>+ รายการอื่น (ระบุเอง)</span></button>`:''}
@@ -2755,12 +3018,14 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         ${showCustom?`
         <div class="od-custom-add">
           <input id="od-custom-name" placeholder="ระบุชื่อรายการ">
+          <input id="od-custom-price" type="number" min="0" step="1" placeholder="ราคา" style="max-width:90px;">
           <button type="button" id="od-custom-confirm">เพิ่ม</button>
         </div>`:''}
         <div class="od-cart" id="od-cart-list">
           ${items.length===0?`<div class="od-cart-empty">แตะเมนูด้านบนเพื่อเพิ่มรายการ</div>`:items.map(it=>`
             <div class="od-cart-line" data-cart-item="${it.id}">
               <span class="od-cart-name">${escapeHtml(it.name)}</span>
+              <span class="od-cart-price">฿${fmtMoney(it.price)}/หน่วย</span>
               <div class="od-cart-qty-ctrl">
                 <button type="button" class="od-cart-qty-btn" data-qtyminus="${it.id}">−</button>
                 <span class="od-cart-qty-num">${it.qty}</span>
@@ -2770,21 +3035,27 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             </div>
           `).join('')}
         </div>
+        ${items.length>0?`<div class="od-cart-total"><span>รวมทั้งบิล</span><span class="val">฿${fmtMoney(cartTotal())}</span></div>`:''}
         <div class="od-field">
           <label>หมายเหตุ (ไม่บังคับ)</label>
           <textarea id="od-note" placeholder="เช่น ไม่ใส่ผัก, เผ็ดน้อย">${escapeHtml(note)}</textarea>
         </div>
         <div class="od-modal-actions">
           <button class="od-btn-secondary" id="od-cancel">ยกเลิก</button>
-          <button class="od-btn-primary" id="od-confirm">ยืนยันออเดอร์ &amp; แจกเลขคิว</button>
+          <button class="od-btn-primary" id="od-confirm">${existing?'บันทึกการแก้ไข':'ยืนยันออเดอร์ & แจกเลขคิว'}</button>
         </div>
       `;
     }
 
-    function addItem(name){
-      const existing = items.find(i=>i.name===name);
-      if(existing) existing.qty += 1;
-      else items.push({id:uid('i'), name, qty:1});
+    function addItem(menuId){
+      const m = activeMenu.find(x=>x.id===menuId);
+      if(!m) return;
+      const existingLine = items.find(i=>i.name===m.name && i.price===m.price);
+      if(existingLine) existingLine.qty += 1;
+      else items.push({id:uid('i'), name:m.name, price:m.price, qty:1});
+    }
+    function addCustomItem(name, price){
+      items.push({id:uid('i'), name, price:price||0, qty:1});
     }
 
     overlay.innerHTML = `<div class="od-modal" id="od-modal-box">${bodyHtml()}</div>`;
@@ -2816,7 +3087,8 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       if(customConfirmBtn) customConfirmBtn.onclick = ()=>{
         captureNote(box);
         const val = box.querySelector('#od-custom-name').value.trim();
-        if(val){ addItem(val); showCustom=false; }
+        const price = parseFloat(box.querySelector('#od-custom-price').value)||0;
+        if(val){ addCustomItem(val, price); showCustom=false; }
         rerender();
       };
       box.querySelectorAll('[data-qtyplus]').forEach(btn=> btn.onclick = ()=>{
@@ -2840,16 +3112,33 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
           captureNote(box);
           if(items.length===0){ toast('กรุณาเลือกรายการอาหารอย่างน้อย 1 อย่าง'); throw new Error('validation'); }
-          const qNum = await nextQueueNumber();
-          const order = {
-            id: uid('o'), queueNumber: qNum, items: items.map(i=>({name:i.name, qty:i.qty})),
-            note: note.trim(), status:'pending', createdAt: new Date().toISOString(),
-          };
-          orders.push(order);
-          await saveOrders();
-          overlay.remove();
-          render();
-          showQueueConfirm(qNum);
+          const round = getActiveRound();
+          if(existing){
+            const oldSummary = (existing.items||[]).map(i=>`${i.name} x${i.qty}`).join(', ');
+            const newSummary = items.map(i=>`${i.name} x${i.qty}`).join(', ');
+            existing.editHistory = existing.editHistory||[];
+            if(oldSummary!==newSummary || (existing.note||'')!==note.trim()){
+              existing.editHistory.push({at:new Date().toISOString(), summary:`เปลี่ยนจาก [${oldSummary}] เป็น [${newSummary}]`});
+            }
+            existing.items = items.map(i=>({name:i.name, price:i.price, qty:i.qty}));
+            existing.note = note.trim();
+            await saveOrders();
+            overlay.remove();
+            render();
+            toast('บันทึกการแก้ไขแล้ว');
+          }else{
+            const qNum = await nextQueueNumber();
+            const order = {
+              id: uid('o'), queueNumber: qNum, items: items.map(i=>({name:i.name, price:i.price, qty:i.qty})),
+              note: note.trim(), status:'pending', createdAt: new Date().toISOString(),
+              eventId: round?round.id:null, editHistory:[],
+            };
+            orders.push(order);
+            await saveOrders();
+            overlay.remove();
+            render();
+            showQueueConfirm(qNum);
+          }
         });
       };
     }
@@ -2945,9 +3234,10 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   function ticketHtml(o){
     const itemLines = (o.items||[]).map(i=>`<div class="kt-ticket-item-line"><span>${escapeHtml(i.name)}</span>${i.qty>1?`<span>x${i.qty}</span>`:''}</div>`).join('');
+    const edited = (o.editHistory||[]).length>0;
     return `
       <div class="kt-ticket">
-        <div class="kt-ticket-qnum">#${o.queueNumber}</div>
+        <div class="kt-ticket-qnum">#${o.queueNumber} ${edited?'<span style="font-size:10px;background:#E0D9F5;color:#5C3FA8;border:1.5px solid var(--ink);border-radius:4px;padding:1px 5px;vertical-align:middle;">แก้ไขแล้ว</span>':''}</div>
         <div class="kt-ticket-items">${itemLines}</div>
         ${o.note?`<div class="kt-ticket-note">📝 ${escapeHtml(o.note)}</div>`:''}
         <div class="kt-ticket-time">${fmtTime(o.createdAt)}</div>
@@ -2969,6 +3259,170 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   loadAll();
   setInterval(loadAll, POLL_MS);
+})();
+
+</script>
+<script>
+
+(function(){
+  const MENU_KEY = 'menu_items_list';
+  let menu = [];
+  const root = document.getElementById('mn-root');
+  function uid(){ return 'mn'+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+  function iconPencil(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>'; }
+  function iconTrash(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
+  function iconPlus(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
+  function toast(msg){ const t=document.createElement('div'); t.className='mn-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  function withLoading(btn, txt, fn){
+    if(btn.disabled) return;
+    const orig = btn.innerHTML; btn.disabled=true; btn.style.opacity='.6'; btn.textContent=txt;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{ if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.innerHTML=orig; } });
+  }
+  async function loadAll(){
+    try{ const r = await window.storage.get(MENU_KEY, true); menu = r && r.value ? JSON.parse(r.value) : []; }catch(e){ menu=[]; }
+    render();
+  }
+  async function saveMenu(){
+    try{ const r = await window.storage.set(MENU_KEY, JSON.stringify(menu), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาด'); }
+  }
+  function render(){
+    const list = [...menu].sort((a,b)=> (b.active?1:0)-(a.active?1:0) || a.name.localeCompare(b.name,'th'));
+    root.innerHTML = `
+      <div class="mn-header">
+        <h1 class="mn-title">เมนู</h1>
+        <div class="mn-sub">จัดการรายการอาหาร ราคา และเปิด/ปิดการขาย</div>
+      </div>
+      <div class="mn-toolbar"><button class="mn-add" id="mn-add-btn">${iconPlus()} เพิ่มเมนู</button></div>
+      <div class="mn-list">${list.length===0?`<div class="mn-empty">ยังไม่มีเมนู กด "เพิ่มเมนู" เพื่อเริ่มบันทึก</div>`:list.map(row).join('')}</div>
+    `;
+    document.getElementById('mn-add-btn').onclick = ()=>openModal(null);
+    root.querySelectorAll('[data-edit]').forEach(b=> b.onclick = ()=>openModal(b.dataset.edit));
+    root.querySelectorAll('[data-del]').forEach(b=> b.onclick = ()=>confirmDelete(b.dataset.del));
+    root.querySelectorAll('[data-toggle]').forEach(inp=> inp.onchange = async ()=>{
+      const m = menu.find(x=>x.id===inp.dataset.toggle);
+      if(m){ m.active = inp.checked; await saveMenu(); render(); }
+    });
+  }
+  function row(m){
+    return `
+      <div class="mn-row ${m.active?'':'inactive'}">
+        <label class="mn-toggle"><input type="checkbox" data-toggle="${m.id}" ${m.active?'checked':''}><span class="mn-toggle-slider"></span></label>
+        <span class="mn-name">${escapeHtml(m.name)}</span>
+        <span class="mn-price">฿${fmtMoney(m.price)}</span>
+        <span class="mn-row-actions">
+          <button class="mn-icon-btn" data-edit="${m.id}">${iconPencil()}</button>
+          <button class="mn-icon-btn" data-del="${m.id}">${iconTrash()}</button>
+        </span>
+      </div>
+    `;
+  }
+  function openModal(id){
+    const m = id ? menu.find(x=>x.id===id) : null;
+    const overlay = document.createElement('div'); overlay.className='mn-overlay';
+    overlay.innerHTML = `
+      <div class="mn-modal">
+        <h2>${m?'แก้ไขเมนู':'เพิ่มเมนูใหม่'}</h2>
+        <div class="mn-field"><label>ชื่อเมนู</label><input id="mf-name" value="${m?escapeHtml(m.name):''}" placeholder="เช่น โจ๊กหมูสับเห็ดหอม"></div>
+        <div class="mn-field"><label>ราคา (บาท)</label><input id="mf-price" type="number" min="0" step="1" value="${m?m.price:''}" placeholder="0"></div>
+        <div class="mn-modal-actions">
+          <button class="mn-btn-secondary" id="mf-cancel">ยกเลิก</button>
+          <button class="mn-btn-primary" id="mf-save">${m?'บันทึกการแก้ไข':'เพิ่มเมนู'}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#mf-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#mf-save').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        const name = overlay.querySelector('#mf-name').value.trim();
+        if(!name){ toast('กรุณาระบุชื่อเมนู'); throw new Error('validation'); }
+        const price = parseFloat(overlay.querySelector('#mf-price').value)||0;
+        const payload = { id: m?m.id:uid(), name, price, active: m?m.active:true };
+        if(m){ menu[menu.findIndex(x=>x.id===m.id)] = payload; } else{ menu.push(payload); }
+        await saveMenu(); overlay.remove(); render();
+        toast(m?'แก้ไขเมนูแล้ว':'เพิ่มเมนูแล้ว');
+      });
+    };
+    overlay.querySelector('#mf-name').focus();
+  }
+  function confirmDelete(id){
+    const m = menu.find(x=>x.id===id); if(!m) return;
+    const overlay = document.createElement('div'); overlay.className='mn-overlay';
+    overlay.innerHTML = `
+      <div class="mn-modal" style="max-width:380px;">
+        <h2>ยืนยันการลบ</h2>
+        <p style="font-size:14px;color:var(--ink-soft);margin:0 0 20px;">ต้องการลบเมนู <b style="color:var(--ink);">${escapeHtml(m.name)}</b> ใช่หรือไม่?</p>
+        <div class="mn-modal-actions">
+          <button class="mn-btn-secondary" id="md-cancel">ยกเลิก</button>
+          <button class="mn-btn-danger" id="md-confirm">ลบเมนู</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#md-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#md-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        menu = menu.filter(x=>x.id!==id); await saveMenu(); overlay.remove(); render();
+        toast('ลบเมนูแล้ว');
+      });
+    };
+  }
+  loadAll();
+})();
+
+</script>
+<script>
+
+(function(){
+  const KEY = 'raw_ingredients_master';
+  let items = [];
+  const root = document.getElementById('ig-root');
+  function uid(){ return 'ig'+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  function toast(msg){ const t=document.createElement('div'); t.className='ig-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  async function loadAll(){
+    try{ const r = await window.storage.get(KEY, true); items = r && r.value ? JSON.parse(r.value) : []; }catch(e){ items=[]; }
+    render();
+  }
+  async function saveAll(){
+    try{ const r = await window.storage.set(KEY, JSON.stringify(items), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาด'); }
+  }
+  function render(){
+    root.innerHTML = `
+      <div class="ig-header">
+        <h1 class="ig-title">วัตถุดิบประกอบอาหาร</h1>
+        <div class="ig-sub">รายชื่อวัตถุดิบที่ซื้อเป็นรอบๆ (ไม่สต๊อก) — จะถูกดึงไปกรอกจำนวน/ราคาที่หน้า Events</div>
+      </div>
+      <div class="ig-toolbar">
+        <input class="ig-input" id="ig-new-name" placeholder="เช่น ข้าวสาร, หมูสับ, ไข่">
+        <button class="ig-add" id="ig-add-btn">+ เพิ่ม</button>
+      </div>
+      <div class="ig-list">
+        ${items.length===0?`<div class="ig-empty">ยังไม่มีรายการ ลองเพิ่มดูได้เลย</div>`:items.map(it=>`
+          <div class="ig-chip"><span>${escapeHtml(it.name)}</span><button data-del="${it.id}">✕</button></div>
+        `).join('')}
+      </div>
+    `;
+    const nameInput = document.getElementById('ig-new-name');
+    const addBtn = document.getElementById('ig-add-btn');
+    async function addItem(){
+      const name = nameInput.value.trim();
+      if(!name){ toast('กรุณากรอกชื่อวัตถุดิบ'); return; }
+      items.push({id:uid(), name});
+      await saveAll(); render();
+    }
+    addBtn.onclick = addItem;
+    nameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addItem(); } };
+    root.querySelectorAll('[data-del]').forEach(b=> b.onclick = async ()=>{
+      items = items.filter(x=>x.id!==b.dataset.del);
+      await saveAll(); render();
+    });
+  }
+  loadAll();
 })();
 
 </script>

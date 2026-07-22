@@ -827,7 +827,6 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   font-weight:700; font-style:normal; font-display:swap;
 }
 
-/* ===== Bold sticker theme override ===== */
 :root{
   --bg:#F3EEDD;
   --surface:#FFFFFF;
@@ -886,7 +885,6 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   text-stroke:0.6px var(--ink);
 }
 
-/* ===== App shell — bold red grid header ===== */
 .app-shell{max-width:960px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
 .app-header{
   background-color:var(--header-red);
@@ -947,12 +945,12 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <span class="app-wordmark">MOM'S CONGEE</span>
     </div>
     <nav class="app-nav">
-      <button class="app-navbtn" data-module="orders"><span class="app-navdot dot-blue"></span>สั่งอาหาร</button>
-      <button class="app-navbtn" data-module="kitchen"><span class="app-navdot dot-purple"></span>ครัว</button>
-      <button class="app-navbtn" data-module="menu"><span class="app-navdot dot-coral"></span>เมนู</button>
+      <button class="app-navbtn" data-module="orders"><span class="app-navdot dot-blue"></span>Orders</button>
+      <button class="app-navbtn" data-module="kitchen"><span class="app-navdot dot-purple"></span>Kitchen</button>
+      <button class="app-navbtn" data-module="menu"><span class="app-navdot dot-coral"></span>Menu</button>
       <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
       <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
-      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>วัตถุดิบ</button>
+      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>Ingredients</button>
       <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
     </nav>
   </div>
@@ -1456,14 +1454,12 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   function iconPlus(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
 
   async function loadAll(){
-    try{
-      const m = await window.storage.get(MASTER_KEY, true);
-      master = m && m.value ? JSON.parse(m.value) : [];
-    }catch(e){ master = []; }
-    try{
-      const t = await window.storage.get(TX_KEY, true);
-      transactions = t && t.value ? JSON.parse(t.value) : [];
-    }catch(e){ transactions = []; }
+    const [m, t] = await Promise.allSettled([
+      window.storage.get(MASTER_KEY, true),
+      window.storage.get(TX_KEY, true),
+    ]);
+    master = (m.status==='fulfilled' && m.value && m.value.value) ? JSON.parse(m.value.value) : [];
+    transactions = (t.status==='fulfilled' && t.value && t.value.value) ? JSON.parse(t.value.value) : [];
     render();
   }
   async function saveMaster(){
@@ -2034,12 +2030,14 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   const MASTER_KEY = 'supplies_master_list';
   const TX_KEY = 'supplies_transactions_list';
   const PARTNERS_KEY = 'business_partners';
+  const ORDERS_KEY = 'orders_list';
   const DEFAULT_INGREDIENTS = ['ข้าวสาร','หมูสับ','เห็ดหอม','ต้นหอมผักชี','ขิงอ่อน','กระเทียม','น้ำมัน','ไข่'];
 
   let events = [];
   let master = [];
   let transactions = [];
   let partners = [{name:'หุ้นส่วน 1', share:50},{name:'หุ้นส่วน 2', share:50}];
+  let orders = [];
   let statusFilter = 'all';
 
   const root = document.getElementById('ev-root');
@@ -2074,13 +2072,20 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   function iconRefresh(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>'; }
 
   async function loadAll(){
-    try{ const e = await window.storage.get(EVENTS_KEY, true); events = e && e.value ? JSON.parse(e.value) : []; }catch(err){ events = []; }
-    try{ const m = await window.storage.get(MASTER_KEY, true); master = m && m.value ? JSON.parse(m.value) : []; }catch(err){ master = []; }
-    try{ const t = await window.storage.get(TX_KEY, true); transactions = t && t.value ? JSON.parse(t.value) : []; }catch(err){ transactions = []; }
-    try{
-      const p = await window.storage.get(PARTNERS_KEY, true);
-      if(p && p.value) partners = JSON.parse(p.value);
-    }catch(err){ /* keep default */ }
+    const [e, m, t, p, o] = await Promise.allSettled([
+      window.storage.get(EVENTS_KEY, true),
+      window.storage.get(MASTER_KEY, true),
+      window.storage.get(TX_KEY, true),
+      window.storage.get(PARTNERS_KEY, true),
+      window.storage.get(ORDERS_KEY, true),
+    ]);
+    events = (e.status==='fulfilled' && e.value && e.value.value) ? JSON.parse(e.value.value) : [];
+    master = (m.status==='fulfilled' && m.value && m.value.value) ? JSON.parse(m.value.value) : [];
+    transactions = (t.status==='fulfilled' && t.value && t.value.value) ? JSON.parse(t.value.value) : [];
+    orders = (o.status==='fulfilled' && o.value && o.value.value) ? JSON.parse(o.value.value) : [];
+    if(p.status==='fulfilled' && p.value && p.value.value){
+      try{ partners = JSON.parse(p.value.value); }catch(err){}
+    }
     render();
   }
   async function saveEvents(){ try{ const r = await window.storage.set(EVENTS_KEY, JSON.stringify(events), true); if(!r) toast('บันทึกไม่สำเร็จ'); }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); } }
@@ -2555,6 +2560,13 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         captureDraft(box);
         if(!draft.date){ toast('กรุณาระบุวันที่'); return; }
         if(!draft.name.trim()) draft.name = defaultEventName(draft.date);
+        if(e){
+          const unserved = orders.filter(o=> o.eventId===e.id && (o.status==='pending' || o.status==='ready'));
+          if(unserved.length>0){
+            toast(`ยังมีออเดอร์ที่ยังไม่เสิร์ฟ ${unserved.length} รายการ — เสิร์ฟให้ครบก่อนถึงจะปิดรอบได้`);
+            return;
+          }
+        }
         confirmCloseRound(e, draft, overlay);
       };
     }
@@ -2770,6 +2782,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   let events = [];
   let activeRoundId = null;
   let queueCounter = {date: todayStr(), n: 0};
+  let busy = false;
   let filter = 'active'; // active | served | all
   const root = document.getElementById('od-root');
 
@@ -2836,7 +2849,8 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   function filteredOrders(){
     const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
-    if(filter==='active') return todays.filter(o=>o.status!=='served'&&o.status!=='cancelled').sort((a,b)=>a.queueNumber-b.queueNumber);
+    if(filter==='active') return todays.filter(o=>o.status!=='served'&&o.status!=='cancelled')
+      .sort((a,b)=> (a.status==='ready'?1:0)-(b.status==='ready'?1:0) || a.queueNumber-b.queueNumber);
     if(filter==='served') return todays.filter(o=>o.status==='served').sort((a,b)=>b.queueNumber-a.queueNumber);
     return todays.sort((a,b)=>b.queueNumber-a.queueNumber);
   }
@@ -2885,9 +2899,11 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     root.querySelectorAll('[data-f]').forEach(b=> b.onclick = ()=>{ filter=b.dataset.f; render(); });
     root.querySelectorAll('[data-serve]').forEach(b=> b.onclick = (ev)=>{
       withLoading(ev.currentTarget, '...', async ()=>{
+        busy = true;
         const o = orders.find(x=>x.id===b.dataset.serve);
         if(o) o.status='served';
         await saveOrders();
+        busy = false;
         render();
         toast('ปิดรายการแล้ว');
       });
@@ -2954,10 +2970,12 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     overlay.querySelector('#oc-cancel').onclick = ()=>overlay.remove();
     overlay.querySelector('#oc-confirm').onclick = (ev)=>{
       withLoading(ev.currentTarget, 'กำลังยกเลิก...', async ()=>{
+        busy = true;
         o.status='cancelled';
         o.editHistory = o.editHistory||[];
         o.editHistory.push({at:new Date().toISOString(), summary:'ยกเลิกออเดอร์'});
         await saveOrders();
+        busy = false;
         overlay.remove();
         render();
         toast('ยกเลิกออเดอร์แล้ว');
@@ -2982,6 +3000,18 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     overlay.querySelector('#or-cancel').onclick = ()=>overlay.remove();
     overlay.querySelector('#or-confirm').onclick = (ev)=>{
       withLoading(ev.currentTarget, 'กำลังเปิดรอบ...', async ()=>{
+        busy = true;
+        // Guard: re-check for any already-open round (in case another device opened one, or local state drifted)
+        const existingOpen = events.find(e=>e.status==='open');
+        if(existingOpen){
+          activeRoundId = existingOpen.id;
+          try{ await window.storage.set(ACTIVE_ROUND_KEY, activeRoundId, true); }catch(e){}
+          busy = false;
+          overlay.remove();
+          render();
+          toast('มีรอบขายเปิดอยู่แล้ว — ปิดรอบเดิมก่อนถึงจะเปิดรอบใหม่ได้');
+          return;
+        }
         const location = overlay.querySelector('#or-location').value.trim();
         const today = todayStr();
         const name = 'รอบขาย ' + new Date(today).toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});
@@ -2994,6 +3024,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         activeRoundId = newEvent.id;
         await saveEvents();
         try{ await window.storage.set(ACTIVE_ROUND_KEY, activeRoundId, true); }catch(e){}
+        busy = false;
         overlay.remove();
         render();
         toast('เปิดรอบขายวันนี้แล้ว');
@@ -3121,6 +3152,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
           captureNote(box);
           if(items.length===0){ toast('กรุณาเลือกรายการอาหารอย่างน้อย 1 อย่าง'); throw new Error('validation'); }
+          busy = true;
           const round = getActiveRound();
           if(existing){
             const oldSummary = (existing.items||[]).map(i=>`${i.name} x${i.qty}`).join(', ');
@@ -3132,6 +3164,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             existing.items = items.map(i=>({name:i.name, price:i.price, qty:i.qty}));
             existing.note = note.trim();
             await saveOrders();
+            busy = false;
             overlay.remove();
             render();
             toast('บันทึกการแก้ไขแล้ว');
@@ -3144,6 +3177,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             };
             orders.push(order);
             await Promise.all([saveOrders(), saveQueueCounter()]);
+            busy = false;
             overlay.remove();
             render();
             showQueueConfirm(qNum);
@@ -3170,7 +3204,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   }
 
   loadAll();
-  setInterval(loadAll, POLL_MS);
+  setInterval(()=>{ if(!busy) loadAll(); }, POLL_MS);
 })();
 
 </script>

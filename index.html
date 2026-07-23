@@ -533,6 +533,293 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .ev-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
 
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
+  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
+  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.od-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+
+.od-header{margin-bottom:16px;}
+.od-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;-webkit-text-stroke:0.6px var(--ink);}
+.od-sub{font-size:13px;color:var(--ink-soft);}
+
+.od-round-banner{
+  background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px;
+  margin-bottom:18px;box-shadow:3px 3px 0 var(--ink);display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.od-round-info{flex:1;min-width:0;}
+.od-round-name{font-weight:700;font-size:14.5px;}
+.od-round-loc{font-size:12px;color:var(--ink-soft);}
+.od-round-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;background:var(--green-soft);color:var(--green);border:1.5px solid var(--ink);border-radius:5px;padding:2px 8px;}
+
+.od-noround{
+  background:var(--surface);border:2px dashed var(--ink);border-radius:var(--radius);
+  padding:36px 24px;text-align:center;margin-bottom:20px;
+}
+.od-noround p{font-size:13.5px;color:var(--ink-soft);margin:0 0 16px;}
+.od-open-round-btn{
+  background:var(--green);color:#fff;border:2px solid var(--ink);padding:13px 26px;border-radius:12px;
+  font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;box-shadow:3px 3px 0 var(--ink);
+}
+
+.od-add{
+  width:100%;background:var(--green);color:#fff;border:2px solid var(--ink);
+  padding:16px;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;
+  font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:3px 3px 0 var(--ink);margin-bottom:20px;
+}
+.od-add:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+.od-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.od-chip{font-size:12.5px;padding:6px 13px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink-soft);cursor:pointer;font-family:inherit;font-weight:600;}
+.od-chip.active{background:var(--ink);color:var(--bg);box-shadow:2px 2px 0 var(--ink);}
+
+.od-list{display:flex;flex-direction:column;gap:10px;}
+.od-row{
+  background:var(--surface);border:2px solid var(--ink);border-radius:12px;
+  padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:3px 3px 0 var(--ink);flex-wrap:wrap;
+}
+.od-row.ready{border-color:var(--green);}
+.od-row.cancelled{opacity:.5;}
+.od-qnum{
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:24px;
+  background:var(--gold-soft);border:2px solid var(--ink);border-radius:10px;
+  padding:4px 12px;flex:0 0 auto;min-width:54px;text-align:center;
+}
+.od-row.ready .od-qnum{background:var(--green-soft);}
+.od-row.cancelled .od-qnum{background:var(--red-soft);}
+.od-row-main{flex:1;min-width:120px;}
+.od-row-items{font-size:13.5px;font-weight:600;}
+.od-row-note{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+.od-row-time{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+.od-row-total{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;flex:0 0 auto;}
+.od-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;border:1.5px solid var(--ink);flex:0 0 auto;}
+.od-tag.pending{background:var(--gold-soft);color:var(--ink);}
+.od-tag.ready{background:var(--green-soft);color:var(--green);}
+.od-tag.cancelled{background:var(--red-soft);color:var(--red);}
+.od-tag.edited{background:#E0D9F5;color:#5C3FA8;}
+.od-row-actions{display:flex;gap:6px;flex:0 0 auto;}
+.od-serve-btn{
+  flex:0 0 auto;background:var(--ink);color:var(--bg);border:none;border-radius:8px;
+  padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.od-icon-btn{background:none;border:1.5px solid var(--ink);border-radius:7px;cursor:pointer;padding:6px 9px;color:var(--ink-soft);font-family:inherit;font-size:12.5px;font-weight:700;}
+.od-icon-btn:hover{background:var(--gold-soft);color:var(--ink);}
+.od-empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
+
+/* Modal */
+.od-overlay{position:fixed;inset:0;background:rgba(23,19,15,.45);display:flex;align-items:flex-end;justify-content:center;z-index:50;}
+@media (min-width:640px){.od-overlay{align-items:center;}}
+.od-modal{background:var(--bg);width:100%;max-width:480px;border-radius:18px 18px 0 0;padding:22px 20px 26px;max-height:90vh;overflow-y:auto;border:2px solid var(--ink);border-bottom:none;}
+@media (min-width:640px){.od-modal{border-radius:18px;border-bottom:2px solid var(--ink);}}
+.od-modal h2{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:20px;margin:0 0 16px;}
+.od-field{margin-bottom:13px;}
+.od-field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
+.od-field input,.od-field textarea{width:100%;padding:9px 12px;border:1.5px solid var(--ink);border-radius:8px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.od-field input:focus,.od-field textarea:focus{outline:2px solid var(--gold);outline-offset:1px;}
+.od-item-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;}
+.od-item-del:hover{color:var(--red);}
+.od-menu-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.od-menu-btn{
+  width:100%;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:10px;
+  padding:13px 16px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit;
+  box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.od-menu-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+.od-menu-btn .price{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-weight:600;font-size:13px;flex:0 0 56px;text-align:right;}
+.od-menu-btn .plus{color:var(--green);font-size:18px;flex:0 0 18px;text-align:center;}
+.od-cart{margin-bottom:14px;}
+.od-cart-empty{font-size:12.5px;color:var(--ink-soft);padding:10px 0;text-align:center;}
+.od-cart-line{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--gold-soft);
+  border:1.5px solid var(--ink);border-radius:8px;margin-bottom:6px;font-size:13.5px;font-weight:600;flex-wrap:wrap;
+}
+.od-cart-name{flex:1;min-width:100px;}
+.od-cart-price{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);flex:0 0 auto;}
+.od-cart-qty-ctrl{display:flex;align-items:center;gap:8px;}
+.od-cart-qty-btn{
+  width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);background:var(--surface);
+  cursor:pointer;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;
+  font-family:inherit;line-height:1;padding:0;
+}
+.od-cart-qty-num{font-family:'IBM Plex Mono',monospace;min-width:18px;text-align:center;}
+.od-cart-del{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:2px;}
+.od-cart-del:hover{color:var(--red);}
+.od-cart-total{
+  display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+  background:var(--ink);color:var(--bg);border-radius:8px;font-weight:700;font-size:15px;margin-bottom:14px;
+}
+.od-cart-total .val{font-family:'IBM Plex Mono',monospace;font-size:19px;}
+.od-custom-add{display:flex;gap:8px;margin-bottom:14px;}
+.od-custom-add input{flex:1;}
+.od-custom-add button{
+  background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:0 14px;
+  font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;
+}
+.od-modal-actions{display:flex;gap:10px;margin-top:16px;}
+.od-btn-primary{flex:1;background:var(--green);color:#fff;border:2px solid var(--ink);padding:11px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:2px 2px 0 var(--ink);}
+.od-btn-secondary{background:var(--surface);border:1.5px solid var(--ink);color:var(--ink-soft);padding:11px 16px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;}
+.od-btn-danger{background:var(--red-soft);color:var(--red);border:2px solid var(--ink);padding:11px 16px;border-radius:9px;font-size:13.5px;cursor:pointer;font-family:inherit;font-weight:700;}
+.od-history-item{font-size:12px;color:var(--ink-soft);padding:6px 0;border-top:1px dashed var(--border);}
+.od-history-item:first-child{border-top:none;}
+
+/* Big queue confirmation */
+.od-confirm-modal{background:var(--gold);border:3px solid var(--ink);border-radius:20px;padding:36px 30px;text-align:center;box-shadow:6px 6px 0 var(--ink);max-width:320px;}
+.od-confirm-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.od-confirm-num{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:72px;color:var(--ink);line-height:1;}
+.od-confirm-ok{margin-top:20px;background:var(--ink);color:var(--bg);border:none;padding:12px 30px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+
+.od-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.od-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
+  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
+  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.kt-root{padding:20px 16px 60px;max-width:960px;margin:0 auto;}
+
+.kt-header{margin-bottom:18px;}
+.kt-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;-webkit-text-stroke:0.6px var(--ink);}
+.kt-sub{font-size:13px;color:var(--ink-soft);}
+.kt-count-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 12px;
+  background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;
+  font-size:12.5px;font-weight:700;
+}
+
+/* ===== Receipt-rail concept ===== */
+.kt-rail-wrap{margin-bottom:36px;position:relative;}
+.kt-rail-label{font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:18px;}
+.kt-rail-bar{
+  height:10px;background:var(--ink);border-radius:6px;
+  box-shadow:0 2px 0 rgba(0,0,0,.15);
+  margin-bottom:0;position:relative;z-index:1;
+}
+.kt-rail-track{
+  display:flex;gap:22px;overflow-x:auto;padding:0 6px 16px;margin-top:-2px;
+  scroll-snap-type:x proximity;
+}
+.kt-ticket{
+  flex:0 0 auto;width:190px;background:var(--surface);border:2px solid var(--ink);
+  border-radius:12px;padding:16px 14px 14px;position:relative;margin-top:16px;
+  box-shadow:4px 4px 0 var(--ink);scroll-snap-align:start;
+}
+.kt-ticket::before{
+  content:'';position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  width:16px;height:16px;border-radius:50%;background:var(--bg);border:2.5px solid var(--ink);
+  z-index:2;
+}
+.kt-ticket:nth-child(odd){transform:rotate(-2deg);}
+.kt-ticket:nth-child(even){transform:rotate(2deg);}
+.kt-ticket-qnum{
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:26px;
+  text-align:center;margin-bottom:8px;
+}
+.kt-ticket-items{font-size:13px;font-weight:600;border-top:1.5px dashed var(--border);padding-top:8px;margin-bottom:6px;min-height:36px;}
+.kt-ticket-item-line{display:flex;justify-content:space-between;gap:6px;padding:1px 0;}
+.kt-ticket-note{font-size:11px;color:var(--ink-soft);margin-bottom:10px;font-style:italic;}
+.kt-ticket-time{font-size:10.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;text-align:center;margin-bottom:8px;}
+.kt-ready-btn{
+  width:100%;background:var(--green);color:#fff;border:2px solid var(--ink);border-radius:8px;
+  padding:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;
+}
+.kt-ready-btn:hover{transform:translate(1px,1px);}
+
+.kt-ready-section{display:flex;flex-direction:column;gap:8px;}
+.kt-ready-row{
+  display:flex;align-items:center;gap:12px;background:var(--green-soft);border:1.5px solid var(--green);
+  border-radius:10px;padding:9px 14px;font-size:13px;
+}
+.kt-ready-qnum{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;flex:0 0 auto;}
+.kt-ready-items{flex:1;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kt-ready-tag{font-size:10.5px;font-weight:700;color:var(--green);flex:0 0 auto;}
+
+.kt-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:2px dashed var(--ink);border-radius:var(--radius);}
+.kt-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.kt-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+:root{
+  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
+  --blue:#7C8DB5; --blue-soft:#DCE3F0; --coral:#E8735A; --coral-soft:#FBDDD5;
+  --gold:#F5CB4D; --gold-soft:#FCEBB8; --border:#C7D0E4; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.mn-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+.mn-header{margin-bottom:16px;}
+.mn-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;color:var(--coral);}
+.mn-sub{font-size:13px;color:var(--ink-soft);}
+.mn-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.mn-add{margin-left:auto;background:var(--coral);color:#fff;border:none;padding:9px 18px;border-radius:999px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 3px 8px rgba(0,0,0,.12);}
+.mn-list{display:flex;flex-direction:column;gap:8px;}
+.mn-row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.mn-row.inactive{opacity:.5;}
+.mn-name{flex:1;font-weight:700;font-size:14.5px;}
+.mn-price{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;color:var(--coral);flex:0 0 auto;}
+.mn-toggle{position:relative;width:42px;height:24px;flex:0 0 auto;}
+.mn-toggle input{opacity:0;width:0;height:0;}
+.mn-toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:.2s;}
+.mn-toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.mn-toggle input:checked + .mn-toggle-slider{background:var(--coral);}
+.mn-toggle input:checked + .mn-toggle-slider::before{transform:translateX(18px);}
+.mn-row-actions{display:flex;gap:2px;flex:0 0 auto;}
+.mn-icon-btn{background:none;border:none;cursor:pointer;padding:5px;color:var(--ink-soft);border-radius:6px;}
+.mn-icon-btn:hover{background:var(--blue-soft);color:var(--ink);}
+.mn-empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;border:1.5px dashed var(--border);border-radius:var(--radius);}
+.mn-overlay{position:fixed;inset:0;background:rgba(59,66,88,.35);display:flex;align-items:flex-end;justify-content:center;z-index:50;}
+@media (min-width:640px){.mn-overlay{align-items:center;}}
+.mn-modal{background:var(--bg);width:100%;max-width:420px;border-radius:18px 18px 0 0;padding:22px 20px 26px;max-height:88vh;overflow-y:auto;}
+@media (min-width:640px){.mn-modal{border-radius:18px;}}
+.mn-modal h2{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-size:19px;margin:0 0 16px;color:var(--coral);}
+.mn-field{margin-bottom:13px;}
+.mn-field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
+.mn-field input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.mn-field input:focus{outline:2px solid var(--coral);outline-offset:1px;}
+.mn-modal-actions{display:flex;gap:10px;margin-top:18px;}
+.mn-btn-primary{flex:1;background:var(--coral);color:#fff;border:none;padding:11px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+.mn-btn-secondary{background:var(--surface);border:1.5px solid var(--border);color:var(--ink-soft);padding:11px 16px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;}
+.mn-btn-danger{background:var(--coral-soft);color:var(--coral);border:none;padding:11px 16px;border-radius:9px;font-size:13.5px;cursor:pointer;font-family:inherit;font-weight:700;flex:1;}
+.mn-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.mn-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
+  --coral:#E8735A; --coral-soft:#FBDDD5; --border:#C7D0E4; --radius:18px;
+}
+*{box-sizing:border-box;}
+body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
+.ig-root{padding:20px 16px 60px;max-width:820px;margin:0 auto;}
+.ig-header{margin-bottom:16px;}
+.ig-title{font-family:'Jao October','Archivo Black','IBM Plex Sans Thai',sans-serif;font-weight:700;font-size:26px;margin:0 0 2px;color:var(--coral);}
+.ig-sub{font-size:13px;color:var(--ink-soft);}
+.ig-toolbar{display:flex;gap:8px;margin-bottom:14px;}
+.ig-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:999px;font-family:inherit;font-size:14px;background:var(--surface);color:var(--ink);}
+.ig-input:focus{outline:2px solid var(--coral);outline-offset:1px;}
+.ig-add{background:var(--coral);color:#fff;border:none;padding:10px 20px;border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;font-size:13.5px;}
+.ig-list{display:flex;flex-wrap:wrap;gap:8px;}
+.ig-chip{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;padding:8px 8px 8px 16px;font-size:13.5px;font-weight:600;}
+.ig-chip button{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;border-radius:50%;}
+.ig-chip button:hover{background:var(--coral-soft);color:var(--coral);}
+.ig-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:1.5px dashed var(--border);border-radius:var(--radius);width:100%;}
+.ig-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
+.ig-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 @font-face{
@@ -551,7 +838,6 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   font-weight:700; font-style:normal; font-display:swap;
 }
 
-/* ===== Bold sticker theme override ===== */
 :root{
   --bg:#F3EEDD;
   --surface:#FFFFFF;
@@ -610,8 +896,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   text-stroke:0.6px var(--ink);
 }
 
-/* ===== App shell — bold red grid header ===== */
-.app-shell{max-width:820px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
+.app-shell{max-width:960px;margin:0 auto;padding:0 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
 .app-header{
   background-color:var(--header-red);
   background-image:
@@ -621,7 +906,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   display:flex;justify-content:center;
 }
 .app-header-inner{
-  width:100%;max-width:820px;box-sizing:border-box;
+  width:100%;max-width:960px;box-sizing:border-box;
   padding:22px 20px 32px;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
 }
@@ -647,6 +932,10 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .app-navdot.dot-green{background:var(--green);}
 .app-navdot.dot-gold{background:var(--gold);}
 .app-navdot.dot-red{background:var(--red);}
+.app-navdot.dot-blue{background:#345BFF;}
+.app-navdot.dot-purple{background:#8C4FD1;}
+.app-navdot.dot-coral{background:#E8735A;}
+.app-navdot.dot-teal{background:#2E9E8F;}
 .app-wave{width:100%;height:20px;display:block;margin:0 0 20px;}
 .app-module{display:none;}
 .app-module.active{display:block;}
@@ -667,8 +956,12 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <span class="app-wordmark">MOM'S CONGEE</span>
     </div>
     <nav class="app-nav">
+      <button class="app-navbtn" data-module="orders"><span class="app-navdot dot-blue"></span>Orders</button>
+      <button class="app-navbtn" data-module="kitchen"><span class="app-navdot dot-purple"></span>Kitchen</button>
+      <button class="app-navbtn" data-module="menu"><span class="app-navdot dot-coral"></span>Menu</button>
       <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
       <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
+      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>Ingredients</button>
       <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
     </nav>
   </div>
@@ -677,6 +970,19 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   <path d="M0,0 Q10,24 20,0 T40,0 T60,0 T80,0 T100,0 T120,0 T140,0 T160,0 T180,0 T200,0 T220,0 T240,0 T260,0 T280,0 T300,0 T320,0 T340,0 T360,0 T380,0 T400,0 L400,24 L0,24 Z" fill="var(--bg)" style="background:var(--header-red);"></path>
 </svg>
 <div class="app-shell">
+<div id="module-orders" class="app-module">
+<div class="od-root" id="od-root">
+  <div class="od-loading">กำลังโหลดข้อมูล...</div>
+</div>
+</div>
+<div id="module-kitchen" class="app-module">
+<div class="kt-root" id="kt-root">
+  <div class="kt-loading">กำลังโหลดข้อมูล...</div>
+</div>
+</div>
+<div id="module-menu" class="app-module">
+<div class="mn-root" id="mn-root"><div class="mn-loading">กำลังโหลดข้อมูล...</div></div>
+</div>
 <div id="module-assets" class="app-module active">
 <div class="faw-root" id="faw-root">
   <div class="faw-loading">กำลังโหลดข้อมูล...</div>
@@ -686,6 +992,9 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 <div class="sw-root" id="sw-root">
   <div class="sw-loading">กำลังโหลดข้อมูล...</div>
 </div>
+</div>
+<div id="module-ingredients" class="app-module">
+<div class="ig-root" id="ig-root"><div class="ig-loading">กำลังโหลดข้อมูล...</div></div>
 </div>
 <div id="module-events" class="app-module">
 <div class="ev-root" id="ev-root">
@@ -697,7 +1006,6 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
 <script>
 (function(){
-  // ===== ตั้งค่า Supabase ของคุณตรงนี้ =====
   var SUPABASE_URL = 'https://hobwibvcpitlisnbovem.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvYndpYnZjcGl0bGlzbmJvdmVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2ODI5ODAsImV4cCI6MjEwMDI1ODk4MH0.ZTTVHT_mOsodUwl9b5TjoXgfj5FpNP-Cge6YbknPFqo';
   var LOGIN_EMAIL = 'chutima.tester@gmail.com';
@@ -750,8 +1058,6 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   // =====================================================================
   // Generic helpers ให้แต่ละโมดูลใช้แทน window.storage เดิม
-  // แนวคิด: โหลดทั้งตาราง / sync ทั้งตาราง (ลบแถวที่ไม่มีในอาเรย์ปัจจุบัน + upsert ที่เหลือ)
-  // เหมาะกับข้อมูลปริมาณน้อยแบบร้านครอบครัว ไม่ต้องทำ diff ละเอียด
   // =====================================================================
   window.dbLoadTable = async function(table){
     await window.authReady;
@@ -776,8 +1082,6 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     return true;
   };
 
-  // ตารางลูกของ events (event_ingredients / event_other_costs / event_supply_usage)
-  // sync แบบ replace ทั้งหมดของ event ที่ยังอยู่ในอาเรย์ปัจจุบัน
   window.dbSyncEventChildren = async function(eventIds, ingRows, costRows, usageRows){
     await window.authReady;
     if(eventIds.length){
@@ -798,6 +1102,26 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       supabase.from('event_supply_usage').select('*'),
     ]);
     return { ing: ing.data || [], cost: cost.data || [], usage: usage.data || [] };
+  };
+
+  // ตารางลูกของ orders (order_items / order_edit_history)
+  window.dbSyncOrderChildren = async function(orderIds, itemRows, historyRows){
+    await window.authReady;
+    if(orderIds.length){
+      await supabase.from('order_items').delete().in('order_id', orderIds);
+      await supabase.from('order_edit_history').delete().in('order_id', orderIds);
+    }
+    if(itemRows.length) await supabase.from('order_items').insert(itemRows);
+    if(historyRows.length) await supabase.from('order_edit_history').insert(historyRows);
+  };
+
+  window.dbLoadOrderChildren = async function(){
+    await window.authReady;
+    const [items, history] = await Promise.all([
+      supabase.from('order_items').select('*'),
+      supabase.from('order_edit_history').select('*').order('at', {ascending:true}),
+    ]);
+    return { items: items.data || [], history: history.data || [] };
   };
 })();
 
@@ -875,7 +1199,8 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const rows = await window.dbLoadTable('assets');
       assets = rows.map(r=>({
         id: r.id, faId: r.fa_id, name: r.name, owner: r.owner, category: r.category,
-        status: r.status, purchaseDate: r.purchase_date, price: r.price, note: r.note
+        status: r.status, purchaseDate: r.purchase_date, price: r.price, note: r.note,
+        paidBack: r.paid_back
       }));
     }catch(e){
       assets = [];
@@ -888,7 +1213,8 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     try{
       const rows = assets.map(a=>({
         id: a.id, fa_id: a.faId, name: a.name, owner: a.owner, category: a.category,
-        status: a.status, purchase_date: a.purchaseDate || null, price: Number(a.price)||0, note: a.note || ''
+        status: a.status, purchase_date: a.purchaseDate || null, price: Number(a.price)||0,
+        note: a.note || '', paid_back: !!a.paidBack
       }));
       const ok = await window.dbSyncTable('assets', 'id', rows);
       if(!ok) toast('บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง');
@@ -969,6 +1295,12 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     root.querySelectorAll('[data-del]').forEach(btn=>{
       btn.onclick = ()=>deleteAsset(btn.dataset.del);
     });
+    root.querySelectorAll('[data-paidback]').forEach(btn=>{
+      btn.onclick = async ()=>{
+        const a = assets.find(x=>x.id===btn.dataset.paidback);
+        if(a){ a.paidBack = !a.paidBack; await saveAssets(); render(); toast(a.paidBack?'ทำเครื่องหมายคืนทุนแล้ว':'ยกเลิกสถานะคืนทุน'); }
+      };
+    });
   }
 
   function listRowHtml(a){
@@ -982,6 +1314,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <span class="faw-row-date">${fmtDate(a.purchaseDate)}</span>
         <span class="faw-row-price">฿${fmtMoney(a.price)}</span>
         <span class="faw-row-actions">
+          <button class="faw-icon-btn" data-paidback="${a.id}" title="${a.paidBack?'ยกเลิกคืนทุน':'ทำเครื่องหมายคืนทุนแล้ว'}">${a.paidBack?'💰':'⭕'}</button>
           <button class="faw-icon-btn" data-edit="${a.id}" title="แก้ไข">${iconPencil()}</button>
           <button class="faw-icon-btn" data-del="${a.id}" title="ลบ">${iconTrash()}</button>
         </span>
@@ -996,6 +1329,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           <div class="faw-ticket-name"><span class="faw-faid">${escapeHtml(a.faId||'-')}</span> ${escapeHtml(a.name)}</div>
           <div class="faw-ticket-meta">
             <span class="faw-tag st-${a.status}">${a.status}</span>
+            ${a.paidBack?'<span class="faw-tag st-ใช้งานอยู่" style="background:var(--green-soft);color:var(--green);">คืนทุนแล้ว</span>':''}
             <span>${a.category||'-'}</span>
             <span>ซื้อเมื่อ ${fmtDate(a.purchaseDate)}</span>
             ${a.owner?`<span>เจ้าของ: ${escapeHtml(a.owner)}</span>`:''}
@@ -1005,6 +1339,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <div class="faw-ticket-right">
           <div class="faw-ticket-price">฿${fmtMoney(a.price)}</div>
           <div class="faw-ticket-actions">
+            <button class="faw-icon-btn" data-paidback="${a.id}" title="${a.paidBack?'ยกเลิกคืนทุน':'ทำเครื่องหมายคืนทุนแล้ว'}">${a.paidBack?'💰':'⭕'}</button>
             <button class="faw-icon-btn" data-edit="${a.id}" title="แก้ไข">${iconPencil()}</button>
             <button class="faw-icon-btn" data-del="${a.id}" title="ลบ">${iconTrash()}</button>
           </div>
@@ -1107,6 +1442,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           purchaseDate: overlay.querySelector('#f-date').value,
           price: parseFloat(overlay.querySelector('#f-price').value)||0,
           note: overlay.querySelector('#f-note').value.trim(),
+          paidBack: a?!!a.paidBack:false,
         };
         if(a){
           const idx = assets.findIndex(x=>x.id===a.id);
@@ -1805,12 +2141,15 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   const MASTER_KEY = 'supplies_master_list';
   const TX_KEY = 'supplies_transactions_list';
   const PARTNERS_KEY = 'business_partners';
+  const ORDERS_KEY = 'orders_list';
   const DEFAULT_INGREDIENTS = ['ข้าวสาร','หมูสับ','เห็ดหอม','ต้นหอมผักชี','ขิงอ่อน','กระเทียม','น้ำมัน','ไข่'];
 
   let events = [];
   let master = [];
   let transactions = [];
   let partners = [{name:'หุ้นส่วน 1', share:50},{name:'หุ้นส่วน 2', share:50}];
+  let ingredientsMaster = [];
+  let orders = [];
   let statusFilter = 'all';
 
   const root = document.getElementById('ev-root');
@@ -1849,7 +2188,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const evRows = await window.dbLoadTable('events');
       const children = await window.dbLoadEventChildren();
       events = evRows.map(r=>({
-        id: r.id, status: r.status, name: r.name, date: r.date, note: r.note,
+        id: r.id, status: r.status, name: r.name, location: r.location, date: r.date, note: r.note,
         bowlsSold: r.bowls_sold, cashRevenue: r.cash_revenue, transferRevenue: r.transfer_revenue,
         closedAt: r.closed_at,
         finalRevenue: r.final_revenue, finalCashRevenue: r.final_cash_revenue, finalTransferRevenue: r.final_transfer_revenue,
@@ -1874,15 +2213,23 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       }));
     }catch(err){ transactions = []; }
     try{
+      // แค่ใช้เช็คว่ายังมีออเดอร์ค้างก่อนปิดรอบไหม ไม่ต้องดึงรายการอาหาร/ประวัติแก้ไข
+      const rows = await window.dbLoadTable('orders');
+      orders = rows.map(r=>({ id: r.id, status: r.status, eventId: r.event_id, createdAt: r.created_at }));
+    }catch(err){ orders = []; }
+    try{
       const rows = await window.dbLoadTable('partners');
       if(rows.length) partners = rows.map(r=>({name: r.name, share: r.share}));
     }catch(err){ /* keep default */ }
+    try{
+      ingredientsMaster = await window.dbLoadTable('ingredients_master');
+    }catch(err){ ingredientsMaster = []; }
     render();
   }
   async function saveEvents(){
     try{
       const rows = events.map(e=>({
-        id: e.id, status: e.status, name: e.name, date: e.date || null, note: e.note || '',
+        id: e.id, status: e.status, name: e.name, location: e.location || '', date: e.date || null, note: e.note || '',
         bowls_sold: Number(e.bowlsSold)||0, cash_revenue: Number(e.cashRevenue)||0, transfer_revenue: Number(e.transferRevenue)||0,
         closed_at: e.closedAt || null,
         final_revenue: e.finalRevenue==null?null:Number(e.finalRevenue),
@@ -1912,6 +2259,19 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         }));
       });
       await window.dbSyncEventChildren(eventIds, ingRows, costRows, usageRows);
+
+      // เพิ่มชื่อวัตถุดิบใหม่ที่ยังไม่มีใน master เข้าไปอัตโนมัติ
+      const knownNames = new Set(ingredientsMaster.map(m=>m.name));
+      const newNames = new Set();
+      events.forEach(e=> (e.rawIngredients||[]).forEach(i=>{
+        const n = (i.name||'').trim();
+        if(n && !knownNames.has(n)) newNames.add(n);
+      }));
+      if(newNames.size){
+        const newRows = Array.from(newNames).map(n=>({id: 'ingm_'+n.replace(/\s+/g,'_'), name: n}));
+        await window.supabaseClient.from('ingredients_master').upsert(newRows, {onConflict:'name', ignoreDuplicates:true});
+        ingredientsMaster = ingredientsMaster.concat(newRows);
+      }
     }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
   }
   async function saveTx(){
@@ -2029,6 +2389,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <div class="ev-row ${e.status==='closed'?'closed':''}" data-erow="${e.id}">
         <div class="ev-row-top">
           <span class="ev-row-name">${escapeHtml(e.name)}</span>
+          ${e.location?`<span class="ev-row-date" style="color:var(--ink-soft);">📍 ${escapeHtml(e.location)}</span>`:''}
           <span class="ev-tag ${e.status}">${e.status==='closed'?'ปิดรอบแล้ว':'กำลังขาย'}</span>
           <span class="ev-row-date" style="margin-left:auto;">${fmtDate(e.date)}</span>
         </div>
@@ -2091,12 +2452,14 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     const state = computeLedgerState();
     const draft = {
       name: e?e.name:'',
+      location: e?(e.location||''):'',
       date: e?e.date:new Date().toISOString().slice(0,10),
       note: e?(e.note||''):'',
       bowlsSold: e?e.bowlsSold:'',
       cashRevenue: e?e.cashRevenue:'',
       transferRevenue: e?e.transferRevenue:'',
-      rawIngredients: e && e.rawIngredients ? JSON.parse(JSON.stringify(e.rawIngredients)) : DEFAULT_INGREDIENTS.map(name=>({id:uid('ing'), name, quantity:'', unit:'', price:''})),
+      rawIngredients: e && e.rawIngredients ? JSON.parse(JSON.stringify(e.rawIngredients)) :
+        (ingredientsMaster.length ? ingredientsMaster : DEFAULT_INGREDIENTS.map(n=>({name:n}))).map(m=>({id:uid('ing'), name:m.name, quantity:'', unit:m.default_unit||m.unit||'', price:''})),
       usage: e && e.usage ? JSON.parse(JSON.stringify(e.usage)) : [],
       otherCosts: e && e.otherCosts ? JSON.parse(JSON.stringify(e.otherCosts)) : [],
     };
@@ -2156,6 +2519,10 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <div class="ev-field">
           <label>ชื่อรอบขาย (ไม่บังคับ — ถ้าไม่ระบุจะใช้วันที่แทน)</label>
           <input id="ef-name" value="${escapeHtml(draft.name)}" placeholder="เช่น ขายวันเสาร์ที่ตลาด, งานบุญวัด">
+        </div>
+        <div class="ev-field">
+          <label>สถานที่ขาย</label>
+          <input id="ef-location" value="${escapeHtml(draft.location)}" placeholder="เช่น ตลาดนัดหน้าหมู่บ้าน, หน้าบ้าน">
         </div>
         <div class="ev-row2">
           <div class="ev-field"><label>วันที่</label><input id="ef-date" type="date" value="${draft.date}"></div>
@@ -2228,6 +2595,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
     function captureDraft(box){
       draft.name = box.querySelector('#ef-name').value;
+      draft.location = box.querySelector('#ef-location').value;
       draft.date = box.querySelector('#ef-date').value;
       draft.note = box.querySelector('#ef-note').value;
       draft.bowlsSold = box.querySelector('#ef-bowls').value;
@@ -2380,6 +2748,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             id: e?e.id:uid('ev'),
             status:'open',
             name: finalName,
+            location: draft.location.trim(),
             date: draft.date,
             note: draft.note.trim(),
             bowlsSold: parseFloat(draft.bowlsSold)||0,
@@ -2401,6 +2770,13 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         captureDraft(box);
         if(!draft.date){ toast('กรุณาระบุวันที่'); return; }
         if(!draft.name.trim()) draft.name = defaultEventName(draft.date);
+        if(e){
+          const unserved = orders.filter(o=> o.eventId===e.id && (o.status==='pending' || o.status==='ready'));
+          if(unserved.length>0){
+            toast(`ยังมีออเดอร์ที่ยังไม่เสิร์ฟ ${unserved.length} รายการ — เสิร์ฟให้ครบก่อนถึงจะปิดรอบได้`);
+            return;
+          }
+        }
         confirmCloseRound(e, draft, overlay);
       };
     }
@@ -2471,7 +2847,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
         const payload = {
           id: eventId, status:'closed', closedAt: new Date().toISOString(),
-          name: draft.name.trim(), date: draft.date, note: draft.note.trim(),
+          name: draft.name.trim(), location: draft.location.trim(), date: draft.date, note: draft.note.trim(),
           bowlsSold: bowls, cashRevenue: cash, transferRevenue: transfer,
           rawIngredients: draft.rawIngredients,
           usage: draft.usage, otherCosts: draft.otherCosts,
@@ -2501,6 +2877,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <div class="ev-modal" id="cv-modal-box">
         <h2>${escapeHtml(e.name)}</h2>
         <div class="ev-closed-banner">✓ ปิดรอบแล้วเมื่อ ${fmtDate(e.closedAt)} — สต๊อกถูกตัดเรียบร้อย ตัวเลขถูกล็อกไว้</div>
+        ${e.location?`<div class="ev-field"><label>สถานที่ขาย</label><input value="${escapeHtml(e.location)}" disabled></div>`:''}
         <div class="ev-field"><label>วันที่ขาย</label><input value="${fmtDate(e.date)}" disabled></div>
         <div class="ev-row2">
           <div class="ev-field"><label>จำนวนชาม</label><input value="${fmtNum(e.finalBowls)}" disabled></div>
@@ -2597,6 +2974,755 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     };
   }
 
+  loadAll();
+})();
+
+</script>
+<script>
+
+(function(){
+  const POLL_MS = 8000;
+
+  let orders = [];
+  let menu = [];
+  let events = [];
+  let busy = false;
+  let filter = 'active'; // active | served | all
+  const root = document.getElementById('od-root');
+
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+  function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
+  function iconPlus(){ return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
+  function iconTrash(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
+
+  async function loadAll(){
+    try{
+      const rows = await window.dbLoadTable('orders');
+      const children = await window.dbLoadOrderChildren();
+      orders = rows.map(r=>({
+        id: r.id, queueNumber: r.queue_number, note: r.note, status: r.status,
+        createdAt: r.created_at, eventId: r.event_id,
+        items: children.items.filter(i=>i.order_id===r.id).map(i=>({id:i.id, name:i.name, price:i.price, qty:i.qty})),
+        editHistory: children.history.filter(h=>h.order_id===r.id).map(h=>({at:h.at, summary:h.summary})),
+      }));
+    }catch(e){ orders = []; }
+    try{
+      const rows = await window.dbLoadTable('menu_items');
+      menu = rows.map(r=>({id:r.id, name:r.name, price:r.price, active:r.active}));
+    }catch(e){ menu = []; }
+    try{
+      const rows = await window.dbLoadTable('events');
+      events = rows.map(r=>({id:r.id, status:r.status, name:r.name, location:r.location, date:r.date}));
+    }catch(e){ events = []; }
+    render();
+  }
+  async function saveOrders(){
+    try{
+      const rows = orders.map(o=>({
+        id: o.id, queue_number: o.queueNumber, note: o.note || '', status: o.status,
+        created_at: o.createdAt, event_id: o.eventId || null
+      }));
+      const ok = await window.dbSyncTable('orders', 'id', rows);
+      if(!ok){ toast('บันทึกไม่สำเร็จ'); return; }
+      const orderIds = orders.map(o=>o.id);
+      const itemRows = [], historyRows = [];
+      orders.forEach(o=>{
+        (o.items||[]).forEach(i=> itemRows.push({
+          id: i.id || uid('oi'), order_id: o.id, name: i.name, price: Number(i.price)||0, qty: Number(i.qty)||0
+        }));
+        (o.editHistory||[]).forEach(h=> historyRows.push({
+          id: h.id || uid('oh'), order_id: o.id, at: h.at, summary: h.summary || ''
+        }));
+      });
+      await window.dbSyncOrderChildren(orderIds, itemRows, historyRows);
+    }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
+  }
+  async function saveEvents(){
+    try{
+      const rows = events.map(e=>({
+        id: e.id, status: e.status, name: e.name, location: e.location || '', date: e.date || null
+      }));
+      await window.dbSyncTable('events', 'id', rows);
+    }catch(e){}
+  }
+  function peekNextQueueNumber(){
+    const today = todayStr();
+    const todays = orders.filter(o=>(o.createdAt||'').slice(0,10)===today);
+    const maxQ = todays.reduce((m,o)=>Math.max(m, Number(o.queueNumber)||0), 0);
+    return maxQ + 1;
+  }
+  function toast(msg){ const t=document.createElement('div'); t.className='od-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true; btn.style.opacity='.6'; btn.style.cursor='wait'; btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; btn.innerHTML=original; }
+    });
+  }
+
+  function getActiveRound(){
+    return events.find(e=>e.status==='open') || null;
+  }
+
+  function orderTotal(o){ return (o.items||[]).reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0); }
+
+  function filteredOrders(){
+    const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
+    if(filter==='active') return todays.filter(o=>o.status!=='served'&&o.status!=='cancelled')
+      .sort((a,b)=> (a.status==='ready'?1:0)-(b.status==='ready'?1:0) || a.queueNumber-b.queueNumber);
+    if(filter==='served') return todays.filter(o=>o.status==='served').sort((a,b)=>b.queueNumber-a.queueNumber);
+    return todays.sort((a,b)=>b.queueNumber-a.queueNumber);
+  }
+
+  function render(){
+    const round = getActiveRound();
+    if(!round){
+      root.innerHTML = `
+        <div class="od-header">
+          <h1 class="od-title">สั่งอาหาร</h1>
+          <div class="od-sub">รับออเดอร์ลูกค้า แจกเลขคิวอัตโนมัติ</div>
+        </div>
+        <div class="od-noround">
+          <p>ยังไม่ได้เปิดรอบขายวันนี้ — ต้องเปิดรอบก่อนถึงจะเริ่มรับออเดอร์ได้</p>
+          <button class="od-open-round-btn" id="od-open-round">🟢 เปิดรอบบิลวันนี้</button>
+        </div>
+      `;
+      document.getElementById('od-open-round').onclick = openRoundModal;
+      return;
+    }
+
+    const list = filteredOrders();
+    root.innerHTML = `
+      <div class="od-header">
+        <h1 class="od-title">สั่งอาหาร</h1>
+        <div class="od-sub">รับออเดอร์ลูกค้า แจกเลขคิวอัตโนมัติ</div>
+      </div>
+      <div class="od-round-banner">
+        <div class="od-round-info">
+          <div class="od-round-name">${escapeHtml(round.name)}</div>
+          <div class="od-round-loc">${round.location?('📍 '+escapeHtml(round.location)):'ยังไม่ระบุสถานที่'}</div>
+        </div>
+        <span class="od-round-tag">รอบเปิดอยู่</span>
+      </div>
+      <button class="od-add" id="od-add-btn">${iconPlus()} รับออเดอร์ใหม่</button>
+      <div class="od-toolbar">
+        <button class="od-chip ${filter==='active'?'active':''}" data-f="active">กำลังดำเนินการ</button>
+        <button class="od-chip ${filter==='served'?'active':''}" data-f="served">เสิร์ฟแล้ววันนี้</button>
+        <button class="od-chip ${filter==='all'?'active':''}" data-f="all">ทั้งหมดวันนี้</button>
+      </div>
+      <div class="od-list">
+        ${list.length===0?`<div class="od-empty">ไม่มีออเดอร์ในหมวดนี้</div>`:list.map(orderRow).join('')}
+      </div>
+    `;
+    document.getElementById('od-add-btn').onclick = ()=>openOrderModal(null);
+    root.querySelectorAll('[data-f]').forEach(b=> b.onclick = ()=>{ filter=b.dataset.f; render(); });
+    root.querySelectorAll('[data-serve]').forEach(b=> b.onclick = (ev)=>{
+      withLoading(ev.currentTarget, '...', async ()=>{
+        busy = true;
+        const o = orders.find(x=>x.id===b.dataset.serve);
+        if(o) o.status='served';
+        await saveOrders();
+        busy = false;
+        render();
+        toast('ปิดรายการแล้ว');
+      });
+    });
+    root.querySelectorAll('[data-editorder]').forEach(b=> b.onclick = ()=>openOrderModal(b.dataset.editorder));
+    root.querySelectorAll('[data-cancelorder]').forEach(b=> b.onclick = ()=>confirmCancelOrder(b.dataset.cancelorder));
+    root.querySelectorAll('[data-history]').forEach(b=> b.onclick = ()=>showHistory(b.dataset.history));
+  }
+
+  function orderRow(o){
+    const itemsSummary = (o.items||[]).map(i=>`${escapeHtml(i.name)}${i.qty>1?' x'+i.qty:''}`).join(', ');
+    const canEdit = o.status==='pending' || o.status==='ready';
+    const hasHistory = (o.editHistory||[]).length>0;
+    return `
+      <div class="od-row ${o.status==='ready'?'ready':''} ${o.status==='cancelled'?'cancelled':''}">
+        <div class="od-qnum">#${o.queueNumber}</div>
+        <div class="od-row-main">
+          <div class="od-row-items">${itemsSummary||'(ไม่มีรายการ)'}</div>
+          ${o.note?`<div class="od-row-note">📝 ${escapeHtml(o.note)}</div>`:''}
+          <div class="od-row-time">${fmtTime(o.createdAt)}</div>
+        </div>
+        <div class="od-row-total">฿${fmtMoney(orderTotal(o))}</div>
+        <span class="od-tag ${o.status}">${o.status==='ready'?'พร้อมเสิร์ฟ':o.status==='served'?'เสิร์ฟแล้ว':o.status==='cancelled'?'ยกเลิกแล้ว':'กำลังทำ'}</span>
+        ${hasHistory?`<button class="od-tag edited" data-history="${o.id}" style="cursor:pointer;">แก้ไขแล้ว</button>`:''}
+        <div class="od-row-actions">
+          ${o.status==='ready'?`<button class="od-serve-btn" data-serve="${o.id}">เสิร์ฟแล้ว</button>`:''}
+          ${canEdit?`<button class="od-icon-btn" data-editorder="${o.id}">แก้ไข</button>`:''}
+          ${canEdit?`<button class="od-icon-btn" data-cancelorder="${o.id}">ยกเลิก</button>`:''}
+        </div>
+      </div>
+    `;
+  }
+
+  function showHistory(id){
+    const o = orders.find(x=>x.id===id); if(!o) return;
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:400px;">
+        <h2>ประวัติการแก้ไข — คิว #${o.queueNumber}</h2>
+        ${(o.editHistory||[]).map(h=>`<div class="od-history-item">🕐 ${fmtTime(h.at)} — ${escapeHtml(h.summary)}</div>`).join('')}
+        <div class="od-modal-actions"><button class="od-btn-secondary" id="oh-close" style="flex:1;">ปิด</button></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#oh-close').onclick = ()=>overlay.remove();
+  }
+
+  function confirmCancelOrder(id){
+    const o = orders.find(x=>x.id===id); if(!o) return;
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:400px;">
+        <h2>ยืนยันยกเลิกออเดอร์</h2>
+        <p style="font-size:14px;color:var(--ink-soft);margin:0 0 20px;">ต้องการยกเลิกออเดอร์คิว <b style="color:var(--ink);">#${o.queueNumber}</b> ใช่หรือไม่?</p>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="oc-cancel">ไม่ยกเลิก</button>
+          <button class="od-btn-danger" id="oc-confirm" style="flex:1;">ยืนยันยกเลิก</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#oc-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#oc-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังยกเลิก...', async ()=>{
+        busy = true;
+        o.status='cancelled';
+        o.editHistory = o.editHistory||[];
+        o.editHistory.push({at:new Date().toISOString(), summary:'ยกเลิกออเดอร์'});
+        await saveOrders();
+        busy = false;
+        overlay.remove();
+        render();
+        toast('ยกเลิกออเดอร์แล้ว');
+      });
+    };
+  }
+
+  function openRoundModal(){
+    const overlay = document.createElement('div'); overlay.className='od-overlay';
+    overlay.innerHTML = `
+      <div class="od-modal" style="max-width:420px;">
+        <h2>เปิดรอบบิลวันนี้</h2>
+        <div class="od-field"><label>สถานที่ขาย</label><input id="or-location" placeholder="เช่น หน้าปากซอย, ตลาดนัด"></div>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="or-cancel">ยกเลิก</button>
+          <button class="od-btn-primary" id="or-confirm">เปิดรอบขาย</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#or-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#or-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังเปิดรอบ...', async ()=>{
+        busy = true;
+        // Guard: re-check for any already-open round (in case another device opened one, or local state drifted)
+        const existingOpen = events.find(e=>e.status==='open');
+        if(existingOpen){
+          busy = false;
+          overlay.remove();
+          render();
+          toast('มีรอบขายเปิดอยู่แล้ว — ปิดรอบเดิมก่อนถึงจะเปิดรอบใหม่ได้');
+          return;
+        }
+        const location = overlay.querySelector('#or-location').value.trim();
+        const today = todayStr();
+        const name = 'รอบขาย ' + new Date(today).toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'});
+        const newEvent = {
+          id: uid('ev'), status:'open', name, date: today, location, note:'',
+          bowlsSold:0, cashRevenue:0, transferRevenue:0,
+          rawIngredients: [], usage: [], otherCosts: [],
+        };
+        events.push(newEvent);
+        await saveEvents();
+        busy = false;
+        overlay.remove();
+        render();
+        toast('เปิดรอบขายวันนี้แล้ว');
+      });
+    };
+    overlay.querySelector('#or-location').focus();
+  }
+
+  function openOrderModal(existingId){
+    const existing = existingId ? orders.find(x=>x.id===existingId) : null;
+    const activeMenu = menu.filter(m=>m.active);
+    let items = existing ? JSON.parse(JSON.stringify(existing.items||[])) : [];
+    let note = existing ? (existing.note||'') : '';
+    let showCustom = false;
+    const overlay = document.createElement('div');
+    overlay.className='od-overlay';
+
+    function cartTotal(){ return items.reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0); }
+
+    function bodyHtml(){
+      return `
+        <h2>${existing?'แก้ไขออเดอร์ คิว #'+existing.queueNumber:'รับออเดอร์ใหม่'}</h2>
+        <div class="od-menu-grid">
+          ${activeMenu.map(m=>`
+            <button type="button" class="od-menu-btn" data-menu="${m.id}">
+              <span style="flex:1;min-width:0;">${escapeHtml(m.name)}</span><span class="price">฿${fmtMoney(m.price)}</span><span class="plus">+</span>
+            </button>
+          `).join('')}
+          ${!showCustom?`<button type="button" class="od-menu-btn" id="od-show-custom"><span>+ รายการอื่น (ระบุเอง)</span></button>`:''}
+        </div>
+        ${showCustom?`
+        <div class="od-custom-add">
+          <input id="od-custom-name" placeholder="ระบุชื่อรายการ">
+          <input id="od-custom-price" type="number" min="0" step="1" placeholder="ราคา" style="max-width:90px;">
+          <button type="button" id="od-custom-confirm">เพิ่ม</button>
+        </div>`:''}
+        <div class="od-cart" id="od-cart-list">
+          ${items.length===0?`<div class="od-cart-empty">แตะเมนูด้านบนเพื่อเพิ่มรายการ</div>`:items.map(it=>`
+            <div class="od-cart-line" data-cart-item="${it.id}">
+              <span class="od-cart-name">${escapeHtml(it.name)}</span>
+              <span class="od-cart-price">฿${fmtMoney(it.price)}/หน่วย</span>
+              <div class="od-cart-qty-ctrl">
+                <button type="button" class="od-cart-qty-btn" data-qtyminus="${it.id}">−</button>
+                <span class="od-cart-qty-num">${it.qty}</span>
+                <button type="button" class="od-cart-qty-btn" data-qtyplus="${it.id}">+</button>
+              </div>
+              <button type="button" class="od-cart-del" data-cartdel="${it.id}" title="ลบ">${iconTrash()}</button>
+            </div>
+          `).join('')}
+        </div>
+        ${items.length>0?`<div class="od-cart-total"><span>รวมทั้งบิล</span><span class="val">฿${fmtMoney(cartTotal())}</span></div>`:''}
+        <div class="od-field">
+          <label>หมายเหตุ (ไม่บังคับ)</label>
+          <textarea id="od-note" placeholder="เช่น ไม่ใส่ผัก, เผ็ดน้อย">${escapeHtml(note)}</textarea>
+        </div>
+        <div class="od-modal-actions">
+          <button class="od-btn-secondary" id="od-cancel">ยกเลิก</button>
+          <button class="od-btn-primary" id="od-confirm">${existing?'บันทึกการแก้ไข':'ยืนยันออเดอร์ & แจกเลขคิว'}</button>
+        </div>
+      `;
+    }
+
+    function addItem(menuId){
+      const m = activeMenu.find(x=>x.id===menuId);
+      if(!m) return;
+      const existingLine = items.find(i=>i.name===m.name && i.price===m.price);
+      if(existingLine) existingLine.qty += 1;
+      else items.push({id:uid('i'), name:m.name, price:m.price, qty:1});
+    }
+    function addCustomItem(name, price){
+      items.push({id:uid('i'), name, price:price||0, qty:1});
+    }
+
+    overlay.innerHTML = `<div class="od-modal" id="od-modal-box">${bodyHtml()}</div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+
+    function captureNote(box){
+      const noteEl = box.querySelector('#od-note');
+      if(noteEl) note = noteEl.value;
+    }
+
+    function rerender(){
+      const box = document.getElementById('od-modal-box');
+      box.innerHTML = bodyHtml();
+      bindEvents();
+    }
+
+    function bindEvents(){
+      const box = document.getElementById('od-modal-box');
+      box.querySelector('#od-cancel').onclick = ()=>overlay.remove();
+      box.querySelectorAll('[data-menu]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        addItem(btn.dataset.menu);
+        rerender();
+      });
+      const showCustomBtn = box.querySelector('#od-show-custom');
+      if(showCustomBtn) showCustomBtn.onclick = ()=>{ captureNote(box); showCustom=true; rerender(); box.querySelector('#od-custom-name').focus(); };
+      const customConfirmBtn = box.querySelector('#od-custom-confirm');
+      if(customConfirmBtn) customConfirmBtn.onclick = ()=>{
+        captureNote(box);
+        const val = box.querySelector('#od-custom-name').value.trim();
+        const price = parseFloat(box.querySelector('#od-custom-price').value)||0;
+        if(val){ addCustomItem(val, price); showCustom=false; }
+        rerender();
+      };
+      box.querySelectorAll('[data-qtyplus]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        const it = items.find(x=>x.id===btn.dataset.qtyplus);
+        if(it) it.qty += 1;
+        rerender();
+      });
+      box.querySelectorAll('[data-qtyminus]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        const it = items.find(x=>x.id===btn.dataset.qtyminus);
+        if(it){ it.qty -= 1; if(it.qty<=0) items = items.filter(x=>x.id!==it.id); }
+        rerender();
+      });
+      box.querySelectorAll('[data-cartdel]').forEach(btn=> btn.onclick = ()=>{
+        captureNote(box);
+        items = items.filter(x=>x.id!==btn.dataset.cartdel);
+        rerender();
+      });
+      box.querySelector('#od-confirm').onclick = (ev)=>{
+        withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+          captureNote(box);
+          if(items.length===0){ toast('กรุณาเลือกรายการอาหารอย่างน้อย 1 อย่าง'); throw new Error('validation'); }
+          busy = true;
+          const round = getActiveRound();
+          if(existing){
+            const oldSummary = (existing.items||[]).map(i=>`${i.name} x${i.qty}`).join(', ');
+            const newSummary = items.map(i=>`${i.name} x${i.qty}`).join(', ');
+            existing.editHistory = existing.editHistory||[];
+            if(oldSummary!==newSummary || (existing.note||'')!==note.trim()){
+              existing.editHistory.push({at:new Date().toISOString(), summary:`เปลี่ยนจาก [${oldSummary}] เป็น [${newSummary}]`});
+            }
+            existing.items = items.map(i=>({name:i.name, price:i.price, qty:i.qty}));
+            existing.note = note.trim();
+            await saveOrders();
+            busy = false;
+            overlay.remove();
+            render();
+            toast('บันทึกการแก้ไขแล้ว');
+          }else{
+            const qNum = peekNextQueueNumber();
+            const order = {
+              id: uid('o'), queueNumber: qNum, items: items.map(i=>({name:i.name, price:i.price, qty:i.qty})),
+              note: note.trim(), status:'pending', createdAt: new Date().toISOString(),
+              eventId: round?round.id:null, editHistory:[],
+            };
+            orders.push(order);
+            await saveOrders();
+            busy = false;
+            overlay.remove();
+            render();
+            showQueueConfirm(qNum);
+          }
+        });
+      };
+    }
+    bindEvents();
+  }
+
+  function showQueueConfirm(qNum){
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(23,19,15,.45);display:flex;align-items:center;justify-content:center;z-index:60;';
+    overlay.innerHTML = `
+      <div class="od-confirm-modal">
+        <div class="od-confirm-label">คิวของคุณคือ</div>
+        <div class="od-confirm-num">#${qNum}</div>
+        <button class="od-confirm-ok" id="qc-ok">ตกลง</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#qc-ok').onclick = ()=>overlay.remove();
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+  }
+
+  loadAll();
+  setInterval(()=>{ if(!busy) loadAll(); }, POLL_MS);
+})();
+
+</script>
+<script>
+
+(function(){
+  const POLL_MS = 6000;
+  let orders = [];
+  const root = document.getElementById('kt-root');
+
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
+  function uid(p){ return (p||'x')+Date.now()+Math.random().toString(36).slice(2,7); }
+  function toast(msg){ const t=document.createElement('div'); t.className='kt-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+
+  async function loadAll(){
+    try{
+      const rows = await window.dbLoadTable('orders');
+      const children = await window.dbLoadOrderChildren();
+      orders = rows.map(r=>({
+        id: r.id, queueNumber: r.queue_number, note: r.note, status: r.status,
+        createdAt: r.created_at, eventId: r.event_id,
+        items: children.items.filter(i=>i.order_id===r.id).map(i=>({id:i.id, name:i.name, price:i.price, qty:i.qty})),
+        editHistory: children.history.filter(h=>h.order_id===r.id).map(h=>({at:h.at, summary:h.summary})),
+      }));
+    }catch(e){ orders = []; }
+    render();
+  }
+  async function saveOrders(){
+    try{
+      const rows = orders.map(o=>({
+        id: o.id, queue_number: o.queueNumber, note: o.note || '', status: o.status,
+        created_at: o.createdAt, event_id: o.eventId || null
+      }));
+      const ok = await window.dbSyncTable('orders', 'id', rows);
+      if(!ok){ toast('บันทึกไม่สำเร็จ'); return; }
+      const orderIds = orders.map(o=>o.id);
+      const itemRows = [], historyRows = [];
+      orders.forEach(o=>{
+        (o.items||[]).forEach(i=> itemRows.push({
+          id: i.id || uid('oi'), order_id: o.id, name: i.name, price: Number(i.price)||0, qty: Number(i.qty)||0
+        }));
+        (o.editHistory||[]).forEach(h=> historyRows.push({
+          id: h.id || uid('oh'), order_id: o.id, at: h.at, summary: h.summary || ''
+        }));
+      });
+      await window.dbSyncOrderChildren(orderIds, itemRows, historyRows);
+    }catch(e){ toast('เกิดข้อผิดพลาดในการบันทึก'); }
+  }
+  function withLoading(btn, loadingText, fn){
+    if(btn.disabled) return;
+    const original = btn.innerHTML;
+    btn.disabled = true; btn.style.opacity='.6'; btn.style.cursor='wait'; btn.textContent = loadingText;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{
+      if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; btn.innerHTML=original; }
+    });
+  }
+
+  function render(){
+    const todays = orders.filter(o=> (o.createdAt||'').slice(0,10)===todayStr());
+    const pending = todays.filter(o=>o.status==='pending').sort((a,b)=>a.queueNumber-b.queueNumber);
+    const ready = todays.filter(o=>o.status==='ready').sort((a,b)=>a.queueNumber-b.queueNumber);
+
+    root.innerHTML = `
+      <div class="kt-header">
+        <h1 class="kt-title">ออเดอร์ในครัว</h1>
+        <div class="kt-sub">ทำตามคิว กดพร้อมเสิร์ฟเมื่อเสร็จ</div>
+        ${pending.length>0?`<div class="kt-count-badge">🔥 ${pending.length} ออเดอร์รอทำ</div>`:''}
+      </div>
+
+      <div class="kt-rail-wrap">
+        <div class="kt-rail-label">รางออเดอร์ — รอทำ (เรียงตามคิว)</div>
+        <div class="kt-rail-bar"></div>
+        ${pending.length===0?`<div class="kt-empty" style="margin-top:16px;">ไม่มีออเดอร์รอทำ 🎉</div>`:`
+        <div class="kt-rail-track">
+          ${pending.map(ticketHtml).join('')}
+        </div>`}
+      </div>
+
+      <div class="kt-rail-label">พร้อมเสิร์ฟ — รอพนักงานหน้าร้านมารับ</div>
+      <div class="kt-ready-section">
+        ${ready.length===0?`<div class="kt-empty">ยังไม่มีออเดอร์ที่พร้อมเสิร์ฟ</div>`:ready.map(readyRow).join('')}
+      </div>
+    `;
+
+    root.querySelectorAll('[data-ready]').forEach(btn=> btn.onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        const o = orders.find(x=>x.id===btn.dataset.ready);
+        if(o) o.status='ready';
+        await saveOrders();
+        render();
+        toast(`คิว #${o?o.queueNumber:''} พร้อมเสิร์ฟแล้ว`);
+      });
+    });
+  }
+
+  function ticketHtml(o){
+    const itemLines = (o.items||[]).map(i=>`<div class="kt-ticket-item-line"><span>${escapeHtml(i.name)}</span><span>x${i.qty}</span></div>`).join('');
+    const edited = (o.editHistory||[]).length>0;
+    return `
+      <div class="kt-ticket">
+        <div class="kt-ticket-qnum">#${o.queueNumber} ${edited?'<span style="font-size:10px;background:#E0D9F5;color:#5C3FA8;border:1.5px solid var(--ink);border-radius:4px;padding:1px 5px;vertical-align:middle;">แก้ไขแล้ว</span>':''}</div>
+        <div class="kt-ticket-items">${itemLines}</div>
+        ${o.note?`<div class="kt-ticket-note">📝 ${escapeHtml(o.note)}</div>`:''}
+        <div class="kt-ticket-time">${fmtTime(o.createdAt)}</div>
+        <button class="kt-ready-btn" data-ready="${o.id}">✓ พร้อมเสิร์ฟ</button>
+      </div>
+    `;
+  }
+
+  function readyRow(o){
+    const itemsSummary = (o.items||[]).map(i=>`${escapeHtml(i.name)}${i.qty>1?' x'+i.qty:''}`).join(', ');
+    return `
+      <div class="kt-ready-row">
+        <span class="kt-ready-qnum">#${o.queueNumber}</span>
+        <span class="kt-ready-items">${itemsSummary}</span>
+        <span class="kt-ready-tag">รอรับ</span>
+      </div>
+    `;
+  }
+
+  loadAll();
+  setInterval(loadAll, POLL_MS);
+})();
+
+</script>
+<script>
+
+(function(){
+  let menu = [];
+  const root = document.getElementById('mn-root');
+  function uid(){ return 'mn'+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+  function iconPencil(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>'; }
+  function iconTrash(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
+  function iconPlus(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
+  function toast(msg){ const t=document.createElement('div'); t.className='mn-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  function withLoading(btn, txt, fn){
+    if(btn.disabled) return;
+    const orig = btn.innerHTML; btn.disabled=true; btn.style.opacity='.6'; btn.textContent=txt;
+    Promise.resolve(fn()).catch(()=>{}).finally(()=>{ if(document.body.contains(btn)){ btn.disabled=false; btn.style.opacity=''; btn.innerHTML=orig; } });
+  }
+  async function loadAll(){
+    try{
+      const rows = await window.dbLoadTable('menu_items');
+      menu = rows.map(r=>({id:r.id, name:r.name, price:r.price, active:r.active}));
+    }catch(e){ menu=[]; }
+    render();
+  }
+  async function saveMenu(){
+    try{
+      const rows = menu.map(m=>({id:m.id, name:m.name, price:Number(m.price)||0, active:!!m.active}));
+      const ok = await window.dbSyncTable('menu_items', 'id', rows);
+      if(!ok) toast('บันทึกไม่สำเร็จ');
+    }catch(e){ toast('เกิดข้อผิดพลาด'); }
+  }
+  function render(){
+    const list = [...menu].sort((a,b)=> (b.active?1:0)-(a.active?1:0) || a.name.localeCompare(b.name,'th'));
+    root.innerHTML = `
+      <div class="mn-header">
+        <h1 class="mn-title">เมนู</h1>
+        <div class="mn-sub">จัดการรายการอาหาร ราคา และเปิด/ปิดการขาย</div>
+      </div>
+      <div class="mn-toolbar"><button class="mn-add" id="mn-add-btn">${iconPlus()} เพิ่มเมนู</button></div>
+      <div class="mn-list">${list.length===0?`<div class="mn-empty">ยังไม่มีเมนู กด "เพิ่มเมนู" เพื่อเริ่มบันทึก</div>`:list.map(row).join('')}</div>
+    `;
+    document.getElementById('mn-add-btn').onclick = ()=>openModal(null);
+    root.querySelectorAll('[data-edit]').forEach(b=> b.onclick = ()=>openModal(b.dataset.edit));
+    root.querySelectorAll('[data-del]').forEach(b=> b.onclick = ()=>confirmDelete(b.dataset.del));
+    root.querySelectorAll('[data-toggle]').forEach(inp=> inp.onchange = async ()=>{
+      const m = menu.find(x=>x.id===inp.dataset.toggle);
+      if(m){ m.active = inp.checked; await saveMenu(); render(); }
+    });
+  }
+  function row(m){
+    return `
+      <div class="mn-row ${m.active?'':'inactive'}">
+        <label class="mn-toggle"><input type="checkbox" data-toggle="${m.id}" ${m.active?'checked':''}><span class="mn-toggle-slider"></span></label>
+        <span class="mn-name">${escapeHtml(m.name)}</span>
+        <span class="mn-price">฿${fmtMoney(m.price)}</span>
+        <span class="mn-row-actions">
+          <button class="mn-icon-btn" data-edit="${m.id}">${iconPencil()}</button>
+          <button class="mn-icon-btn" data-del="${m.id}">${iconTrash()}</button>
+        </span>
+      </div>
+    `;
+  }
+  function openModal(id){
+    const m = id ? menu.find(x=>x.id===id) : null;
+    const overlay = document.createElement('div'); overlay.className='mn-overlay';
+    overlay.innerHTML = `
+      <div class="mn-modal">
+        <h2>${m?'แก้ไขเมนู':'เพิ่มเมนูใหม่'}</h2>
+        <div class="mn-field"><label>ชื่อเมนู</label><input id="mf-name" value="${m?escapeHtml(m.name):''}" placeholder="เช่น โจ๊กหมูสับเห็ดหอม"></div>
+        <div class="mn-field"><label>ราคา (บาท)</label><input id="mf-price" type="number" min="0" step="1" value="${m?m.price:''}" placeholder="0"></div>
+        <div class="mn-modal-actions">
+          <button class="mn-btn-secondary" id="mf-cancel">ยกเลิก</button>
+          <button class="mn-btn-primary" id="mf-save">${m?'บันทึกการแก้ไข':'เพิ่มเมนู'}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#mf-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#mf-save').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังบันทึก...', async ()=>{
+        const name = overlay.querySelector('#mf-name').value.trim();
+        if(!name){ toast('กรุณาระบุชื่อเมนู'); throw new Error('validation'); }
+        const price = parseFloat(overlay.querySelector('#mf-price').value)||0;
+        const payload = { id: m?m.id:uid(), name, price, active: m?m.active:true };
+        if(m){ menu[menu.findIndex(x=>x.id===m.id)] = payload; } else{ menu.push(payload); }
+        await saveMenu(); overlay.remove(); render();
+        toast(m?'แก้ไขเมนูแล้ว':'เพิ่มเมนูแล้ว');
+      });
+    };
+    overlay.querySelector('#mf-name').focus();
+  }
+  function confirmDelete(id){
+    const m = menu.find(x=>x.id===id); if(!m) return;
+    const overlay = document.createElement('div'); overlay.className='mn-overlay';
+    overlay.innerHTML = `
+      <div class="mn-modal" style="max-width:380px;">
+        <h2>ยืนยันการลบ</h2>
+        <p style="font-size:14px;color:var(--ink-soft);margin:0 0 20px;">ต้องการลบเมนู <b style="color:var(--ink);">${escapeHtml(m.name)}</b> ใช่หรือไม่?</p>
+        <div class="mn-modal-actions">
+          <button class="mn-btn-secondary" id="md-cancel">ยกเลิก</button>
+          <button class="mn-btn-danger" id="md-confirm">ลบเมนู</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',(e)=>{ if(e.target===overlay) overlay.remove(); });
+    overlay.querySelector('#md-cancel').onclick = ()=>overlay.remove();
+    overlay.querySelector('#md-confirm').onclick = (ev)=>{
+      withLoading(ev.currentTarget, 'กำลังลบ...', async ()=>{
+        menu = menu.filter(x=>x.id!==id); await saveMenu(); overlay.remove(); render();
+        toast('ลบเมนูแล้ว');
+      });
+    };
+  }
+  loadAll();
+})();
+
+</script>
+<script>
+
+(function(){
+  let items = [];
+  const root = document.getElementById('ig-root');
+  function uid(){ return 'ig'+Date.now()+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  function toast(msg){ const t=document.createElement('div'); t.className='ig-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+  async function loadAll(){
+    try{
+      const rows = await window.dbLoadTable('ingredients_master');
+      items = rows.map(r=>({id:r.id, name:r.name}));
+    }catch(e){ items=[]; }
+    render();
+  }
+  async function saveAll(){
+    try{
+      const rows = items.map(it=>({id:it.id, name:it.name}));
+      const ok = await window.dbSyncTable('ingredients_master', 'id', rows);
+      if(!ok) toast('บันทึกไม่สำเร็จ');
+    }catch(e){ toast('เกิดข้อผิดพลาด'); }
+  }
+  function render(){
+    root.innerHTML = `
+      <div class="ig-header">
+        <h1 class="ig-title">วัตถุดิบประกอบอาหาร</h1>
+        <div class="ig-sub">รายชื่อวัตถุดิบที่ซื้อเป็นรอบๆ (ไม่สต๊อก) — จะถูกดึงไปกรอกจำนวน/ราคาที่หน้า Events</div>
+      </div>
+      <div class="ig-toolbar">
+        <input class="ig-input" id="ig-new-name" placeholder="เช่น ข้าวสาร, หมูสับ, ไข่">
+        <button class="ig-add" id="ig-add-btn">+ เพิ่ม</button>
+      </div>
+      <div class="ig-list">
+        ${items.length===0?`<div class="ig-empty">ยังไม่มีรายการ ลองเพิ่มดูได้เลย</div>`:items.map(it=>`
+          <div class="ig-chip"><span>${escapeHtml(it.name)}</span><button data-del="${it.id}">✕</button></div>
+        `).join('')}
+      </div>
+    `;
+    const nameInput = document.getElementById('ig-new-name');
+    const addBtn = document.getElementById('ig-add-btn');
+    async function addItem(){
+      const name = nameInput.value.trim();
+      if(!name){ toast('กรุณากรอกชื่อวัตถุดิบ'); return; }
+      items.push({id:uid(), name});
+      await saveAll(); render();
+    }
+    addBtn.onclick = addItem;
+    nameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addItem(); } };
+    root.querySelectorAll('[data-del]').forEach(b=> b.onclick = async ()=>{
+      items = items.filter(x=>x.id!==b.dataset.del);
+      await saveAll(); render();
+    });
+  }
   loadAll();
 })();
 

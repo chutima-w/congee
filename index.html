@@ -766,6 +766,8 @@ body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .mn-add{margin-left:auto;background:var(--coral);color:#fff;border:none;padding:9px 18px;border-radius:999px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 3px 8px rgba(0,0,0,.12);}
 .mn-list{display:flex;flex-direction:column;gap:8px;}
 .mn-row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.mn-row.dragging{opacity:.4;}
+.mn-row.drag-over{border-color:var(--green,#3F7A52);box-shadow:0 0 0 2px var(--green,#3F7A52) inset;}
 .mn-row.inactive{opacity:.5;}
 .mn-name{flex:1;font-weight:700;font-size:14.5px;}
 .mn-price{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;color:var(--coral);flex:0 0 auto;}
@@ -816,6 +818,20 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .ig-chip button{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;border-radius:50%;}
 .ig-chip button:hover{background:var(--coral-soft);color:var(--coral);}
 .ig-empty{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;border:1.5px dashed var(--border);border-radius:var(--radius);width:100%;}
+.ig-section-title{font-family:'Taviraj',serif;font-size:16px;font-weight:600;margin:24px 0 10px;color:var(--ink);}
+.ig-rowlist{display:flex;flex-direction:column;gap:8px;}
+.ig-item-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13.5px;}
+.ig-item-row.inactive{opacity:.5;}
+.ig-item-name{flex:1;font-weight:600;}
+.ig-item-amount{color:var(--ink-soft);font-weight:600;}
+.ig-item-row button{background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:4px;border-radius:50%;}
+.ig-item-row button:hover{background:var(--coral-soft);color:var(--coral);}
+.ig-toggle{position:relative;width:38px;height:22px;flex:0 0 auto;}
+.ig-toggle input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;}
+.ig-toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:.2s;}
+.ig-toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.ig-toggle input:checked + .ig-toggle-slider{background:var(--coral);}
+.ig-toggle input:checked + .ig-toggle-slider::before{transform:translateX(16px);}
 .ig-loading{text-align:center;padding:40px;color:var(--ink-soft);font-size:13px;}
 .ig-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;z-index:100;}
 
@@ -961,7 +977,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       <button class="app-navbtn" data-module="menu"><span class="app-navdot dot-coral"></span>Menu</button>
       <button class="app-navbtn active" data-module="assets"><span class="app-navdot dot-green"></span>Fixed Assets</button>
       <button class="app-navbtn" data-module="supplies"><span class="app-navdot dot-gold"></span>Supplies</button>
-      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>Ingredients</button>
+      <button class="app-navbtn" data-module="ingredients"><span class="app-navdot dot-teal"></span>Ingredients & Costs</button>
       <button class="app-navbtn" data-module="events"><span class="app-navdot dot-red"></span>Events</button>
     </nav>
   </div>
@@ -2149,6 +2165,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   let transactions = [];
   let partners = [{name:'หุ้นส่วน 1', share:50},{name:'หุ้นส่วน 2', share:50}];
   let ingredientsMaster = [];
+  let otherCostsMaster = [];
   let orders = [];
   let statusFilter = 'all';
 
@@ -2224,6 +2241,9 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     try{
       ingredientsMaster = await window.dbLoadTable('ingredients_master');
     }catch(err){ ingredientsMaster = []; }
+    try{
+      otherCostsMaster = await window.dbLoadTable('other_costs_master');
+    }catch(err){ otherCostsMaster = []; }
     render();
   }
   async function saveEvents(){
@@ -2458,10 +2478,11 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       bowlsSold: e?e.bowlsSold:'',
       cashRevenue: e?e.cashRevenue:'',
       transferRevenue: e?e.transferRevenue:'',
-      rawIngredients: e && e.rawIngredients ? JSON.parse(JSON.stringify(e.rawIngredients)) :
-        (ingredientsMaster.length ? ingredientsMaster : DEFAULT_INGREDIENTS.map(n=>({name:n}))).map(m=>({id:uid('ing'), name:m.name, quantity:'', unit:m.default_unit||m.unit||'', price:''})),
+      rawIngredients: (e && e.rawIngredients && e.rawIngredients.length) ? JSON.parse(JSON.stringify(e.rawIngredients)) :
+        (ingredientsMaster.filter(m=>m.active!==false).length ? ingredientsMaster.filter(m=>m.active!==false) : DEFAULT_INGREDIENTS.map(n=>({name:n}))).map(m=>({id:uid('ing'), name:m.name, quantity:'', unit:m.default_unit||m.unit||'', price:''})),
       usage: e && e.usage ? JSON.parse(JSON.stringify(e.usage)) : [],
-      otherCosts: e && e.otherCosts ? JSON.parse(JSON.stringify(e.otherCosts)) : [],
+      otherCosts: (e && e.otherCosts && e.otherCosts.length) ? JSON.parse(JSON.stringify(e.otherCosts)) :
+        otherCostsMaster.filter(c=>c.active!==false).map(c=>({id:uid('oc'), description:c.name, amount:c.default_amount||''})),
     };
 
     function ensureAutoRows(){
@@ -3045,8 +3066,9 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const rows = events.map(e=>({
         id: e.id, status: e.status, name: e.name, location: e.location || '', date: e.date || null
       }));
-      await window.dbSyncTable('events', 'id', rows);
-    }catch(e){}
+      const ok = await window.dbSyncTable('events', 'id', rows);
+      return !!ok;
+    }catch(e){ return false; }
   }
   function peekNextQueueNumber(){
     const today = todayStr();
@@ -3242,9 +3264,15 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
           rawIngredients: [], usage: [], otherCosts: [],
         };
         events.push(newEvent);
-        await saveEvents();
+        const ok = await saveEvents();
         busy = false;
         overlay.remove();
+        if(!ok){
+          events = events.filter(ev=>ev.id!==newEvent.id);
+          render();
+          toast('เปิดรอบไม่สำเร็จ ลองใหม่อีกครั้ง (เช็คว่าตาราง events มีคอลัมน์ location แล้วหรือยัง)');
+          return;
+        }
         render();
         toast('เปิดรอบขายวันนี้แล้ว');
       });
@@ -3571,23 +3599,26 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   async function loadAll(){
     try{
       const rows = await window.dbLoadTable('menu_items');
-      menu = rows.map(r=>({id:r.id, name:r.name, price:r.price, active:r.active}));
+      menu = rows.map(r=>({id:r.id, name:r.name, price:r.price, active:r.active, sortOrder:r.sort_order||0}));
+      menu.sort((a,b)=>a.sortOrder-b.sortOrder);
     }catch(e){ menu=[]; }
     render();
   }
   async function saveMenu(){
     try{
-      const rows = menu.map(m=>({id:m.id, name:m.name, price:Number(m.price)||0, active:!!m.active}));
+      const rows = menu.map((m,idx)=>({id:m.id, name:m.name, price:Number(m.price)||0, active:!!m.active, sort_order: idx}));
       const ok = await window.dbSyncTable('menu_items', 'id', rows);
       if(!ok) toast('บันทึกไม่สำเร็จ');
     }catch(e){ toast('เกิดข้อผิดพลาด'); }
   }
+  function iconDrag(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>'; }
+  let dragId = null;
   function render(){
-    const list = [...menu].sort((a,b)=> (b.active?1:0)-(a.active?1:0) || a.name.localeCompare(b.name,'th'));
+    const list = menu; // ลำดับตามที่ผู้ใช้จัดไว้ ไม่เรียงตาม active/ชื่ออัตโนมัติ
     root.innerHTML = `
       <div class="mn-header">
         <h1 class="mn-title">เมนู</h1>
-        <div class="mn-sub">จัดการรายการอาหาร ราคา และเปิด/ปิดการขาย</div>
+        <div class="mn-sub">จัดการรายการอาหาร ราคา และเปิด/ปิดการขาย — ลากที่ไอคอน ⠿ เพื่อจัดลำดับใหม่</div>
       </div>
       <div class="mn-toolbar"><button class="mn-add" id="mn-add-btn">${iconPlus()} เพิ่มเมนู</button></div>
       <div class="mn-list">${list.length===0?`<div class="mn-empty">ยังไม่มีเมนู กด "เพิ่มเมนู" เพื่อเริ่มบันทึก</div>`:list.map(row).join('')}</div>
@@ -3599,10 +3630,30 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       const m = menu.find(x=>x.id===inp.dataset.toggle);
       if(m){ m.active = inp.checked; await saveMenu(); render(); }
     });
+    root.querySelectorAll('.mn-row').forEach(rowEl=>{
+      rowEl.addEventListener('dragstart', ()=>{ dragId = rowEl.dataset.id; rowEl.classList.add('dragging'); });
+      rowEl.addEventListener('dragend', ()=>{ dragId = null; rowEl.classList.remove('dragging'); root.querySelectorAll('.mn-row').forEach(r=>r.classList.remove('drag-over')); });
+      rowEl.addEventListener('dragover', (e)=>{ e.preventDefault(); if(rowEl.dataset.id!==dragId) rowEl.classList.add('drag-over'); });
+      rowEl.addEventListener('dragleave', ()=>{ rowEl.classList.remove('drag-over'); });
+      rowEl.addEventListener('drop', async (e)=>{
+        e.preventDefault();
+        rowEl.classList.remove('drag-over');
+        const targetId = rowEl.dataset.id;
+        if(!dragId || dragId===targetId) return;
+        const fromIdx = menu.findIndex(x=>x.id===dragId);
+        const toIdx = menu.findIndex(x=>x.id===targetId);
+        if(fromIdx<0 || toIdx<0) return;
+        const [moved] = menu.splice(fromIdx,1);
+        menu.splice(toIdx,0,moved);
+        await saveMenu();
+        render();
+      });
+    });
   }
   function row(m){
     return `
-      <div class="mn-row ${m.active?'':'inactive'}">
+      <div class="mn-row ${m.active?'':'inactive'}" draggable="true" data-id="${m.id}">
+        <span class="mn-drag-handle" title="ลากเพื่อจัดลำดับ" style="cursor:grab;color:var(--ink-soft);display:flex;align-items:center;">${iconDrag()}</span>
         <label class="mn-toggle"><input type="checkbox" data-toggle="${m.id}" ${m.active?'checked':''}><span class="mn-toggle-slider"></span></label>
         <span class="mn-name">${escapeHtml(m.name)}</span>
         <span class="mn-price">฿${fmtMoney(m.price)}</span>
@@ -3673,54 +3724,125 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 <script>
 
 (function(){
-  let items = [];
+  let ingredients = [];
+  let otherCosts = [];
   const root = document.getElementById('ig-root');
-  function uid(){ return 'ig'+Date.now()+Math.random().toString(36).slice(2,7); }
+  function uid(p){ return (p||'ig')+Date.now()+Math.random().toString(36).slice(2,7); }
   function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:0,maximumFractionDigits:2}); }
   function toast(msg){ const t=document.createElement('div'); t.className='ig-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+
   async function loadAll(){
     try{
       const rows = await window.dbLoadTable('ingredients_master');
-      items = rows.map(r=>({id:r.id, name:r.name}));
-    }catch(e){ items=[]; }
+      ingredients = rows.map(r=>({id:r.id, name:r.name, active: r.active!==false}));
+    }catch(e){ ingredients=[]; }
+    try{
+      const rows = await window.dbLoadTable('other_costs_master');
+      otherCosts = rows.map(r=>({id:r.id, name:r.name, defaultAmount:r.default_amount, active: r.active!==false}));
+    }catch(e){ otherCosts=[]; }
     render();
   }
-  async function saveAll(){
+  // บันทึกแล้วโหลดข้อมูลจริงจาก DB กลับมาทันที เพื่อให้เห็นทันทีถ้าบันทึกไม่สำเร็จ
+  // (แทนที่จะเชื่อ state ในหน่วยความจำเฉยๆ ซึ่งจะทำให้ของหายตอนรีเฟรชโดยไม่รู้ตัว)
+  async function saveIngredients(){
     try{
-      const rows = items.map(it=>({id:it.id, name:it.name}));
+      const rows = ingredients.map(it=>({id:it.id, name:it.name, active: it.active!==false}));
       const ok = await window.dbSyncTable('ingredients_master', 'id', rows);
       if(!ok) toast('บันทึกไม่สำเร็จ');
-    }catch(e){ toast('เกิดข้อผิดพลาด'); }
+      await loadAll();
+      return ok;
+    }catch(e){ toast('เกิดข้อผิดพลาด'); await loadAll(); return false; }
   }
+  async function saveOtherCosts(){
+    try{
+      const rows = otherCosts.map(c=>({id:c.id, name:c.name, default_amount:Number(c.defaultAmount)||0, active: c.active!==false}));
+      const ok = await window.dbSyncTable('other_costs_master', 'id', rows);
+      if(!ok) toast('บันทึกไม่สำเร็จ');
+      await loadAll();
+      return ok;
+    }catch(e){ toast('เกิดข้อผิดพลาด'); await loadAll(); return false; }
+  }
+
   function render(){
     root.innerHTML = `
       <div class="ig-header">
-        <h1 class="ig-title">วัตถุดิบประกอบอาหาร</h1>
-        <div class="ig-sub">รายชื่อวัตถุดิบที่ซื้อเป็นรอบๆ (ไม่สต๊อก) — จะถูกดึงไปกรอกจำนวน/ราคาที่หน้า Events</div>
+        <h1 class="ig-title">วัตถุดิบ &amp; ค่าใช้จ่ายอื่นๆ</h1>
+        <div class="ig-sub">รายการเหล่านี้จะถูกดึงไปเป็นค่าเริ่มต้นตอนเปิด/ปิดรอบขายที่หน้า Events — ปิด toggle เพื่อซ่อนรายการที่ไม่ได้ใช้แล้ว โดยไม่ต้องลบทิ้ง</div>
       </div>
+
+      <h2 class="ig-section-title">วัตถุดิบประกอบอาหาร</h2>
       <div class="ig-toolbar">
         <input class="ig-input" id="ig-new-name" placeholder="เช่น ข้าวสาร, หมูสับ, ไข่">
         <button class="ig-add" id="ig-add-btn">+ เพิ่ม</button>
       </div>
-      <div class="ig-list">
-        ${items.length===0?`<div class="ig-empty">ยังไม่มีรายการ ลองเพิ่มดูได้เลย</div>`:items.map(it=>`
-          <div class="ig-chip"><span>${escapeHtml(it.name)}</span><button data-del="${it.id}">✕</button></div>
+      <div class="ig-rowlist">
+        ${ingredients.length===0?`<div class="ig-empty">ยังไม่มีรายการ ลองเพิ่มดูได้เลย</div>`:ingredients.map(it=>`
+          <div class="ig-item-row ${it.active?'':'inactive'}">
+            <label class="ig-toggle"><input type="checkbox" data-ing-toggle="${it.id}" ${it.active?'checked':''}><span class="ig-toggle-slider"></span></label>
+            <span class="ig-item-name">${escapeHtml(it.name)}</span>
+            <button data-ing-del="${it.id}">✕</button>
+          </div>
+        `).join('')}
+      </div>
+
+      <h2 class="ig-section-title">ค่าใช้จ่ายอื่นๆ (นอกเหนือจากวัตถุดิบ/สต๊อก)</h2>
+      <div class="ig-toolbar">
+        <input class="ig-input" id="ig-cost-name" placeholder="เช่น ค่าเช่าที่, ค่าแก๊ส, ค่าเดินทาง">
+        <input class="ig-input" id="ig-cost-amount" type="number" min="0" step="1" placeholder="จำนวนเงินเริ่มต้น" style="max-width:150px;">
+        <button class="ig-add" id="ig-cost-add-btn">+ เพิ่ม</button>
+      </div>
+      <div class="ig-rowlist">
+        ${otherCosts.length===0?`<div class="ig-empty">ยังไม่มีรายการ ลองเพิ่มดูได้เลย</div>`:otherCosts.map(c=>`
+          <div class="ig-item-row ${c.active?'':'inactive'}">
+            <label class="ig-toggle"><input type="checkbox" data-cost-toggle="${c.id}" ${c.active?'checked':''}><span class="ig-toggle-slider"></span></label>
+            <span class="ig-item-name">${escapeHtml(c.name)}</span>
+            <span class="ig-item-amount">฿${fmtMoney(c.defaultAmount)}</span>
+            <button data-cost-del="${c.id}">✕</button>
+          </div>
         `).join('')}
       </div>
     `;
+
     const nameInput = document.getElementById('ig-new-name');
     const addBtn = document.getElementById('ig-add-btn');
-    async function addItem(){
+    async function addIngredient(){
       const name = nameInput.value.trim();
       if(!name){ toast('กรุณากรอกชื่อวัตถุดิบ'); return; }
-      items.push({id:uid(), name});
-      await saveAll(); render();
+      ingredients.push({id:uid('ing'), name, active:true});
+      await saveIngredients();
     }
-    addBtn.onclick = addItem;
-    nameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addItem(); } };
-    root.querySelectorAll('[data-del]').forEach(b=> b.onclick = async ()=>{
-      items = items.filter(x=>x.id!==b.dataset.del);
-      await saveAll(); render();
+    addBtn.onclick = addIngredient;
+    nameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addIngredient(); } };
+    root.querySelectorAll('[data-ing-del]').forEach(b=> b.onclick = async ()=>{
+      ingredients = ingredients.filter(x=>x.id!==b.dataset.ingDel);
+      await saveIngredients();
+    });
+    root.querySelectorAll('[data-ing-toggle]').forEach(inp=> inp.onchange = async ()=>{
+      const it = ingredients.find(x=>x.id===inp.dataset.ingToggle);
+      if(it){ it.active = inp.checked; await saveIngredients(); }
+    });
+
+    const costNameInput = document.getElementById('ig-cost-name');
+    const costAmountInput = document.getElementById('ig-cost-amount');
+    const costAddBtn = document.getElementById('ig-cost-add-btn');
+    async function addOtherCost(){
+      const name = costNameInput.value.trim();
+      if(!name){ toast('กรุณากรอกชื่อค่าใช้จ่าย'); return; }
+      const amount = parseFloat(costAmountInput.value)||0;
+      otherCosts.push({id:uid('oc'), name, defaultAmount:amount, active:true});
+      await saveOtherCosts();
+    }
+    costAddBtn.onclick = addOtherCost;
+    costAmountInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addOtherCost(); } };
+    costNameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addOtherCost(); } };
+    root.querySelectorAll('[data-cost-del]').forEach(b=> b.onclick = async ()=>{
+      otherCosts = otherCosts.filter(x=>x.id!==b.dataset.costDel);
+      await saveOtherCosts();
+    });
+    root.querySelectorAll('[data-cost-toggle]').forEach(inp=> inp.onchange = async ()=>{
+      const c = otherCosts.find(x=>x.id===inp.dataset.costToggle);
+      if(c){ c.active = inp.checked; await saveOtherCosts(); }
     });
   }
   loadAll();

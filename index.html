@@ -22,18 +22,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root{
-  --bg:#FBF7EF;
+  --bg:#F7EFE5;
   --surface:#FFFFFF;
-  --ink:#3A2A1E;
-  --ink-soft:#8A7A67;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
   --green:#3F7A52;
-  --green-soft:#E7F0E9;
-  --red:#C1442D;
-  --red-soft:#F7E7E3;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
   --gold:#C98A2C;
-  --gold-soft:#FBF0DC;
-  --border:#E7DCC9;
-  --radius:14px;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
+}
+html body{
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(62,42,31,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,42,31,.05) 1px, transparent 1px);
+  background-size:28px 28px;
+  background-attachment:local;
 }
 *{box-sizing:border-box;}
 body,.faw-root{
@@ -219,18 +232,23 @@ body,.faw-root{
 @import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root{
-  --bg:#FBF7EF;
+  --bg:#F7EFE5;
   --surface:#FFFFFF;
-  --ink:#3A2A1E;
-  --ink-soft:#8A7A67;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
   --green:#3F7A52;
-  --green-soft:#E7F0E9;
-  --red:#C1442D;
-  --red-soft:#F7E7E3;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
   --gold:#C98A2C;
-  --gold-soft:#FBF0DC;
-  --border:#E7DCC9;
-  --radius:14px;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.sw-root{
@@ -308,6 +326,9 @@ body,.sw-root{
   padding:10px 14px;font-size:12.5px;flex-wrap:wrap;
 }
 .sw-row.low{border-left-color:var(--red);}
+.sw-row.dragging{opacity:.4;}
+.sw-row.drag-over{border-color:var(--green,#3F7A52);box-shadow:0 0 0 2px var(--green,#3F7A52) inset;}
+.sw-hint{font-size:12px;color:var(--ink-soft);margin:-4px 0 8px;}
 .sw-row.type-out{border-left-color:var(--red);}
 .sw-row.type-in{border-left-color:var(--green);}
 .sw-row-name{flex:1 1 140px;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -391,9 +412,23 @@ body,.sw-root{
 @import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root{
-  --bg:#FBF7EF; --surface:#FFFFFF; --ink:#3A2A1E; --ink-soft:#8A7A67;
-  --green:#3F7A52; --green-soft:#E7F0E9; --red:#C1442D; --red-soft:#F7E7E3;
-  --gold:#C98A2C; --gold-soft:#FBF0DC; --border:#E7DCC9; --radius:14px;
+  --bg:#F7EFE5;
+  --surface:#FFFFFF;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
@@ -536,9 +571,23 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
 
 :root{
-  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
-  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
-  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+  --bg:#F7EFE5;
+  --surface:#FFFFFF;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
@@ -602,7 +651,7 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .od-tag.pending{background:var(--gold-soft);color:var(--ink);}
 .od-tag.ready{background:var(--green-soft);color:var(--green);}
 .od-tag.cancelled{background:var(--red-soft);color:var(--red);}
-.od-tag.edited{background:#E0D9F5;color:#5C3FA8;}
+.od-tag.edited{background:#F3E4C8;color:#8B5E3C;}
 .od-row-actions{display:flex;gap:6px;flex:0 0 auto;}
 .od-serve-btn{
   flex:0 0 auto;background:var(--ink);color:var(--bg);border:none;border-radius:8px;
@@ -681,9 +730,23 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
 
 :root{
-  --bg:#F3EEDD; --surface:#FFFFFF; --ink:#17130F; --ink-soft:#5B564D;
-  --green:#1F6F4C; --green-soft:#CFE7D8; --red:#D33F3F; --red-soft:#F7D9D2;
-  --gold:#F0A400; --gold-soft:#FCE7B8; --border:#17130F; --radius:18px;
+  --bg:#F7EFE5;
+  --surface:#FFFFFF;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
@@ -752,9 +815,23 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
 :root{
-  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
-  --blue:#7C8DB5; --blue-soft:#DCE3F0; --coral:#E8735A; --coral-soft:#FBDDD5;
-  --gold:#F5CB4D; --gold-soft:#FCEBB8; --border:#C7D0E4; --radius:18px;
+  --bg:#F7EFE5;
+  --surface:#FFFFFF;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
@@ -800,8 +877,23 @@ body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap');
 :root{
-  --bg:#FBF3D3; --surface:#FFFFFF; --ink:#3B4258; --ink-soft:#7C8DB5;
-  --coral:#E8735A; --coral-soft:#FBDDD5; --border:#C7D0E4; --radius:18px;
+  --bg:#F7EFE5;
+  --surface:#FFFFFF;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 *{box-sizing:border-box;}
 body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',sans-serif;}
@@ -857,19 +949,23 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 }
 
 :root{
-  --bg:#F3EEDD;
+  --bg:#F7EFE5;
   --surface:#FFFFFF;
-  --ink:#17130F;
-  --ink-soft:#5B564D;
-  --green:#1F6F4C;
-  --green-soft:#CFE7D8;
-  --red:#D33F3F;
-  --red-soft:#F7D9D2;
-  --gold:#F0A400;
-  --gold-soft:#FCE7B8;
-  --border:#17130F;
-  --radius:18px;
-  --header-red:#E14B2E;
+  --ink:#3E2A1F;
+  --ink-soft:#8B5E3C;
+  --green:#3F7A52;
+  --green-soft:#E3F0E7;
+  --red:#E41C23;
+  --red-soft:#FBDEDC;
+  --gold:#C98A2C;
+  --gold-soft:#F3E4C8;
+  --coral:#E41C23;
+  --coral-soft:#FBDEDC;
+  --blue:#8B5E3C;
+  --blue-soft:#EAD7C1;
+  --border:#3E2A1F;
+  --radius:16px;
+  --header-red:#E41C23;
 }
 
 .faw-ticket,.faw-receipt,.sw-receipt,.ev-hero,
@@ -950,10 +1046,10 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .app-navdot.dot-green{background:var(--green);}
 .app-navdot.dot-gold{background:var(--gold);}
 .app-navdot.dot-red{background:var(--red);}
-.app-navdot.dot-blue{background:#345BFF;}
-.app-navdot.dot-purple{background:#8C4FD1;}
+.app-navdot.dot-blue{background:#A8562E;}
+.app-navdot.dot-purple{background:#7A3B3B;}
 .app-navdot.dot-coral{background:#E8735A;}
-.app-navdot.dot-teal{background:#2E9E8F;}
+.app-navdot.dot-teal{background:#8B7355;}
 .app-wave{width:100%;height:20px;display:block;margin:0 0 20px;}
 .app-module{display:none;}
 .app-module.active{display:block;}
@@ -1528,6 +1624,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   let transactions = [];
   let activeTab = 'master'; // master | stock | tx
   let masterSearch = '';
+  let dragMasterId = null;
   let masterUsageFilter = 'all';
   let txFilterItem = 'all';
   let txFilterType = 'all';
@@ -1564,14 +1661,16 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   function iconPencil(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>'; }
   function iconTrash(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'; }
   function iconPlus(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'; }
+  function iconDrag(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>'; }
 
   async function loadAll(){
     try{
       const rows = await window.dbLoadTable('supplies_master');
       master = rows.map(r=>({
         id: r.id, name: r.name, unit: r.unit, category: r.category,
-        usageType: r.usage_type, qtyPerBowl: r.qty_per_bowl, minStock: r.min_stock
+        usageType: r.usage_type, qtyPerBowl: r.qty_per_bowl, minStock: r.min_stock, sortOrder: r.sort_order||0
       }));
+      master.sort((a,b)=>a.sortOrder-b.sortOrder);
     }catch(e){ master = []; }
     try{
       const rows = await window.dbLoadTable('supplies_transactions');
@@ -1584,9 +1683,9 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   }
   async function saveMaster(){
     try{
-      const rows = master.map(m=>({
+      const rows = master.map((m,idx)=>({
         id: m.id, name: m.name, unit: m.unit, category: m.category,
-        usage_type: m.usageType, qty_per_bowl: Number(m.qtyPerBowl)||0, min_stock: Number(m.minStock)||0
+        usage_type: m.usageType, qty_per_bowl: Number(m.qtyPerBowl)||0, min_stock: Number(m.minStock)||0, sort_order: idx
       }));
       const ok = await window.dbSyncTable('supplies_master', 'id', rows);
       if(!ok) toast('บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง');
@@ -1673,9 +1772,10 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
   // ---- MASTER TAB ----
   function renderMaster(content){
+    const isUnfiltered = !masterSearch && masterUsageFilter==='all';
     const list = master.filter(m=> !masterSearch || m.name.toLowerCase().includes(masterSearch.toLowerCase()))
-                        .filter(m=> masterUsageFilter==='all' || m.usageType===masterUsageFilter)
-                        .sort((a,b)=> a.name.localeCompare(b.name,'th'));
+                        .filter(m=> masterUsageFilter==='all' || m.usageType===masterUsageFilter);
+    if(!isUnfiltered) list.sort((a,b)=> a.name.localeCompare(b.name,'th'));
     content.innerHTML = `
       <div class="sw-toolbar">
         <input class="sw-search" id="sw-m-search" placeholder="ค้นหารายการ..." value="${masterSearch}">
@@ -1684,8 +1784,9 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         <button class="sw-chip ${masterUsageFilter==='general'?'active':''}" data-muf="general">ทั่วไป</button>
         <button class="sw-add" id="sw-m-add">${iconPlus()} เพิ่มรายการ</button>
       </div>
-      <div class="sw-list">
-        ${list.length===0?`<div class="sw-empty">ยังไม่มีรายการวัตถุดิบ — กด "เพิ่มรายการ" เพื่อเริ่มบันทึก</div>`:list.map(masterRow).join('')}
+      ${isUnfiltered?'<div class="sw-hint">ลากที่ไอคอน ⠿ เพื่อจัดลำดับใหม่</div>':''}
+      <div class="sw-list" id="sw-master-list">
+        ${list.length===0?`<div class="sw-empty">ยังไม่มีรายการวัตถุดิบ — กด "เพิ่มรายการ" เพื่อเริ่มบันทึก</div>`:list.map(m=>masterRow(m,isUnfiltered)).join('')}
       </div>
     `;
     document.getElementById('sw-m-search').oninput = (e)=>{
@@ -1696,12 +1797,34 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     document.getElementById('sw-m-add').onclick = ()=>openMasterModal(null);
     content.querySelectorAll('[data-medit]').forEach(b=> b.onclick = ()=>openMasterModal(b.dataset.medit));
     content.querySelectorAll('[data-mdel]').forEach(b=> b.onclick = ()=>confirmDeleteMaster(b.dataset.mdel));
+    if(isUnfiltered){
+      content.querySelectorAll('#sw-master-list .sw-row').forEach(rowEl=>{
+        rowEl.addEventListener('dragstart', ()=>{ dragMasterId = rowEl.dataset.id; rowEl.classList.add('dragging'); });
+        rowEl.addEventListener('dragend', ()=>{ dragMasterId = null; rowEl.classList.remove('dragging'); content.querySelectorAll('#sw-master-list .sw-row').forEach(r=>r.classList.remove('drag-over')); });
+        rowEl.addEventListener('dragover', (e)=>{ e.preventDefault(); if(rowEl.dataset.id!==dragMasterId) rowEl.classList.add('drag-over'); });
+        rowEl.addEventListener('dragleave', ()=>{ rowEl.classList.remove('drag-over'); });
+        rowEl.addEventListener('drop', async (e)=>{
+          e.preventDefault();
+          rowEl.classList.remove('drag-over');
+          const targetId = rowEl.dataset.id;
+          if(!dragMasterId || dragMasterId===targetId) return;
+          const fromIdx = master.findIndex(x=>x.id===dragMasterId);
+          const toIdx = master.findIndex(x=>x.id===targetId);
+          if(fromIdx<0 || toIdx<0) return;
+          const [moved] = master.splice(fromIdx,1);
+          master.splice(toIdx,0,moved);
+          await saveMaster();
+          renderMaster(content);
+        });
+      });
+    }
   }
 
-  function masterRow(m){
+  function masterRow(m, draggable){
     const usage = USAGE_TYPES.find(u=>u.value===m.usageType) || USAGE_TYPES[1];
     return `
-      <div class="sw-row">
+      <div class="sw-row" ${draggable?'draggable="true"':''} data-id="${m.id}">
+        ${draggable?`<span class="sw-drag-handle" title="ลากเพื่อจัดลำดับ" style="cursor:grab;color:var(--ink-soft);display:flex;align-items:center;">${iconDrag()}</span>`:''}
         <span class="sw-row-name">${escapeHtml(m.name)}</span>
         <span class="sw-row-sub">${escapeHtml(m.category||'-')}</span>
         <span class="sw-row-sub">หน่วย: ${escapeHtml(m.unit)}</span>
@@ -3626,7 +3749,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     const edited = (o.editHistory||[]).length>0;
     return `
       <div class="kt-ticket">
-        <div class="kt-ticket-qnum">#${o.queueNumber} ${edited?'<span style="font-size:10px;background:#E0D9F5;color:#5C3FA8;border:1.5px solid var(--ink);border-radius:4px;padding:1px 5px;vertical-align:middle;">แก้ไขแล้ว</span>':''}</div>
+        <div class="kt-ticket-qnum">#${o.queueNumber} ${edited?'<span style="font-size:10px;background:#F3E4C8;color:#8B5E3C;border:1.5px solid var(--ink);border-radius:4px;padding:1px 5px;vertical-align:middle;">แก้ไขแล้ว</span>':''}</div>
         <div class="kt-ticket-items">${itemLines}</div>
         ${o.note?`<div class="kt-ticket-note">📝 ${escapeHtml(o.note)}</div>`:''}
         <div class="kt-ticket-time">${fmtTime(o.createdAt)}</div>

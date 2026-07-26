@@ -7,6 +7,8 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <div id="pin-gate" style="position:fixed;inset:0;z-index:9999;background:#FBF7EF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;">
   <div style="background:#FFFFFF;border:1px solid #E7DCC9;border-radius:14px;padding:32px 28px;max-width:320px;width:90%;text-align:center;box-sizing:border-box;">
     <div style="font-family:'Taviraj',serif;font-weight:600;font-size:22px;color:#3A2A1E;margin-bottom:4px;">MOM'S CONGEE</div>
@@ -3133,6 +3135,8 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
         </div>
         <div class="ev-modal-actions">
           <button class="ev-btn-secondary" id="cv-cancel">ปิดหน้าต่าง</button>
+          <button class="ev-btn-secondary" id="cv-export-jpg">🖼️ ดาวน์โหลด JPG</button>
+          <button class="ev-btn-secondary" id="cv-export-pdf">📄 ดาวน์โหลด PDF</button>
           <button class="ev-btn-danger" id="cv-delete">${iconTrash()} ลบรอบนี้</button>
           <button class="ev-btn-primary" id="cv-reopen">${iconRefresh()} เปิดรอบใหม่อีกครั้ง</button>
         </div>
@@ -3143,6 +3147,89 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     overlay.querySelector('#cv-cancel').onclick = ()=>overlay.remove();
     overlay.querySelector('#cv-reopen').onclick = ()=>confirmReopen(e, overlay);
     overlay.querySelector('#cv-delete').onclick = ()=>confirmDeleteEvent(e, overlay);
+    overlay.querySelector('#cv-export-jpg').onclick = (ev)=> exportReceipt(e, orderSummary, {ingredientsCost, suppliesCost, otherCost, diff, diffOk}, 'jpg', ev.currentTarget);
+    overlay.querySelector('#cv-export-pdf').onclick = (ev)=> exportReceipt(e, orderSummary, {ingredientsCost, suppliesCost, otherCost, diff, diffOk}, 'pdf', ev.currentTarget);
+  }
+
+  function buildReceiptNode(e, orderSummary, costs){
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:380px;background:#FEF8E6;font-family:"IBM Plex Mono",monospace;color:#21201C;padding:24px;box-sizing:border-box;';
+    const line = ()=>'<div style="border-top:1.5px dashed #21201C;margin:10px 0;"></div>';
+    wrap.innerHTML = `
+      <div style="text-align:center;margin-bottom:10px;">
+        <div style="font-family:'Jao October','Archivo Black',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.01em;">MOM'S CONGEE</div>
+        <div style="font-size:11px;color:#4A4940;margin-top:2px;">ใบสรุปยอดขายรอบขาย</div>
+      </div>
+      ${line()}
+      <div style="font-size:13px;line-height:1.9;">
+        <div><b>รอบ:</b> ${escapeHtml(e.name)}</div>
+        ${e.location?`<div><b>สถานที่:</b> ${escapeHtml(e.location)}</div>`:''}
+        <div><b>วันที่:</b> ${fmtDate(e.date)}</div>
+        <div><b>ปิดรอบเมื่อ:</b> ${fmtDate(e.closedAt)}</div>
+      </div>
+      ${line()}
+      <div style="font-size:13px;">
+        ${orderSummary.rows.length===0 ? '<div style="display:flex;justify-content:space-between;"><span>ไม่มีข้อมูลออเดอร์</span></div>' :
+          orderSummary.rows.map(r=>`<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>${escapeHtml(r.name)} x${fmtNum(r.qty)}</span><span>฿${fmtMoney(r.revenue)}</span></div>`).join('')}
+      </div>
+      ${line()}
+      <div style="font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;">
+        <span>รวม ${fmtNum(orderSummary.totalBowls)} ชาม</span><span>฿${fmtMoney(orderSummary.totalRevenue)}</span>
+      </div>
+      ${line()}
+      <div style="font-size:12.5px;line-height:1.9;">
+        <div style="display:flex;justify-content:space-between;"><span>เงินสดที่นับได้จริง</span><span>฿${fmtMoney(e.finalCashRevenue)}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>เงินโอน/แสกนที่ได้จริง</span><span>฿${fmtMoney(e.finalTransferRevenue)}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>เทียบกับยอดออเดอร์</span><span>${costs.diffOk?'✓ ตรงกัน':`ต่าง ฿${fmtMoney(Math.abs(costs.diff))} ${costs.diff<0?'(ขาด)':'(เกิน)'}`}</span></div>
+      </div>
+      ${line()}
+      <div style="font-size:12.5px;line-height:1.9;">
+        <div style="display:flex;justify-content:space-between;"><span>ต้นทุนวัตถุดิบประกอบอาหาร</span><span>฿${fmtMoney(costs.ingredientsCost)}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>ต้นทุนวัตถุดิบจาก Supplies</span><span>฿${fmtMoney(costs.suppliesCost)}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>ค่าใช้จ่ายอื่นๆ</span><span>฿${fmtMoney(costs.otherCost)}</span></div>
+      </div>
+      ${line()}
+      <div style="font-size:16px;font-weight:700;display:flex;justify-content:space-between;">
+        <span>กำไรสุทธิ</span><span>฿${fmtMoney(e.finalProfit)}</span>
+      </div>
+      <div style="font-size:11.5px;color:#4A4940;margin-top:6px;">
+        ${partners.map(p=>`${escapeHtml(p.name)}: ฿${fmtMoney(e.finalProfit*p.share/100)} (${p.share}%)`).join(' &middot; ')}
+      </div>
+      ${line()}
+      <div style="text-align:center;font-size:12px;color:#4A4940;margin-top:8px;">ขอบคุณค่ะ 🥣</div>
+    `;
+    document.body.appendChild(wrap);
+    return wrap;
+  }
+
+  async function exportReceipt(e, orderSummary, costs, format, btn){
+    if(typeof html2canvas === 'undefined'){ toast('โหลดตัวช่วยสร้างไฟล์ไม่สำเร็จ ลองเช็คอินเทอร์เน็ตแล้วลองใหม่'); return; }
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'กำลังสร้างไฟล์...';
+    const node = buildReceiptNode(e, orderSummary, costs);
+    try{
+      const canvas = await html2canvas(node, {backgroundColor:'#FEF8E6', scale:2});
+      const fname = 'receipt-' + (e.name||'round').replace(/[^\w\u0E00-\u0E7F-]+/g,'_') + '-' + (e.date||'');
+      if(format==='jpg'){
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        const a = document.createElement('a');
+        a.href = dataUrl; a.download = fname + '.jpg';
+        document.body.appendChild(a); a.click(); a.remove();
+      }else{
+        const { jsPDF } = window.jspdf;
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const pdfWidth = 100; // มม. — ขนาดใกล้เคียงใบเสร็จจริง
+        const pdfHeight = pdfWidth * canvas.height / canvas.width;
+        const pdf = new jsPDF({ unit:'mm', format:[pdfWidth, pdfHeight] });
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(fname + '.pdf');
+      }
+    }catch(err){
+      toast('สร้างไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง');
+    }finally{
+      node.remove();
+      btn.disabled = false; btn.textContent = orig;
+    }
   }
 
   function confirmReopen(e, parentOverlay){

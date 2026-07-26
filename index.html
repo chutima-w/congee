@@ -2681,7 +2681,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       cashRevenue: e?e.cashRevenue:'',
       transferRevenue: e?e.transferRevenue:'',
       rawIngredients: (e && e.rawIngredients && e.rawIngredients.length) ? JSON.parse(JSON.stringify(e.rawIngredients)) :
-        (ingredientsMaster.filter(m=>m.active!==false).length ? ingredientsMaster.filter(m=>m.active!==false) : DEFAULT_INGREDIENTS.map(n=>({name:n}))).map(m=>({id:uid('ing'), name:m.name, quantity:'', unit:m.default_unit||m.unit||'', price:''})),
+        (ingredientsMaster.filter(m=>m.active!==false).length ? ingredientsMaster.filter(m=>m.active!==false) : DEFAULT_INGREDIENTS.map(n=>({name:n}))).map(m=>({id:uid('ing'), name:m.name, quantity:(m.default_quantity||m.defaultQty)||'', unit:m.default_unit||m.unit||'', price:''})),
       usage: e && e.usage ? JSON.parse(JSON.stringify(e.usage)) : [],
       otherCosts: (e && e.otherCosts && e.otherCosts.length) ? JSON.parse(JSON.stringify(e.otherCosts)) :
         otherCostsMaster.filter(c=>c.active!==false).map(c=>({id:uid('oc'), description:c.name, amount:c.default_amount||''})),
@@ -4055,7 +4055,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   async function loadAll(){
     try{
       const rows = await window.dbLoadTable('ingredients_master');
-      ingredients = rows.map(r=>({id:r.id, name:r.name, active: r.active!==false, sortOrder: r.sort_order||0}));
+      ingredients = rows.map(r=>({id:r.id, name:r.name, active: r.active!==false, sortOrder: r.sort_order||0, unit:r.default_unit||'', defaultQty:r.default_quantity||''}));
       ingredients.sort((a,b)=>a.sortOrder-b.sortOrder);
     }catch(e){ ingredients=[]; }
     try{
@@ -4068,7 +4068,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   // (แทนที่จะเชื่อ state ในหน่วยความจำเฉยๆ ซึ่งจะทำให้ของหายตอนรีเฟรชโดยไม่รู้ตัว)
   async function saveIngredients(){
     try{
-      const rows = ingredients.map((it,idx)=>({id:it.id, name:it.name, active: it.active!==false, sort_order: idx}));
+      const rows = ingredients.map((it,idx)=>({id:it.id, name:it.name, active: it.active!==false, sort_order: idx, default_unit: it.unit||'', default_quantity: Number(it.defaultQty)||0}));
       const ok = await window.dbSyncTable('ingredients_master', 'id', rows);
       if(!ok) toast('บันทึกไม่สำเร็จ');
       await loadAll();
@@ -4093,8 +4093,11 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
       </div>
 
       <h2 class="ig-section-title">วัตถุดิบประกอบอาหาร</h2>
+      <div class="ig-sub" style="margin:-6px 0 10px;">ตั้งหน่วยและปริมาณเริ่มต้นไว้ที่นี่ครั้งเดียว — ตอนเปิดรอบขายที่หน้า Events จะดึงมาเติมให้อัตโนมัติ ไม่ต้องกรอกซ้ำ</div>
       <div class="ig-toolbar">
         <input class="ig-input" id="ig-new-name" placeholder="เช่น ข้าวสาร, หมูสับ, ไข่">
+        <input class="ig-input" id="ig-new-qty" type="number" min="0" step="0.01" placeholder="ปริมาณเริ่มต้น" style="max-width:130px;">
+        <input class="ig-input" id="ig-new-unit" placeholder="หน่วย เช่น กก., ฟอง" style="max-width:120px;">
         <button class="ig-add" id="ig-add-btn">+ เพิ่ม</button>
       </div>
       <div class="ig-rowlist" id="ig-ing-list">
@@ -4103,6 +4106,8 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
             <span class="ig-drag-handle" title="ลากเพื่อจัดลำดับ" style="cursor:grab;color:var(--ink-soft);display:flex;align-items:center;">${iconDrag()}</span>
             <label class="ig-toggle"><input type="checkbox" data-ing-toggle="${it.id}" ${it.active?'checked':''}><span class="ig-toggle-slider"></span></label>
             <span class="ig-item-name">${escapeHtml(it.name)}</span>
+            <input type="number" min="0" step="0.01" value="${it.defaultQty}" data-ing-qty="${it.id}" placeholder="ปริมาณ" style="width:90px;">
+            <input type="text" value="${escapeHtml(it.unit)}" data-ing-unit="${it.id}" placeholder="หน่วย" style="width:90px;">
             <button data-ing-del="${it.id}">✕</button>
           </div>
         `).join('')}
@@ -4127,15 +4132,29 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
     `;
 
     const nameInput = document.getElementById('ig-new-name');
+    const qtyInput = document.getElementById('ig-new-qty');
+    const unitInput = document.getElementById('ig-new-unit');
     const addBtn = document.getElementById('ig-add-btn');
     async function addIngredient(){
       const name = nameInput.value.trim();
       if(!name){ toast('กรุณากรอกชื่อวัตถุดิบ'); return; }
-      ingredients.push({id:uid('ing'), name, active:true});
+      const defaultQty = parseFloat(qtyInput.value)||'';
+      const unit = unitInput.value.trim();
+      ingredients.push({id:uid('ing'), name, active:true, unit, defaultQty});
       await saveIngredients();
     }
     addBtn.onclick = addIngredient;
     nameInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addIngredient(); } };
+    qtyInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addIngredient(); } };
+    unitInput.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addIngredient(); } };
+    root.querySelectorAll('[data-ing-qty]').forEach(inp=> inp.onchange = async ()=>{
+      const it = ingredients.find(x=>x.id===inp.dataset.ingQty);
+      if(it){ it.defaultQty = inp.value; await saveIngredients(); }
+    });
+    root.querySelectorAll('[data-ing-unit]').forEach(inp=> inp.onchange = async ()=>{
+      const it = ingredients.find(x=>x.id===inp.dataset.ingUnit);
+      if(it){ it.unit = inp.value.trim(); await saveIngredients(); }
+    });
     root.querySelectorAll('[data-ing-del]').forEach(b=> b.onclick = async ()=>{
       ingredients = ingredients.filter(x=>x.id!==b.dataset.ingDel);
       await saveIngredients();

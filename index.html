@@ -27,6 +27,7 @@
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -126,7 +127,7 @@ body,.faw-root{
 .faw-list.view-list{display:flex;flex-direction:column;gap:6px;}
 .faw-row{
   display:flex;align-items:center;gap:10px;background:var(--surface);
-  border:1px solid var(--border);border-left:3px solid var(--gold);
+  border:1px solid var(--border);border-left:3px solid var(--border);
   border-radius:8px;padding:9px 12px;font-size:12.5px;
 }
 .faw-row.status-ไม่ใช้งาน{border-left-color:var(--ink-soft);opacity:.6;}
@@ -147,14 +148,14 @@ body,.faw-root{
 .faw-ticket{
   background:var(--surface);border:1px solid var(--border);border-radius:10px;
   padding:14px 16px;position:relative;display:flex;justify-content:space-between;gap:12px;
-  border-left:4px solid var(--gold);
+  border-left:4px solid var(--border);
 }
 .faw-ticket.status-ไม่ใช้งาน{border-left-color:var(--ink-soft);opacity:.65;}
 .faw-ticket-main{flex:1;min-width:0;}
 .faw-ticket-name{font-weight:600;font-size:15px;margin-bottom:2px;}
 .faw-faid{
   font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
-  color:var(--gold);background:var(--gold-soft);padding:1px 6px;border-radius:5px;
+  color:var(--ink);background:var(--gold);padding:1px 6px;border-radius:5px;
   margin-right:4px;letter-spacing:.02em;
 }
 .faw-ticket-meta{font-size:12px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:8px;}
@@ -234,6 +235,7 @@ body,.faw-root{
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -320,7 +322,7 @@ body,.sw-root{
 .sw-list{display:flex;flex-direction:column;gap:6px;}
 .sw-row{
   display:flex;align-items:center;gap:10px;background:var(--surface);
-  border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;
+  border:1px solid var(--border);border-left:3px solid var(--border);border-radius:8px;
   padding:10px 14px;font-size:12.5px;flex-wrap:wrap;
 }
 .sw-row.low{border-left-color:var(--red);}
@@ -343,7 +345,7 @@ body,.sw-root{
 .sw-tag.out{background:var(--red-soft);color:var(--red);}
 .sw-tag.low{background:var(--red-soft);color:var(--red);}
 .sw-tag.ok{background:var(--green-soft);color:var(--green);}
-.sw-tag.pb{background:var(--gold-soft);color:var(--gold);}
+.sw-tag.pb{background:var(--gold);color:var(--ink);}
 .sw-tag.gen{background:var(--fill-muted);color:var(--ink-soft);}
 .sw-empty{
   text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:13.5px;
@@ -415,6 +417,7 @@ body,.sw-root{
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -479,7 +482,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 
 .ev-list{display:flex;flex-direction:column;gap:8px;}
 .ev-row{
-  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border);
   border-radius:8px;padding:12px 16px;cursor:pointer;
 }
 .ev-row.closed{border-left-color:var(--green);}
@@ -490,7 +493,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;
   letter-spacing:.05em;padding:2px 7px;border-radius:5px;
 }
-.ev-tag.open{background:var(--gold-soft);color:var(--gold);}
+.ev-tag.open{background:var(--gold);color:var(--ink);}
 .ev-tag.closed{background:var(--green-soft);color:var(--green);}
 .ev-row-nums{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;font-size:12.5px;}
 .ev-row-nums .item .lbl{color:var(--ink-soft);font-size:11px;}
@@ -524,7 +527,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 .ev-usage-qty{flex:0 0 70px;}
 .ev-usage-qty input{padding:5px 8px;font-size:12.5px;}
 .ev-usage-cost{flex:0 0 70px;text-align:right;font-family:'IBM Plex Mono',monospace;}
-.ev-usage-auto{font-size:9.5px;color:var(--gold);background:var(--gold-soft);padding:1px 5px;border-radius:4px;flex:0 0 auto;}
+.ev-usage-auto{font-size:9.5px;color:var(--ink);background:var(--gold);padding:1px 5px;border-radius:4px;flex:0 0 auto;}
 .ev-usage-del{flex:0 0 auto;background:none;border:none;color:var(--ink-soft);cursor:pointer;padding:2px;}
 .ev-usage-del:hover{color:var(--red);}
 .ev-cost-desc{flex:1 1 100px;}
@@ -575,6 +578,7 @@ body,.ev-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -735,6 +739,7 @@ body,.od-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -821,6 +826,7 @@ body,.kt-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -884,6 +890,7 @@ body,.mn-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -957,6 +964,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   --ink:#21201C;
   --ink-soft:#4A4940;
   --green:#5E8C42;
+  --green-light:#BCD38F;
   --green-soft:#E7EFD8;
   --red:#EE5533;
   --red-soft:#FDE1DA;
@@ -1014,7 +1022,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   text-stroke:0.6px var(--ink);
 }
 
-.app-shell{max-width:960px;margin:0 auto;padding:14px 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
+.app-shell{max-width:960px;margin:0 auto;padding:8px 16px 10px;font-family:'IBM Plex Sans Thai','IBM Plex Sans',sans-serif;}
 .app-header{
   background-color:var(--header-red);
   background-image:
@@ -1027,7 +1035,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
 }
 .app-header-inner{
   width:100%;max-width:960px;box-sizing:border-box;
-  padding:20px 20px 18px;
+  padding:18px 20px 14px;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
 }
 .app-brand{display:flex;align-items:center;gap:14px;}
@@ -1045,7 +1053,7 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:7px;
   transition:background .15s,color .15s;
 }
-.app-navbtn.active{background:var(--green);color:var(--ink);border-color:var(--ink);}
+.app-navbtn.active{background:var(--green-light);color:var(--ink);border-color:var(--ink);}
 .app-navbtn:hover{background:var(--bg);}
 .app-navdot{width:8px;height:8px;border-radius:50%;display:inline-block;}
 .app-navdot.dot-green{background:var(--green);}
@@ -2327,21 +2335,27 @@ body,.ig-root{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Pl
   }
   // จำนวนวัตถุดิบที่ควรใช้อัตโนมัติ = แบบผันแปรตามชามรวม (เดิม) + แบบตามสูตรเฉพาะเมนู (ใหม่)
   function computeAutoSupplyQty(supplyItemId, orderSummary){
+    const hasRecipe = menuSupplyUsage.some(x=>x.supplyItemId===supplyItemId);
     let qty = 0;
-    const m = master.find(x=>x.id===supplyItemId);
-    if(m && m.usageType==='per_bowl'){
-      qty += orderSummary.totalBowls * Number(m.qtyPerBowl||0);
+    if(hasRecipe){
+      // มีสูตรเฉพาะเมนูแล้ว ใช้ตัวนี้อย่างเดียว ไม่บวกซ้ำกับสูตรผันแปรตามชามแบบเหมารวม
+      orderSummary.rows.forEach(r=>{
+        if(!r.menuItemId) return;
+        const recipe = menuSupplyUsage.find(x=>x.supplyItemId===supplyItemId && x.menuItemId===r.menuItemId);
+        if(recipe) qty += r.qty * Number(recipe.qtyPerUnit||0);
+      });
+    }else{
+      const m = master.find(x=>x.id===supplyItemId);
+      if(m && m.usageType==='per_bowl'){
+        qty += orderSummary.totalBowls * Number(m.qtyPerBowl||0);
+      }
     }
-    orderSummary.rows.forEach(r=>{
-      if(!r.menuItemId) return;
-      const recipe = menuSupplyUsage.find(x=>x.supplyItemId===supplyItemId && x.menuItemId===r.menuItemId);
-      if(recipe) qty += r.qty * Number(recipe.qtyPerUnit||0);
-    });
     return qty;
   }
   function relevantAutoSupplyIds(orderSummary){
     const ids = new Set();
-    master.filter(m=>m.usageType==='per_bowl').forEach(m=>ids.add(m.id));
+    const recipeSupplyIds = new Set(menuSupplyUsage.map(x=>x.supplyItemId));
+    master.filter(m=>m.usageType==='per_bowl' && !recipeSupplyIds.has(m.id)).forEach(m=>ids.add(m.id));
     orderSummary.rows.forEach(r=>{
       if(!r.menuItemId) return;
       menuSupplyUsage.filter(x=>x.menuItemId===r.menuItemId).forEach(x=>ids.add(x.supplyItemId));
